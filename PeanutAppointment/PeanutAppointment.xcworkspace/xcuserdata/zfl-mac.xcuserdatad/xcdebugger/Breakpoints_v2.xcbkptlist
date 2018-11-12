@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Support/Tool/XMPPManager.m"
+            timestampString = "560512042.897046"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
+            landmarkName = "-xmppRoster:didReceivePresenceSubscriptionRequest:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Support/Tool/XMPPManager.m"
+            timestampString = "560512042.8971291"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
+            landmarkName = "XMPPManager"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            condition = "$arg3 == nil"
+            continueAfterRunningActions = "No"
+            symbolName = "[UIImage imageNamed:]"
+            moduleName = "">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "+[UIImage imageNamed:]"
+                  moduleName = "UIKit"
+                  usesParentBreakpointCondition = "Yes"
+                  offsetFromSymbolStart = "0">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Support/Tool/XMPPManager.m"
+            timestampString = "560512042.89719"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "342"
+            endingLineNumber = "342"
+            landmarkName = "XMPPManager"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Support/Tool/XMPPManager.m"
+            timestampString = "560512042.897293"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "-xmppStream:didNotRegister:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Class/AppointmentOrder/Root/View/PACollectionFlowLayout.m"
+            timestampString = "562787969.884221"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "-prepareLayout"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+            timestampString = "563556048.53812"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
+            landmarkName = "-configLiveRoom"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[AlivcLiveRoomView configLiveRoom]"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.036893"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "431"
+                  endingLineNumber = "431"
+                  offsetFromSymbolStart = "1456">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__35-[AlivcLiveRoomView configLiveRoom]_block_invoke"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.041527"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "432"
+                  endingLineNumber = "432"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.398"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.045457"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "431"
+                  endingLineNumber = "431"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+            timestampString = "563556052.289556"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1873"
+            endingLineNumber = "1873"
+            landmarkName = "-onAlivcPusherURLAuthenticationAboutToExpire"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[AlivcLiveRoomView onAlivcPusherURLAuthenticationAboutToExpire]"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.057079"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1873"
+                  endingLineNumber = "1873"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__64-[AlivcLiveRoomView onAlivcPusherURLAuthenticationAboutToExpire]_block_invoke"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.06021"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1875"
+                  endingLineNumber = "1875"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.1198"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.062786"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1873"
+                  endingLineNumber = "1873"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+            timestampString = "563556061.619127"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2079"
+            endingLineNumber = "2079"
+            landmarkName = "-onAlivcInteractiveLiveRoomErrorCode:errorDetail:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+            timestampString = "563556064.029858"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2133"
+            endingLineNumber = "2133"
+            landmarkName = "-onStsWillBeExpireSoonWithAccessKey:secretKey:expireTime:token:afterTime:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[AlivcLiveRoomView onStsWillBeExpireSoonWithAccessKey:secretKey:expireTime:token:afterTime:]"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.080475"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2133"
+                  endingLineNumber = "2133"
+                  offsetFromSymbolStart = "172">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__93-[AlivcLiveRoomView onStsWillBeExpireSoonWithAccessKey:secretKey:expireTime:token:afterTime:]_block_invoke"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.0838341"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2135"
+                  endingLineNumber = "2135"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.1309"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.087597"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2133"
+                  endingLineNumber = "2133"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+            timestampString = "563557832.205562"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1303"
+            endingLineNumber = "1303"
+            landmarkName = "-startButtonTouched:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+            timestampString = "563557910.573965"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1307"
+            endingLineNumber = "1307"
+            landmarkName = "-startButtonTouched:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+            timestampString = "563558018.080994"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2086"
+            endingLineNumber = "2086"
+            landmarkName = "-onAlivcInteractiveLiveRoomErrorCode:errorDetail:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[AlivcLiveRoomView onAlivcInteractiveLiveRoomErrorCode:errorDetail:]"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.111136"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2086"
+                  endingLineNumber = "2086"
+                  offsetFromSymbolStart = "256">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__69-[AlivcLiveRoomView onAlivcInteractiveLiveRoomErrorCode:errorDetail:]_block_invoke"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.115993"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2087"
+                  endingLineNumber = "2087"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.1284"
+                  moduleName = "PeanutAppointment"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zfl-mac/Downloads/PeanutAppointment/PeanutAppointment/Vendor/AliyunVideo/AlivcLive/AlivcLiveView/AlivcLiveRoomAbout/AlivcLiveRoomView.m"
+                  timestampString = "563727978.119959"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2086"
+                  endingLineNumber = "2086"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PeanutAppointment/Class/Mine/&#x76f8;&#x518c;/Controller/PhotoAlbumViewController.m"
+            timestampString = "563629352.182742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "-getData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
