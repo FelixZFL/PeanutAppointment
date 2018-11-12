@@ -1,6 +1,0 @@
-framework module AlivcLiveRoomSDK {
-  umbrella header "AlivcLiveRoomSDK.h"
-
-  export *
-  module * { export * }
-}
