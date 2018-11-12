@@ -1416,6 +1416,7 @@
 		81B713923EBF859DE4B7613864002F60 /* XMPPAnonymousAuthentication.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XMPPAnonymousAuthentication.h; path = Authentication/Anonymous/XMPPAnonymousAuthentication.h; sourceTree = "<group>"; };
 		81F3FF1F86C36900C54D05246BD089C1 /* NSXMLElement+XEP_0297.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSXMLElement+XEP_0297.m"; path = "Extensions/XEP-0297/NSXMLElement+XEP_0297.m"; sourceTree = "<group>"; };
 		82620FCA6D48A423F9D4F619AB917632 /* CocoaAsyncSocket-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CocoaAsyncSocket-dummy.m"; sourceTree = "<group>"; };
+		8290D31B6B1F864BEF09A9C14D58E910 /* libjpush-ios-3.1.0.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = "libjpush-ios-3.1.0.a"; sourceTree = "<group>"; };
 		83142A21C3FB2CF59B1EC05980F1EEA5 /* XMPPPushModule.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XMPPPushModule.h; path = "Extensions/XEP-0357/XMPPPushModule.h"; sourceTree = "<group>"; };
 		8390C80E460A8241A848BC92C663C6D2 /* NSString+MJExtension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSString+MJExtension.h"; path = "MJExtension/NSString+MJExtension.h"; sourceTree = "<group>"; };
 		83A62A56A8FB04EE0C58219ACA40BE98 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
@@ -1481,7 +1482,6 @@
 		97192B447BFEC32C854235A8BB36588E /* XMPPGroupCoreDataStorageObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XMPPGroupCoreDataStorageObject.h; path = Extensions/Roster/CoreDataStorage/XMPPGroupCoreDataStorageObject.h; sourceTree = "<group>"; };
 		979AD972AC0AA16015A761FB9E8A5D85 /* DDXMLElementAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DDXMLElementAdditions.m; path = KissXML/Additions/DDXMLElementAdditions.m; sourceTree = "<group>"; };
 		979F41558DE8751E56C9DBAC72852F0E /* TAAbstractDotView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TAAbstractDotView.m; path = SDCycleScrollView/Lib/SDCycleScrollView/PageControl/TAAbstractDotView.m; sourceTree = "<group>"; };
-		97E955B0A0064D8500E061E8B688A76F /* libjcore-ios-1.1.9.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = "libjcore-ios-1.1.9.a"; sourceTree = "<group>"; };
 		984CF4969184C90C99D90DA01B7E966D /* LBXScanViewStyle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = LBXScanViewStyle.m; path = LBXScan/UI/LBXScanViewStyle.m; sourceTree = "<group>"; };
 		98E91FC43B413E62CF64375DA1E72FE7 /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = IQKeyboardManager.bundle; path = IQKeyboardManager/Resources/IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		990606AB9D8D50783735AD4B63FD0716 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
@@ -1574,6 +1574,7 @@
 		B273706B702FDFBD4265FB59B5668381 /* SDWebImageManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageManager.m; path = SDWebImage/SDWebImageManager.m; sourceTree = "<group>"; };
 		B385600753AC83FABAAD7AA3B912246D /* TZImageManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TZImageManager.h; path = TZImagePickerController/TZImagePickerController/TZImageManager.h; sourceTree = "<group>"; };
 		B39B5144F83B2FB328CFC87089BEB904 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressAnimatedView.m; path = SVProgressHUD/SVProgressAnimatedView.m; sourceTree = "<group>"; };
+		B3AFF1B4A89153034528C109AED4A991 /* libjcore-ios-1.2.2.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = "libjcore-ios-1.2.2.a"; sourceTree = "<group>"; };
 		B3BE9C3A3AF95C99DB062AE2218EB837 /* DDOSLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DDOSLogger.h; path = Classes/DDOSLogger.h; sourceTree = "<group>"; };
 		B3E648936408BDE8AD3E11E7FC162873 /* XMPPRosterMemoryStorage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XMPPRosterMemoryStorage.h; path = Extensions/Roster/MemoryStorage/XMPPRosterMemoryStorage.h; sourceTree = "<group>"; };
 		B4333D9521A3D2CACB05ED637EF56127 /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+MASDebugAdditions.h"; path = "Masonry/NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
@@ -1696,7 +1697,6 @@
 		D45CAFEF64633764DD48A0AAB64420B1 /* XMPPCapsResourceCoreDataStorageObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XMPPCapsResourceCoreDataStorageObject.h; path = "Extensions/XEP-0115/CoreDataStorage/XMPPCapsResourceCoreDataStorageObject.h"; sourceTree = "<group>"; };
 		D4EB0C70BFC2C7498C9CBB836FC6F1B1 /* XMPPvCardAvatarCoreDataStorageObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = XMPPvCardAvatarCoreDataStorageObject.m; path = "Extensions/XEP-0054/CoreDataStorage/XMPPvCardAvatarCoreDataStorageObject.m"; sourceTree = "<group>"; };
 		D637A2C384A9F31B834B558AA032684D /* XMPPMessage+XEP_0224.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "XMPPMessage+XEP_0224.m"; path = "Extensions/XEP-0224/XMPPMessage+XEP_0224.m"; sourceTree = "<group>"; };
-		D683F771FBD55D3A294642DE15CFB23A /* libjpush-ios-3.0.2.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; path = "libjpush-ios-3.0.2.a"; sourceTree = "<group>"; };
 		D6C3C322224DFF154D00E4DE5E7BFB4D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7347B143357445A8CF6FA73F543AF4C /* XMPPMessageArchiving.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XMPPMessageArchiving.h; path = "Extensions/XEP-0136/XMPPMessageArchiving.h"; sourceTree = "<group>"; };
 		D79D1BC956F44C6C943288863C01C808 /* XMPPResourceMemoryStorageObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = XMPPResourceMemoryStorageObject.h; path = Extensions/Roster/MemoryStorage/XMPPResourceMemoryStorageObject.h; sourceTree = "<group>"; };
@@ -2357,14 +2357,6 @@
 			path = "../Target Support Files/MJExtension";
 			sourceTree = "<group>";
 		};
-		24D0B3CBEFF32254636277A2B1392F72 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				97E955B0A0064D8500E061E8B688A76F /* libjcore-ios-1.1.9.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		292F58950020A713B01A2683AF5D628A /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -2458,6 +2450,14 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/TTRangeSlider";
+			sourceTree = "<group>";
+		};
+		475C5D1AE188E0ED1059606F3B59B606 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B3AFF1B4A89153034528C109AED4A991 /* libjcore-ios-1.2.2.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4C9001C0546061D806F202D2A28EC47E /* BMKLocationKit */ = {
@@ -2746,14 +2746,6 @@
 			path = "../Target Support Files/MJRefresh";
 			sourceTree = "<group>";
 		};
-		85EB9F2D8C37FDD754700299DEAC9559 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D683F771FBD55D3A294642DE15CFB23A /* libjpush-ios-3.0.2.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		876767C27EB4FCA1C0F4711FC4EAB06C /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -2875,6 +2867,14 @@
 			name = Default;
 			sourceTree = "<group>";
 		};
+		AA55099C105F75FD76EBF8EFB0B3D55C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8290D31B6B1F864BEF09A9C14D58E910 /* libjpush-ios-3.1.0.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AB399A52EE484A733C0D43AB0314EB0F /* XMPPFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -2888,7 +2888,7 @@
 		B0FAAE573E50245E36E54830405A81C7 /* JCore */ = {
 			isa = PBXGroup;
 			children = (
-				24D0B3CBEFF32254636277A2B1392F72 /* Frameworks */,
+				475C5D1AE188E0ED1059606F3B59B606 /* Frameworks */,
 			);
 			name = JCore;
 			path = JCore;
@@ -3489,7 +3489,7 @@
 			isa = PBXGroup;
 			children = (
 				01210BC64DBCD6253F85E4536956467A /* JPUSHService.h */,
-				85EB9F2D8C37FDD754700299DEAC9559 /* Frameworks */,
+				AA55099C105F75FD76EBF8EFB0B3D55C /* Frameworks */,
 			);
 			name = JPush;
 			path = JPush;

@@ -33,9 +33,9 @@ target 'PeanutAppointment' do
     #微信开放平台  1.8.2
     pod 'WechatOpenSDK'
     
-#    Installing JCore (1.1.9)
-    #极光推送(3.0.2)
-    pod 'JPush', '3.0.2'
+#    Installing JCore (1.2.2)
+    #极光推送(3.1.0)
+    pod 'JPush', '3.1.0'
     
     #百度定位(1.3.0.2)
     pod 'BMKLocationKit'

@@ -27,9 +27,9 @@ PODS:
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
   - IQKeyboardManager (6.1.1)
-  - JCore (1.1.9)
-  - JPush (3.0.2):
-    - JCore (~> 1.1.1)
+  - JCore (1.2.2)
+  - JPush (3.1.0):
+    - JCore (~> 1.2.0)
   - JSONModel (1.8.0)
   - KissXML (5.2.3)
   - LBXScan/LBXNative (2.3):
@@ -66,7 +66,7 @@ DEPENDENCIES:
   - BMKLocationKit
   - FMDB
   - IQKeyboardManager
-  - JPush (= 3.0.2)
+  - JPush (= 3.1.0)
   - JSONModel
   - LBXScan/LBXNative (~> 2.3)
   - LBXScan/UI (~> 2.3)
@@ -119,8 +119,8 @@ SPEC CHECKSUMS:
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   IQKeyboardManager: 79c57795f5c2408d259d37b9da2ed07efcbb5225
-  JCore: 27598485098d0db99d2812cba048003457d08cfb
-  JPush: 01a693fafe51b93eafc2e368bbc7a7cc07e12ce4
+  JCore: f14c0549968a63c22e246a4875aa9d428446f373
+  JPush: 5921e25ad13e0386351079217b009f2039084eac
   JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
   KissXML: 09f88ff8161fd058d67b70740b8b516687b52823
   LBXScan: e51449f0832d1fe17da632af0d22adeb3cfa3543
@@ -138,6 +138,6 @@ SPEC CHECKSUMS:
   WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
   XMPPFramework: 5d31ff9f73dce031b24bc49bcf88093627a3a86e
 
-PODFILE CHECKSUM: 3503d374cce0f99f54b703a4b106a9532a892baa
+PODFILE CHECKSUM: 9c5e97d967c5bd885b3fa9bb9f6cf9a23545aede
 
 COCOAPODS: 1.5.3
