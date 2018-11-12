@@ -57,31 +57,6 @@
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    NSLog(@"%s",__func__);
-}
-
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-     NSLog(@"%s",__func__);
-}
-
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-     NSLog(@"%s",__func__);
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-     NSLog(@"%s",__func__);
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-     NSLog(@"%s",__func__);
-}
-
-
 #pragma mark - 界面跳转
 
 - (void)initWindow {
@@ -116,7 +91,46 @@
 //    [self.window makeKeyAndVisible];
 //}
 
+#pragma mark - 推送 -
+
+//注册APNs成功并上报DeviceToken
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    [self JPapplication:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+//实现注册APNs失败接口（可选）
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    [self JPapplication:application didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
 #pragma mark - 与其他应用互动 -
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    NSLog(@"%s",__func__);
+}
+
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSLog(@"%s",__func__);
+    [self JPapplicationDidEnterBackground:application];
+}
+
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    NSLog(@"%s",__func__);
+    [self JPapplicationWillEnterForeground:application];
+}
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSLog(@"%s",__func__);
+}
+
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    NSLog(@"%s",__func__);
+}
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
@@ -126,7 +140,6 @@
     [TencentOAuth HandleOpenURL:url];
     
     return YES;
-    
 }
 
 #pragma mark - WXApiDelegate
