@@ -11,6 +11,8 @@
 
 #import "MyMainPageModel.h"
 
+#import "PhotoAlbumViewController.h"
+
 @interface MyMainPageViewController ()
 
 @property (nonatomic, strong) MyMainPageHeadView *headView;
@@ -67,7 +69,12 @@
 #pragma mark - getter
 - (MyMainPageHeadView *)headView {
     if (!_headView) {
+        __weak __typeof(self)weakSelf = self;
         _headView = [[MyMainPageHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
+        [_headView setPhotoClickBlock:^{
+            PhotoAlbumViewController *vc = [[PhotoAlbumViewController alloc] init];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }];
     }
     return _headView;
 }

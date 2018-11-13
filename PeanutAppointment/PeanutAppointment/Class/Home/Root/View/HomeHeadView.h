@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) HomeStarOfTodayView *starView;//今日之星
 @property (nonatomic, strong) HomeGotTalentView *talentView;//今日达人
 
-+ (CGFloat )getHeight;
++ (CGFloat )getHeightWithModel:(nullable HomeModel *)model;
 
 - (void)updateWithModel:(HomeModel *)model;
 

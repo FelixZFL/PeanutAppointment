@@ -147,8 +147,8 @@
 }
 
 - (void)updateWithModel:(MyExceptionalModel *)model {
-    self.receiveLabel.text = [NSString stringWithFormat:@"%@枚",model.gold];
-    self.returnLabel.text = [NSString stringWithFormat:@"￥%@",model.price];
+    self.receiveLabel.text = [NSString stringWithFormat:@"%@枚",model.gold?:@"0"];
+    self.returnLabel.text = [NSString stringWithFormat:@"￥%@",model.price?:@"0"];
 }
 
 #pragma mark - action -

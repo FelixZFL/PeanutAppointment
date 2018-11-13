@@ -137,38 +137,6 @@
         UIImage *shareImage = self.image;//imageNamed(@"share_appIcon");
 
         if (sender.tag - kBtnTag == 0) {
-            WXMediaMessage *message = [WXMediaMessage message];
-            message.title = titleStr;
-            message.description = contentStr;
-            [message setThumbImage:shareImage];
-            WXWebpageObject *ext = [WXWebpageObject object];
-            ext.webpageUrl = urlStr;
-            message.mediaObject = ext;
-
-            SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-            req.bText = NO;
-            req.message = message;
-            req.scene = WXSceneSession;
-            [WXApi sendReq:req];
-
-        }else if (sender.tag - kBtnTag == 1) {
-
-            WXMediaMessage *message = [WXMediaMessage message];
-            message.title = titleStr;
-            message.description = contentStr;
-            [message setThumbImage:shareImage];
-
-            WXWebpageObject *ext = [WXWebpageObject object];
-            ext.webpageUrl = urlStr;
-            message.mediaObject = ext;
-
-            SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-            req.bText = NO;
-            req.message = message;
-            req.scene = WXSceneTimeline;
-            [WXApi sendReq:req];
-
-        }else if (sender.tag - kBtnTag == 2) {
             NSString *url = urlStr;
             UIImage *image = shareImage;
             NSData *imgData = UIImageJPEGRepresentation(image, 1);
@@ -179,6 +147,39 @@
             if (code == EQQAPITIMNOTSUPPORTAPI) {
                 [SVProgressHUD showInfoWithStatus:@"请安装QQ"];
             }
+            
+            
+        }else if (sender.tag - kBtnTag == 1) {
+            WXMediaMessage *message = [WXMediaMessage message];
+            message.title = titleStr;
+            message.description = contentStr;
+            [message setThumbImage:shareImage];
+            WXWebpageObject *ext = [WXWebpageObject object];
+            ext.webpageUrl = urlStr;
+            message.mediaObject = ext;
+            
+            SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+            req.bText = NO;
+            req.message = message;
+            req.scene = WXSceneSession;
+            [WXApi sendReq:req];
+
+        }else if (sender.tag - kBtnTag == 2) {
+            
+            WXMediaMessage *message = [WXMediaMessage message];
+            message.title = titleStr;
+            message.description = contentStr;
+            [message setThumbImage:shareImage];
+            
+            WXWebpageObject *ext = [WXWebpageObject object];
+            ext.webpageUrl = urlStr;
+            message.mediaObject = ext;
+            
+            SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+            req.bText = NO;
+            req.message = message;
+            req.scene = WXSceneTimeline;
+            [WXApi sendReq:req];
         }
     }
     

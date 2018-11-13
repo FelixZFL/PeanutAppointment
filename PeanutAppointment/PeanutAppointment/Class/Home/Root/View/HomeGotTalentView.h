@@ -7,17 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HomeNoticeView.h"
+
+
+@class HomeVideoHotUserModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeGotTalentView : UIView
 
-@property (nonatomic, strong) HomeNoticeView *noticeView;
+@property (nonatomic, copy) void(^tapActionBlcok) (HomeVideoHotUserModel *model);
 
-@property (nonatomic, strong) NSMutableArray *photoViewArray;
+@property (nonatomic, strong) NSArray<HomeVideoHotUserModel *> *dataArray;
 
-+ (CGFloat )getHeight;
++ (CGFloat )getHeightWithArray:(NSArray *)array;
 
 @end
 

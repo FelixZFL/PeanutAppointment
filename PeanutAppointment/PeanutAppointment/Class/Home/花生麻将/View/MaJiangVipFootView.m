@@ -7,6 +7,9 @@
 //
 
 #import "MaJiangVipFootView.h"
+#import "MajiangVipModel.h"
+
+#define kViewTag 7365
 
 @interface MaJiangVipFootView()
 
@@ -41,17 +44,20 @@
     CGFloat viewHeight = 57;
     
     for (int i = 0; i < _dataArray.count; i++) {
+        MajiangVipModel *model = _dataArray[i];
         
         UIView *view = [UIView viewWithColor:COLOR_UI_THEME_RED];
         [view setDefaultCorner];
         view.frame = CGRectMake(MARGIN_15 + i%2 * (viewWidth + MARGIN_15), MARGIN_15 + i/2 * (viewHeight + MARGIN_15), viewWidth, viewHeight);
+        view.tag = kViewTag + i;
+        [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(itemClick:)]];
         [self addSubview:view];
         
         UIButton *btn = [[UIButton alloc] init];
         btn.userInteractionEnabled = NO;
         [btn setImage:imageNamed(@"majiang_VIP") forState:UIControlStateNormal];
         [btn setImage:imageNamed(@"majiang_VIP") forState:UIControlStateHighlighted];
-        [btn setButtonStateNormalTitle:@"5天20元" Font:KFont(17) textColor:COLOR_UI_FFFFFF];
+        [btn setButtonStateNormalTitle:[NSString stringWithFormat:@"%@天%@元",model.dayNumber,model.price] Font:KFont(17) textColor:COLOR_UI_FFFFFF];
         [view addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.mas_equalTo(0);
@@ -59,7 +65,7 @@
         }];
         
         UILabel *label = [UILabel labelWithFont:KFont(12) textColor:COLOR_UI_FFFFFF textAlignment:NSTextAlignmentCenter];
-        label.text = @"送20张房卡";
+        label.text = [NSString stringWithFormat:@"送%@张房卡",model.roomCardNumber?:@"0"];
         [view addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.mas_equalTo(0);
@@ -83,6 +89,13 @@
 }
 
 #pragma mark - action -
+
+- (void)itemClick:(UITapGestureRecognizer *)tapGes {
+    NSInteger index = tapGes.view.tag - kViewTag;
+    if (self.itemClickBlock && self.dataArray.count > index) {
+        self.itemClickBlock(self.dataArray[index]);
+    }
+}
 
 
 @end

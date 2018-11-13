@@ -170,7 +170,15 @@
         //打赏
         [YQNetworking postWithApiNumber:API_NUM_10021 params:@{@"userId":[PATool getUserId], @"id":_ID,@"type":@(_type),@"bUserId":_bUserId,@"jzNumber":@(_rewardCount)} successBlock:^(id response) {
             if (getResponseIsSuccess(response)) {
-                [self getData];
+                NSDictionary *dic = getResponseData(response);
+                if ([dic[@"isSuccess"] integerValue] == 1) {
+                    [self getData];
+                } else {
+                    [SVProgressHUD showSuccessWithStatus:@"金钻不足"];
+                    //充值
+                    [self removFromWindow];
+                    [[RechargeAlertView alert] showInWindow];
+                }
             }
         } failBlock:nil];
     } else {

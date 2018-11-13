@@ -9,10 +9,13 @@
 #import "UserMainPageViewController.h"
 #import "UserMainPageHeadView.h"
 #import "UserMainPageFootView.h"
+#import "LocationManager.h"
 
 #import "AppointmentHerViewController.h"
 
 @interface UserMainPageViewController ()
+
+@property (nonatomic, strong) CLLocation *location;//当前定位
 
 @property (nonatomic, strong) UserMainPageHeadView *headView;
 @property (nonatomic, strong) UserMainPageFootView *footView;
@@ -30,6 +33,8 @@
     [self setupUI];
     
     [self setupNav];
+    
+    [self getData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,7 +112,42 @@
 
 
 #pragma mark - network
+//userId：用户id pusId：用户与技能id （pusId非必传，如果不传就不用把pusId带上）
+//lng: 经度 lat:纬度
 
+- (void)getData {
+    if (_location) {
+        NSDictionary *param = @{@"userId":_userId?:@"", @"pusId":@"", @"lng":@(_location.coordinate.longitude), @"lat":@(_location.coordinate.latitude)};
+        [YQNetworking postWithApiNumber:API_NUM_20033 params:param successBlock:^(id response) {
+            if (getResponseIsSuccess(response)) {
+                
+            }
+        } failBlock:^(NSError *error) {
+        }];
+        [self getLocationToRequest:NO];
+    } else {
+        [self getLocationToRequest:YES];
+    }
+}
+
+#pragma mark - private
+///获取位置信息 request 是否需要获取数据
+- (void)getLocationToRequest:(BOOL)request {
+    [[LocationManager sharedManager].locationManager requestLocationWithReGeocode:NO withNetworkState:NO completionBlock:^(BMKLocation * _Nullable location, BMKLocationNetworkState state, NSError * _Nullable error) {
+        if (!error) {
+            self.location = location.location;
+            if (request) {
+                [self getData];
+            }
+        } else {// TODO  暂时这样处理的，百度地图key有问题
+#warning 后面改
+            self.location = [[CLLocation alloc] initWithLatitude:29.678 longitude:106.67328];
+            if (request) {
+                [self getData];
+            }
+        }
+    }];
+}
 
 #pragma mark - action
 

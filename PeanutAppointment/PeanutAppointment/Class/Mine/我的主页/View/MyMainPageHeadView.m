@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong) UILabel *addressLabel;//地址
 @property (nonatomic, strong) UILabel *authLabel;//认证
-@property (nonatomic, strong) UILabel *integralLbabel;//积分
+//@property (nonatomic, strong) UILabel *integralLbabel;//积分
 @property (nonatomic, strong) UILabel *visitorCountLabel;//访客
 @property (nonatomic, strong) UILabel *likesCountLabel;//点赞数
 
@@ -89,7 +89,7 @@
     CGFloat titleWidth = 60;
     
     UIView *lastView = userView;
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 5; i++) {
         
         BaseBottomLineView *view = [[BaseBottomLineView alloc] init];
         [self addSubview:view];
@@ -132,16 +132,13 @@
                 make.right.mas_equalTo(-MARGIN_15);
                 make.centerY.equalTo(view);
             }];
+            [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoViewTapAction:)]];
             
         } else if (i == 2) {
             titleLabel.text = @"认证";
             self.authLabel = contentLabel;
             
         } else if (i == 3) {
-            titleLabel.text = @"等级积分";
-            contentLabel.textColor = COLOR_UI_THEME_RED;
-            self.integralLbabel = contentLabel;
-        } else if (i == 4) {
             titleLabel.text = @"访客量";
             contentLabel.textColor = COLOR_UI_THEME_RED;
             self.visitorCountLabel = contentLabel;
@@ -173,7 +170,7 @@
                 make.height.mas_equalTo(75);
             }];
             
-        } else if (i == 5) {
+        } else if (i == 4) {
             titleLabel.text = @"已获得赞";
             self.likesCountLabel = contentLabel;
         }
@@ -188,7 +185,7 @@
 
 + (CGFloat )getHeightWithModel:(MyMainPageModel *)model {
     if (model && model.info) {
-        CGFloat height = 66 + 40 * 4;
+        CGFloat height = 66 + 40 * 3;
         MyMainPageInfoModel *infoModel = model.info;
         CGFloat titleWidth = 60;
         CGFloat addressHeight = MAX([infoModel.addr getHeightWithMaxWidth:SCREEN_WIDTH - titleWidth - MARGIN_15 * 3 font:KFont(14)] + MARGIN_15 * 2, 40);
@@ -219,7 +216,6 @@
         }];
         
         [self setAuthImageWithModel:infoModel];
-//        self.integralLbabel.text = infoModel.
         self.visitorCountLabel.text = infoModel.fwNumber;
         self.likesCountLabel.text = infoModel.likeSumNumber;
         
@@ -286,6 +282,12 @@
 
 
 #pragma mark - action -
+
+- (void)photoViewTapAction:(UITapGestureRecognizer *)tapGes {
+    if (self.photoClickBlock) {
+        self.photoClickBlock();
+    }
+}
 
 #pragma mark - getter -
 

@@ -8,6 +8,7 @@
 
 #import "ShareViewController.h"
 #import "NavTypeChooseView.h"
+#import "SGQRCode.h"
 
 #define kBtnTag 948
 
@@ -48,6 +49,23 @@
     [self.bgImageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.left.right.mas_equalTo(0);
     }];
+    
+    
+    CGFloat CodeImgWidth = ScreenWidth - 100;
+    UIImageView *QRCodeImgV = [[UIImageView alloc] init];
+    [self.view addSubview:QRCodeImgV];
+    __weak __typeof(self)weakSelf = self;
+    [QRCodeImgV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(weakSelf.view.mas_centerX);
+        make.centerY.equalTo(weakSelf.view.mas_centerY);
+        make.width.mas_equalTo(CodeImgWidth);
+        make.height.mas_equalTo(CodeImgWidth);
+    }];
+    
+    NSString *shareStr = shareAddressWithPhone([PAUserDefaults getUserBoundPhone]);
+    
+    QRCodeImgV.image = [SGQRCodeGenerateManager generateWithDefaultQRCodeData:shareStr imageViewWidth:CodeImgWidth];
+    
     
     CGFloat btnH = 69;
     

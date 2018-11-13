@@ -11,6 +11,11 @@
 #import "MaJiangVipFootView.h"
 #import "MaJiangRoomCardFootView.h"
 
+#import "MajiangVipModel.h"
+#import "MajiangRoomCardModel.h"
+
+#define kBtnTag 58492
+
 @interface MaJiangViewController ()
 
 @property (nonatomic, strong) MaJiangHeadView *headView;
@@ -31,6 +36,8 @@
     [self setupNav];
     
     [self setupUI];
+    
+    [self getData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -55,17 +62,6 @@
     self.tableView.tableHeaderView = self.headView;
     
     
-    if (_type == MaJiangVCType_Vip) {
-        [self.vipFootView setDataArray:@[@"",@"",@"",@""]];
-        self.vipFootView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [MaJiangVipFootView getHeightWithDadaArray:@[@"",@"",@"",@""]]);
-        self.tableView.tableFooterView = self.vipFootView;
-    } else if (_type == MaJiangVCType_RoomCard) {
-        [self.roomCardFootView setDataArray:@[@"",@"",@"",@"",@"",@""]];
-        self.roomCardFootView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [MaJiangRoomCardFootView getHeightWithDadaArray:@[@"",@"",@"",@"",@"",@""]]);
-        self.tableView.tableFooterView = self.roomCardFootView;
-    }
-    
-    
     if (_type == MaJiangVCType_Main) {
         UIView *btnView = [[UIView alloc] init];
         [self.view addSubview:btnView];
@@ -80,7 +76,7 @@
             
             UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(MARGIN_15 +  i * (btnWidth + MARGIN_15), 0, btnWidth, 50)];
             [btn setDefaultCorner];
-            btn.tag = 555 + i;
+            btn.tag = kBtnTag + i;
             btn.titleLabel.font = KFont(14);
             [btn setborderColor:COLOR_UI_THEME_RED];
             [btn setTitleColor:COLOR_UI_THEME_RED forState:UIControlStateNormal];
@@ -131,24 +127,50 @@
 
 #pragma mark - network
 
+- (void)getData {
+    
+    if (_type == MaJiangVCType_Vip) {
+        [YQNetworking postWithApiNumber:API_NUM_20034 params:@{} successBlock:^(id response) {
+            if (getResponseIsSuccess(response)) {
+                NSArray *vipModelArray  = [MajiangVipModel mj_objectArrayWithKeyValuesArray:getResponseData(response)];
+                [self.vipFootView setDataArray:vipModelArray];
+                self.vipFootView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [MaJiangVipFootView getHeightWithDadaArray:vipModelArray]);
+                self.tableView.tableFooterView = self.vipFootView;
+            }
+        } failBlock:^(NSError *error) {
+        }];
+        
+    } else if (_type == MaJiangVCType_RoomCard) {
+        [YQNetworking postWithApiNumber:API_NUM_20035 params:@{} successBlock:^(id response) {
+            if (getResponseIsSuccess(response)) {
+                NSArray *roomCardModelArray  = [MajiangRoomCardModel mj_objectArrayWithKeyValuesArray:getResponseData(response)];
+                [self.roomCardFootView setDataArray:roomCardModelArray];
+                self.roomCardFootView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [MaJiangRoomCardFootView getHeightWithDadaArray:roomCardModelArray]);
+                self.tableView.tableFooterView = self.roomCardFootView;
+            }
+        } failBlock:^(NSError *error) {
+        }];
+    }
+}
+
 
 #pragma mark - action
 
 - (void)btnClickAction:(UIButton *)sender {
-    if (sender.tag - 555 == 0) {
+    if (sender.tag - kBtnTag == 0) {
         
         MaJiangViewController *vc = [[MaJiangViewController alloc] init];
         vc.type = MaJiangVCType_Vip;
         [self.navigationController pushViewController:vc animated:YES];
         
-    } else if (sender.tag - 555 == 1) {
+    } else if (sender.tag - kBtnTag == 1) {
         
         MaJiangViewController *vc = [[MaJiangViewController alloc] init];
         vc.type = MaJiangVCType_RoomCard;
         [self.navigationController pushViewController:vc animated:YES];
         
-    } else if (sender.tag - 555 == 2) {
-        
+    } else if (sender.tag - kBtnTag == 2) {
+        [self joinBtnTapAction];
     }
 }
 
@@ -168,6 +190,18 @@
 - (MaJiangVipFootView *)vipFootView {
     if (!_vipFootView) {
         _vipFootView = [[MaJiangVipFootView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
+        [_vipFootView setItemClickBlock:^(MajiangVipModel * _Nonnull model) {
+            [YQNetworking postWithApiNumber:API_NUM_10026 params:@{@"userId":[PATool getUserId], @"pgvId":model.pgvId} successBlock:^(id response) {
+                if (getResponseIsSuccess(response)) {
+                    NSDictionary *dic = getResponseData(response);
+                    if ([dic[@"isSuccess"] integerValue] == 1) {
+                        [[AlertBaseView alertWithTitle:@"开通成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
+                    } else {
+                        [SVProgressHUD showSuccessWithStatus:@"开通失败"];
+                    }
+                }
+            } failBlock:nil];
+        }];
     }
     return _vipFootView;
 }
@@ -175,6 +209,18 @@
 - (MaJiangRoomCardFootView *)roomCardFootView {
     if (!_roomCardFootView) {
         _roomCardFootView = [[MaJiangRoomCardFootView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
+        [_roomCardFootView setItemClickBlock:^(MajiangRoomCardModel * _Nonnull model) {
+            [YQNetworking postWithApiNumber:API_NUM_10027 params:@{@"userId":[PATool getUserId], @"prbId":model.prbId} successBlock:^(id response) {
+                if (getResponseIsSuccess(response)) {
+                    NSDictionary *dic = getResponseData(response);
+                    if ([dic[@"isSuccess"] integerValue] == 1) {
+                        [[AlertBaseView alertWithTitle:@"购买成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
+                    } else {
+                        [SVProgressHUD showSuccessWithStatus:@"购买失败"];
+                    }
+                }
+            } failBlock:nil];
+        }];
     }
     return _roomCardFootView;
 }

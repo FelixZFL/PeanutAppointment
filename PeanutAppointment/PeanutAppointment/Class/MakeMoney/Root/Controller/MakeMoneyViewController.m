@@ -15,7 +15,9 @@
 
 #import "upYunTool.h"
 
-#import "AddSkillViewController.h"
+#import "AddSkillViewController.h"//添加技能
+#import "PersonalAuthViewController.h"//个人认证
+#import "PhotoAlbumViewController.h"//相册
 
 //module
 #import "AliyunMediator.h"
@@ -394,9 +396,11 @@
                     }
                 }] showInWindow];
             } else if (index == 2) {
-                
+                PersonalAuthViewController *vc = [[PersonalAuthViewController alloc] init];
+                [weakSelf.navigationController pushViewController:vc animated:YES];
             } else if (index == 3) {
-                
+                PhotoAlbumViewController *vc = [[PhotoAlbumViewController alloc] init];
+                [weakSelf.navigationController pushViewController:vc animated:YES];
             } else if (index == 4) {
                 [weakSelf choosePhotoType];
             }

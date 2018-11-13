@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class MajiangRoomCardModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MaJiangRoomCardFootView : UIView
 
-@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, copy) void(^itemClickBlock) (MajiangRoomCardModel *model);
 
-+ (CGFloat )getHeightWithDadaArray:(NSArray *)dataArray;
+@property (nonatomic, strong) NSArray<MajiangRoomCardModel *> *dataArray;
+
++ (CGFloat )getHeightWithDadaArray:(NSArray<MajiangRoomCardModel *> *)dataArray;
 
 @end
 

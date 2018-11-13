@@ -96,15 +96,15 @@
         [SVProgressHUD showErrorWithStatus:@"请输入服务价格"];
         return;
     }
-    if ([_headView.serverExperienceTextV.text doubleValue] <= 0) {
+    if (_headView.serverExperienceTextV.text.length == 0) {
         [SVProgressHUD showErrorWithStatus:@"请输入服务经历"];
         return;
     }
-    if ([_headView.serverIntroduceTextV.text doubleValue] <= 0) {
+    if (_headView.serverIntroduceTextV.text.length == 0) {
         [SVProgressHUD showErrorWithStatus:@"请输入服务介绍"];
         return;
     }
-    if ([_headView.personalIntroductionTextV.text doubleValue] <= 0) {
+    if (_headView.personalIntroductionTextV.text.length == 0) {
         [SVProgressHUD showErrorWithStatus:@"请输入个人介绍"];
         return;
     }

@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class MajiangVipModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MaJiangVipFootView : UIView
 
-@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, copy) void(^itemClickBlock) (MajiangVipModel *model);
 
-+ (CGFloat )getHeightWithDadaArray:(NSArray *)dataArray;
+@property (nonatomic, strong) NSArray<MajiangVipModel *> *dataArray;
+
++ (CGFloat )getHeightWithDadaArray:(NSArray<MajiangVipModel *> *)dataArray;
 
 @end
 

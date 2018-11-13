@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class HomeGamesModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeActivityView : UIView
 
-@property (nonatomic, copy) void(^imageTapAction) (NSInteger index);
+@property (nonatomic, copy) void(^imageTapAction) (NSInteger index, HomeGamesModel *model);
 
-@property (nonatomic, strong) UIImageView *image1;
-@property (nonatomic, strong) UIImageView *image2;
-@property (nonatomic, strong) UIImageView *image3;
+@property (nonatomic, strong) NSArray<HomeGamesModel *> *gamesArray;
 
 + (CGFloat )getHeight;
 

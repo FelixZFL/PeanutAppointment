@@ -8,6 +8,8 @@
 
 #import "HomeHeadView.h"
 #import <SDCycleScrollView/SDCycleScrollView.h>
+#import "HomeNoticeView.h"
+
 #import "HomeModel.h"
 
 #define kBtnTag 4358
@@ -15,6 +17,7 @@
 @interface HomeHeadView()<SDCycleScrollViewDelegate>
 
 @property (nonatomic, strong) SDCycleScrollView *bannerView;//循环滚动轮播图
+@property (nonatomic, strong) HomeNoticeView *noticeView;//消息通知
 
 @property (nonatomic, strong) HomeModel *model;
 
@@ -63,7 +66,7 @@
     NSInteger column = 4;
     
     CGFloat btnW = SCREEN_WIDTH/column;
-    CGFloat btnH = 110;
+    CGFloat btnH = 82;
     
     CGFloat btnViewHeight = btnH * ceilf(self.btnModelArray.count/(float)column);
     
@@ -108,16 +111,36 @@
     [self.talentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
         make.top.equalTo(weakSelf.starView.mas_bottom);
-        make.height.mas_equalTo([HomeGotTalentView getHeight]);
+        make.height.mas_equalTo([HomeGotTalentView getHeightWithArray:@[]]);
     }];
+    
+    
+    HomeNoticeView *noticeView = [[HomeNoticeView alloc] init];
+    [self addSubview:noticeView];
+    [noticeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(-MARGIN_10);
+        make.height.mas_equalTo([HomeNoticeView getHeight]);
+    }];
+    self.noticeView = noticeView;
+    
+    UIView *bottomLineView = [[UIView alloc] init];
+    bottomLineView.backgroundColor = COLOR_UI_F0F0F0;
+    [self addSubview:bottomLineView];
+    [bottomLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.bottom.right.mas_equalTo(0);
+        make.height.mas_equalTo(MARGIN_10);
+    }];
+    
     
 }
 
 #pragma mark - public -
-
-+ (CGFloat)getHeight {
-    
-    return HomeHannerHeight + 110*2 + [HomeActivityView getHeight] + [HomeStarOfTodayView getHeight] + [HomeGotTalentView getHeight];
++ (CGFloat )getHeightWithModel:(HomeModel *)model {
+    if (model) {
+        return HomeHannerHeight + 82*2 + [HomeActivityView getHeight] + [HomeStarOfTodayView getHeight] + [HomeGotTalentView getHeightWithArray:model.toDayVideoHotUser] + [HomeNoticeView getHeight] + MARGIN_10;
+    }
+    return 0;
 }
 
 - (void)updateWithModel:(HomeModel *)model {
@@ -130,39 +153,17 @@
     }
     self.bannerView.imageURLStringsGroup = picArr;
     
-    if (model.gamePhotos.count >=3) {
-        HomeGamesModel *game1 = model.gamePhotos[0];
-        HomeGamesModel *game2 = model.gamePhotos[1];
-        HomeGamesModel *game3 = model.gamePhotos[2];
-        
-        [self.activityView.image1 sd_setImageWithURL:URLWithString(game1.photoUrl)];
-        [self.activityView.image2 sd_setImageWithURL:URLWithString(game2.photoUrl)];
-        [self.activityView.image3 sd_setImageWithURL:URLWithString(game3.photoUrl)];
-    }
+    [self.activityView setGamesArray:model.gamePhotos];
     
-    for (int i = 0; i < self.starView.photoViewArray.count; i++) {
-        UIImageView *imageV = self.starView.photoViewArray[i];
-        if (model.toDayHotUser.count > i) {
-            imageV.hidden = NO;
-            HomeHotUserModel *hotUser = model.toDayHotUser[i];
-            [imageV sd_setImageWithURL:URLWithString(hotUser.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
-        }else {
-            imageV.hidden = YES;
-        }
-    }
+    [self.starView setDataArray:model.toDayHotUser];
     
-    for (int i = 0; i < self.talentView.photoViewArray.count; i++) {
-        UIImageView *imageV = self.talentView.photoViewArray[i];
-        if (model.toDayHotUser.count > i) {
-            imageV.hidden = NO;
-            HomeVideoHotUserModel *hotUser = model.toDayVideoHotUser[i];
-            [imageV sd_setImageWithURL:URLWithString(hotUser.voidUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
-        }else {
-            imageV.hidden = YES;
-        }
-    }
+    [self.talentView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo([HomeGotTalentView getHeightWithArray:model.toDayVideoHotUser]);
+    }];
+    [self.talentView setDataArray:model.toDayVideoHotUser];
     
-    self.talentView.noticeView.contentLabel.text = model.notice;
+    
+    self.noticeView.contentLabel.text = model.notice;
     
 }
 

@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class RechargeAlertListModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface RechargeAlertCell : UICollectionViewCell
+
+@property (nonatomic, strong) RechargeAlertListModel *model;
 
 + (NSString *) reuseIdentifier;
 

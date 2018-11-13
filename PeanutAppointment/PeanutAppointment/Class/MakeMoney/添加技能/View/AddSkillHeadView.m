@@ -121,6 +121,7 @@
         } else if (i == 2 || i == 3) {
             
             UITextField *textField = [UITextField textFieldWithFont:KFont(14) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentLeft];
+            textField.keyboardType = UIKeyboardTypeNumberPad;
             [singleView addSubview:textField];
             [textField mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(marginLeft);
@@ -286,12 +287,17 @@
 }
 
 - (void)addPhotoTapAction:(UIGestureRecognizer *)gesture {
-    TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:self];
-    [imagePickerVC setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-        [self.photosArray addObjectsFromArray:photos];
-        [self updatePhotoView];
-    }];
-    [self.topViewController presentViewController:imagePickerVC animated:YES completion:nil];
+    UIImageView *imageV = (UIImageView *)gesture.view;
+    if (self.photosArray.count > imageV.tag - kImageVTag) {
+        //TODO 预览
+    } else {
+        TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:3 - self.photosArray.count delegate:self];
+        [imagePickerVC setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+            [self.photosArray addObjectsFromArray:photos];
+            [self updatePhotoView];
+        }];
+        [self.topViewController presentViewController:imagePickerVC animated:YES completion:nil];
+    }
 }
 
 #pragma mark - private -

@@ -74,7 +74,7 @@
         
     }];
     
-    [self.customNavBar setRightButtonWithTitle:@"消息" titleColor:COLOR_UI_FFFFFF];
+    [self.customNavBar setRightButtonWithImage:imageNamed(@"message_read")];
     [self.customNavBar setOnClickRightButton:^(UIButton *btn) {
         MessageListViewController *vc = [[MessageListViewController alloc] init];
         [weakSelf.navigationController pushViewController:vc animated:YES];
