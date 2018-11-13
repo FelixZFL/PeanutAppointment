@@ -9,11 +9,14 @@
 #import "FeedbackViewController.h"
 #import "FeedbackHeadView.h"
 #import "AddPhotoAlbumFootView.h"
+#import "upYunTool.h"
 
 @interface FeedbackViewController ()
 
 @property (nonatomic, strong) FeedbackHeadView *headView;
 @property (nonatomic, strong) AddPhotoAlbumFootView *footView;
+
+@property (nonatomic, strong) NSMutableArray *photoUrlArray;
 
 @end
 
@@ -105,16 +108,49 @@
         return;
     }
     
-    //图片url 多张图片逗号分隔
-    NSString *picUrl = @"";
+//    if (self.footView.photos.count == 0) {
+//        [SVProgressHUD showErrorWithStatus:@"请先添加图片"];
+//        return;
+//    }
     
-    [YQNetworking postWithApiNumber:API_NUM_10006 params:@{@"userId":[PATool getUserId],@"content":self.headView.feedBackTextView.text,@"photoUrl":picUrl} successBlock:^(id response) {
+    if (self.footView.photos.count == 0) {
+        [SVProgressHUD show];
+        [self requestFeedback];
+    } else {
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        for (UIImage *image in self.footView.photos) {
+            [upYunTool upImage:image successHandle:^(NSString * _Nonnull url) {
+                [self.photoUrlArray addObject:url];
+                [self requestFeedback];
+            } failureHandle:^(NSError * _Nonnull error) {
+                [SVProgressHUD dismiss];
+                [SVProgressHUD showErrorWithStatus:@"上传图片失败"];
+            }];
+        }
+    }
+
+
+    
+}
+
+- (void)requestFeedback {
+    if (self.photoUrlArray.count != _footView.photos.count) {
+        return;
+    }
+    
+    //图片url 多张图片逗号分隔
+    NSString *photosStr = [self.photoUrlArray componentsJoinedByString:@","];
+    [YQNetworking postWithApiNumber:API_NUM_10006 params:@{@"userId":[PATool getUserId],@"content":self.headView.feedBackTextView.text,@"photoUrl":photosStr} successBlock:^(id response) {
+        [SVProgressHUD dismiss];
         if (getResponseIsSuccess(response)) {
             [SVProgressHUD showSuccessWithStatus:@"提交成功"];
             [self.navigationController popViewControllerAnimated:YES];
         }
-    } failBlock:nil];
-    
+    } failBlock:^(NSError *error) {
+        [SVProgressHUD dismiss];
+    }];
 }
 
 #pragma mark - private -
@@ -140,11 +176,23 @@
 
 - (AddPhotoAlbumFootView *)footView {
     if (!_footView) {
+        __weak __typeof(self)weakSelf = self;
         _footView = [[AddPhotoAlbumFootView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [AddPhotoAlbumFootView getHeight])];
         _footView.titleLabel.text = @"问题描述";
         _footView.contentLabel.hidden = YES;
+        [_footView setHeightChangeBlock:^(CGFloat height) {
+            weakSelf.footView.frame = CGRectMake(0, 0, SCREEN_WIDTH, height);
+            weakSelf.tableView.tableHeaderView = weakSelf.footView;
+        }];
     }
     return _footView;
+}
+
+- (NSMutableArray *)photoUrlArray {
+    if (!_photoUrlArray) {
+        _photoUrlArray = [NSMutableArray arrayWithCapacity:1];
+    }
+    return _photoUrlArray;
 }
 
 @end

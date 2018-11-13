@@ -10,11 +10,14 @@
 #import "MyInfoHeadView.h"
 #import "MyInfoCell.h"
 
+#import "UserInfoModel.h"
+
 #import "upYunTool.h"
 
 @interface MyInfoViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) MyInfoHeadView *headView;
+@property (nonatomic, strong) MyInfoCell *cell;
 
 @end
 
@@ -42,17 +45,36 @@
 - (void)setupUI {
     
     self.tableView.tableHeaderView = self.headView;
+    [self.headView updateWithModel:self.model];
     
 }
 
 - (void)setupNav {
     [self.customNavBar setTitle:@"个人信息"];
+    __weak __typeof(self)weakSelf = self;
+    [self.customNavBar setRightButtonWithTitle:@"保存" titleColor:COLOR_UI_FFFFFF];
+    [self.customNavBar setOnClickRightButton:^(UIButton *btn) {
+        if (![weakSelf.cell.nickNameTF.text isEqual:weakSelf.model.nikeName]) {
+            [weakSelf requestChangeUserInfo];
+        }
+    }];
 }
 
 
 #pragma mark - network
 
-
+- (void)requestChangeUserInfo {
+    if (self.cell.nickNameTF.text.length == 0) {
+        [SVProgressHUD showErrorWithStatus:@"昵称不能为空"];
+        return;
+    }
+    [self.view endEditing:YES];
+    [YQNetworking postWithApiNumber:API_NUM_10011 params:@{@"userId":[PATool getUserId],@"nikeName":self.cell.nickNameTF.text} successBlock:^(id response) {
+        if (getResponseIsSuccess(response)) {
+            [SVProgressHUD showSuccessWithStatus:@"修改成功"];
+        }
+    } failBlock:nil];
+}
 
 #pragma mark - UITableViewDelegate
 
@@ -69,7 +91,9 @@
     MyInfoCell *cell = (MyInfoCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[MyInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        [cell updateWithModel:self.model];
     }
+    self.cell = cell;
     return cell;
 }
 
@@ -80,7 +104,7 @@
 #pragma mark - action
 
 - (void)headViewTapAction {
-    
+    [self choosePhotoType];
 }
 
 #pragma mark - UIImagePickerControllerDelegate - 图片选择回调
@@ -96,8 +120,10 @@
         [upYunTool upImage:image successHandle:^(NSString * _Nonnull url) {
             [SVProgressHUD dismiss];
             [YQNetworking postWithApiNumber:API_NUM_10011 params:@{@"userId":[PATool getUserId],@"headUrl":url} successBlock:^(id response) {
-                [SVProgressHUD showSuccessWithStatus:@"上传成功"];
-                self.headView.headImageV.image = image;
+                if (getResponseIsSuccess(response)) {
+                    [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+                    self.headView.headImageV.image = image;
+                }
             } failBlock:nil];
             
         } failureHandle:^(NSError * _Nonnull error) {

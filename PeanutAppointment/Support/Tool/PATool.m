@@ -10,7 +10,6 @@
 #import "DeviceIDInKeychainTool.h"
 #import "RSAEncryptor.h"
 
-
 @implementation PATool
 
 ///是否登录
@@ -30,15 +29,6 @@
         return @"";
     }
 }
-
-//+ (NSString *)getUserRecommandCode {
-//    if ([self isLogin]) {
-//        UserLoginModel *model = [UserLoginModel mj_objectWithKeyValues:[ANGUserDefaults getObjectForKey:KEY_USER_LOGIN_INFO]];
-//        return model.recommand_code;
-//    }else {
-//        return @"";
-//    }
-//}
 
 //时间转换格式
 + (NSString *)getTimeStringWithTime:(NSString *)fromTime

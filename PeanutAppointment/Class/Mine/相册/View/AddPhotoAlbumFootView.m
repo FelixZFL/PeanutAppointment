@@ -85,7 +85,7 @@
     
     CGFloat photoWith = (SCREEN_WIDTH - MARGIN_15 *5 - 60)/3.f;
 
-    return 35 + photoWith;
+    return 35 + photoWith + MARGIN_15;
 }
 
 #pragma mark - private

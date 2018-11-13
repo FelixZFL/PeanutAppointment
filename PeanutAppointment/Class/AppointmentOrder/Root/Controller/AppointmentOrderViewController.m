@@ -13,7 +13,8 @@
 
 #import "SkillTypesModel.h"
 
-#import "ReleaseOrderViewController.h"
+#import "ReleaseOrderViewController.h"//发布
+#import "SearchViewController.h"//搜索
 
 @interface AppointmentOrderViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HorizontalCollectionLayoutDelegate>
 
@@ -51,17 +52,17 @@
     
     
     [self.view addSubview:self.collectionView];
+    CGFloat bottomMargin = _type == AppointmentOrderViewControllerType_ChooseType ? 0 : -TABBAR_HEIGHT;
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(NAVITETION_HEIGHT);
         make.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(-TABBAR_HEIGHT);
+        make.bottom.mas_equalTo(bottomMargin);
     }];
     
 }
 
 - (void)setupNav {
-    [self.customNavBar setTitle:@"发布需求"];
-    
+    [self.customNavBar setTitle:_type == AppointmentOrderViewControllerType_ChooseType ? @"选择类型" : @"发布需求"];
 }
 
 
@@ -119,8 +120,21 @@
 
 #pragma mark - <UICollectionViewDelegate>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    ReleaseOrderViewController *vc = [[ReleaseOrderViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.dataArr.count > indexPath.section) {
+        SkillTypesModel *typeModel = self.dataArr[indexPath.section];
+        if (typeModel.list.count > indexPath.row) {
+            SkillModel *skill = typeModel.list[indexPath.row];
+            if (_type == AppointmentOrderViewControllerType_ChooseType) {
+                SearchViewController *vc = [[SearchViewController alloc] init];
+                vc.pasId = skill.pasId;
+                [self.navigationController pushViewController:vc animated:YES];
+            } else {
+                ReleaseOrderViewController *vc = [[ReleaseOrderViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+            
+        }
+    }
 }
 
 

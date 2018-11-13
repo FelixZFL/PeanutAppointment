@@ -48,8 +48,6 @@
     [self setupNav];
     
     [self setupUI];
-    
-    [self getData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -100,7 +98,6 @@
     [self.customNavBar setTitle:@"个人中心"];
 }
 
-
 #pragma mark - network
 
 - (void)getData {
@@ -117,8 +114,11 @@
 #pragma mark - action
 
 - (void)userInfoTapAction {
-    MyInfoViewController *vc = [[MyInfoViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.model) {
+        MyInfoViewController *vc = [[MyInfoViewController alloc] init];
+        vc.model = self.model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 #pragma mark - UITableViewDelegate

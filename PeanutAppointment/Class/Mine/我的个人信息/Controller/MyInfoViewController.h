@@ -8,9 +8,13 @@
 
 #import "BaseTableViewController.h"
 
+@class UserInfoModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MyInfoViewController : BaseTableViewController
+
+@property (nonatomic, strong) UserInfoModel *model;
 
 @end
 

@@ -8,6 +8,8 @@
 
 #import "MyInfoCell.h"
 
+#import "UserInfoModel.h"
+
 #define SingleViewHeight 45.f
 
 @interface MyInfoCell()
@@ -15,7 +17,6 @@
 @property (nonatomic, strong) UILabel *userNameLabel;
 @property (nonatomic, strong) UILabel *genderLabel;
 @property (nonatomic, strong) UILabel *ageLabel;
-@property (nonatomic, strong) UITextField *nickNameTF;
 
 @end
 
@@ -76,10 +77,6 @@
                 make.centerY.equalTo(singleView);
             }];
             self.nickNameTF = textField;
-            textField.text = @"可以修改的昵称";
-            
-            
-            
         } else {
             
             UILabel *contentLabel = [UILabel labelWithFont:KFont(14) textColor:COLOR_UI_222222 textAlignment:NSTextAlignmentLeft];
@@ -92,7 +89,7 @@
             if (i == 0) {
                 titleLabel.text = @"用户名";
                 self.userNameLabel = contentLabel;
-                contentLabel.text = @"152326232";
+                contentLabel.text = [PAUserDefaults getUserBoundPhone];
             } else if (i == 2) {
                 titleLabel.text = @"性别";
                 self.genderLabel = contentLabel;
@@ -124,6 +121,12 @@
 + (CGFloat)getCellHeight {
     
     return SingleViewHeight * 4;
+}
+
+- (void)updateWithModel:(UserInfoModel *)model {
+    self.nickNameTF.text = model.nikeName;
+    self.ageLabel.text = model.age ?: @"";
+    self.genderLabel.text = [model.sex integerValue] == 1 ? @"男" : @"女";
 }
 
 - (void)editBtnAction:(id)sender {

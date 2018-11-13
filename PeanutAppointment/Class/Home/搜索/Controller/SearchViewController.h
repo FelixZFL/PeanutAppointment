@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchViewController : BaseTableViewController
 
+///搜索技能id
+@property (nonatomic, copy) NSString *pasId;
+
 @end
 
 NS_ASSUME_NONNULL_END

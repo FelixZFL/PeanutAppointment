@@ -78,6 +78,9 @@ static NSString * const API_NUM_20010 = @"20010";//
 //个人中心-个人认证接口
 static NSString * const API_NUM_20011 = @"20011";//
 
+//个人中心-积分兑换（兑换）接口
+static NSString * const API_NUM_10005 = @"10005";//
+
 //个人中心-设置-建议与反馈接口
 static NSString * const API_NUM_10006 = @"10006";//
 
