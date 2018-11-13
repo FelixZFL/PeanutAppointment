@@ -8,6 +8,8 @@
 
 #import "MyInfoHeadView.h"
 
+#import "UserInfoModel.h"
+
 @interface MyInfoHeadView()
 
 @property (nonatomic, strong) UILabel *nameLabel;
@@ -75,6 +77,12 @@
 + (CGFloat)getHeight {
     
     return 65 + MARGIN_10;
+}
+
+- (void)updateWithModel:(UserInfoModel *)model {
+    
+    [_headImageV sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
+//    _nameLabel.text = [NSString stringWithFormat:@"%@（点击图片修改）",model.nikeName];
 }
 
 #pragma mark - action -

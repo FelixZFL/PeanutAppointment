@@ -66,7 +66,9 @@
 #pragma mark - action
 
 - (void)logoutBtnAction {
-    
+    [[AlertBaseView alertWithTitle:@"您确定要退出登录" leftBtn:@"取消" leftBlock:nil rightBtn:@"确定" rightBlock:^{
+        //TODO  退出
+    }] showInWindow];
 }
 
 #pragma mark - UITableViewDelegate

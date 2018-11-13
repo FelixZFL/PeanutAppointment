@@ -12,7 +12,6 @@
 #import "HomeCell.h"
 #import "XMPPManager.h"
 #import "AlertShareView.h"
-#import "AlertBaseView.h"
 #import "SignInAlertView.h"
 #import "PasswordAlertView.h"
 #import "RewardAlertView.h"
@@ -29,6 +28,7 @@
 #import "StarOfTodayViewController.h"//今日之星
 #import "SearchViewController.h"//搜索
 #import "UserMainPageViewController.h"//ta的主页
+#import "AppointmentOrderViewController.h"//选择分类
 
 @interface HomeViewController ()
 
@@ -105,6 +105,7 @@
     [self.customNavBar setLeftButtonWithImage:imageNamed(@"main_nav_search")];
     __weak __typeof(self)weakSelf = self;
     [self.customNavBar setOnClickLeftButton:^(UIButton *btn) {
+        if (![weakSelf cheakLogin]) return;
         SearchViewController *vc = [[SearchViewController alloc] init];
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
@@ -175,7 +176,7 @@
             if (request) {
                 [self getData];
             }
-        } else {//暂时这样处理的，百度地图key有问题
+        } else {// TODO  暂时这样处理的，百度地图key有问题
 #warning 后面改
             self.location = [[CLLocation alloc] initWithLatitude:29.678 longitude:106.67328];
             if (request) {
@@ -183,6 +184,19 @@
             }
         }
     }];
+}
+//检查是否登录 没有登录跳转到登录
+- (BOOL)cheakLogin {
+    if ([PATool isLogin]) {
+        return YES;
+    } else {
+        [[AlertBaseView alertWithTitle:@"您还没有登录，请先登录" leftBtn:@"取消" leftBlock:nil rightBtn:@"确定" rightBlock:^{
+            LoginViewController *vc = [[LoginViewController alloc] init];
+            BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+            [self presentViewController:nav animated:YES completion:nil];
+        }] showInWindow];
+        return NO;
+    }
 }
 
 #pragma mark - action
@@ -228,7 +242,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;//self.model.indexUser.count;
+    return self.model.indexUser.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -241,10 +255,12 @@
     if (!cell) {
         cell = [[HomeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         [cell setUserInfoBlock:^(HomeIndexUserModel * _Nonnull model) {
+            if (![self cheakLogin]) return;
             UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }];
         [cell setBtnClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {
+            if (![self cheakLogin]) return;
             if (index == 0) {//分享
                 [YQNetworking postWithApiNumber:API_NUM_10023 params:@{@"userId":model.userId, @"pusId":model.pusId} successBlock:^(id response) {
                     if (getResponseIsSuccess(response)) {
@@ -289,15 +305,20 @@
         [_headView.starView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(starTapAction:)]];
         [_headView.talentView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(starTapAction:)]];
         [_headView setHeadButtonBlock:^(HomeSkillBtnModel * _Nonnull model) {
+            if (![weakSelf cheakLogin]) return;
             //
             if (model.pasId.length > 0) {
-                
+                SearchViewController *vc = [[SearchViewController alloc] init];
+                vc.pasId = model.pasId;
+                [weakSelf.navigationController pushViewController:vc animated:YES];
             } else {
-                
+                AppointmentOrderViewController *vc = [[AppointmentOrderViewController alloc] init];
+                vc.type = AppointmentOrderViewControllerType_ChooseType;
+                [weakSelf.navigationController pushViewController:vc animated:YES];
             }
-            
         }];
         [_headView.activityView setImageTapAction:^(NSInteger index) {
+            if (![weakSelf cheakLogin]) return;
             if (index == 0) {
                 MaJiangViewController *vc = [[MaJiangViewController alloc] init];
                 [weakSelf.navigationController pushViewController:vc animated:YES];
@@ -314,12 +335,7 @@
 
 /*
  NSLog(@"index == %ld",(long)index);
- if (index == 0) {
- [[AlertBaseView alertWithTitle:@"你确定领取此礼包么你确定领取此礼包么" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:^{
- [SVProgressHUD showInfoWithStatus:@"点击了确定"];
- }] showInWindow];
- 
- } else if (index == 1) {
+ if (index == 1) {
  UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"登录" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
  [sheet addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
  [sheet addAction:[UIAlertAction actionWithTitle:@"haha" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -368,17 +384,6 @@
  dispatch_async(dispatch_get_main_queue(), ^{
  [weakSelf presentViewController:sheet animated:YES completion:nil];
  });
- }
- 
- 
- } else if (index == 5) {
- LoginViewController *vc = [[LoginViewController alloc] init];
- BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
- [weakSelf presentViewController:nav animated:YES completion:nil];
- } else if (index == 6) {
- [[AlertBaseView alertWithTitle:@"你确定领取此礼包么你确定领取此礼包么" leftBtn:@"取消" leftBlock:nil rightBtn:@"确定" rightBlock:^{
- [SVProgressHUD showInfoWithStatus:@"点击了确定"];
- }] showInWindow];
  } else if (index == 7) {
  [[PasswordAlertView alertWithBlock:^{
  [SVProgressHUD showInfoWithStatus:@"确定"];

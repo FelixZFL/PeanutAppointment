@@ -8,6 +8,13 @@
 
 #import "BaseTableViewController.h"
 
+typedef enum : NSUInteger {
+    AppointmentOrderViewControllerType_Default,
+    AppointmentOrderViewControllerType_ChooseType,//选择分类
+} AppointmentOrderViewControllerType;
+
 @interface AppointmentOrderViewController : BaseTableViewController
+
+@property (nonatomic, assign) AppointmentOrderViewControllerType type;
 
 @end

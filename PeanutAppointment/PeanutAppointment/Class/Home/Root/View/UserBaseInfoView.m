@@ -176,6 +176,7 @@
 - (UILabel *)authimgLabel {
     if (!_authimgLabel) {
         _authimgLabel = [[UILabel alloc] init];
+        _authimgLabel.font = KFont(12);
     }
     return _authimgLabel;
 }

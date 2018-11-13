@@ -98,7 +98,8 @@
     if (self.selectModel) {
         [YQNetworking postWithApiNumber:API_NUM_10014 params:@{@"userId":[PATool getUserId],@"piwId":self.selectModel.pvbId} successBlock:^(id response) {
             if (getResponseIsSuccess(response)) {
-                [SVProgressHUD showInfoWithStatus:@"开通会员接口成功"];
+                [self getData];
+                [[AlertBaseView alertWithTitle:@"开通会员成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
             }
         } failBlock:nil];
     }

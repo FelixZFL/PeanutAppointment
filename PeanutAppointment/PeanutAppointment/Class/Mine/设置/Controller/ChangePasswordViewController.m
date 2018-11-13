@@ -63,6 +63,7 @@
 - (void)submitInfoWithParam:(NSDictionary *)param {
     [YQNetworking postWithApiNumber:API_NUM_10002 params:param successBlock:^(id response) {
         if (getResponseIsSuccess(response)) {
+            [SVProgressHUD showSuccessWithStatus:@"设置提现密码成功"];
             if (self.submitSuccessBlock) {
                 self.submitSuccessBlock();
             }

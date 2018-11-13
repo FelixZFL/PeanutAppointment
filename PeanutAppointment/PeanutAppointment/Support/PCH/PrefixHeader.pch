@@ -28,6 +28,8 @@
 #import "Enumeration.h"//枚举常量
 #import "StringConsts.h"//字符串常量
 
+#import "AlertBaseView.h"//通用弹框
+
 //接口地址列表
 #import "APIList.h"
 

@@ -8,9 +8,15 @@
 
 #import "BaseTableViewCell.h"
 
+@class UserInfoModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MyInfoCell : BaseTableViewCell
+
+@property (nonatomic, strong) UITextField *nickNameTF;
+
+- (void)updateWithModel:(UserInfoModel *)model;
 
 @end
 

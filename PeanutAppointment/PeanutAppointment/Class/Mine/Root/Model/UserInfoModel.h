@@ -16,6 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *headUrl;
 ///昵称
 @property (nonatomic, copy) NSString *nikeName;
+///年龄
+@property (nonatomic, copy) NSString *age;
+///性别
+@property (nonatomic, copy) NSString *sex;
+///积分
+@property (nonatomic, copy) NSString *integral;
 
 /*
  "headUrl": "http://imagexb.test.upcdn.net/xbsc/user/1523174557774.jpg",

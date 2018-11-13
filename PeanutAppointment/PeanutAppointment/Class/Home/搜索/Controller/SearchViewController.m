@@ -152,8 +152,14 @@
     } else {
         
     }
-    
-    [YQNetworking postWithApiNumber:API_NUM_20022 params:@{@"pasId":@"",@"content":@"", @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)} successBlock:^(id response) {
+    /*pasId：技能分类id  page：页数  limit：条数
+     cjl：1    （成交量  非必传）
+     price：1   （价格 非必传）
+     lng：（长）经度 非必传
+     lat：（短）纬度：非必传
+     content：搜索的内容}*/
+    NSString *pasId = self.pasId?:@"";
+    [YQNetworking postWithApiNumber:API_NUM_20022 params:@{@"pasId":pasId,@"content":@"", @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)} successBlock:^(id response) {
         if (getResponseIsSuccess(response)) {
             
             [self.dataArr addObjectsFromArray:[HomeIndexUserModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
@@ -185,6 +191,7 @@
 {
     NSLog(@"点击了搜索");
     //请求数据
+    [self getData];
     return YES;
 }
 

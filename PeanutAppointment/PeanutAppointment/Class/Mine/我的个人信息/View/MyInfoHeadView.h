@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class UserInfoModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MyInfoHeadView : UIView
@@ -15,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *headImageV;
 
 + (CGFloat )getHeight;
+
+- (void)updateWithModel:(UserInfoModel *)model;
 
 @end
 
