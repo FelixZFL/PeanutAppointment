@@ -45,7 +45,7 @@
     __weak __typeof(self)weakSelf = self;
     
     UIImageView *imageV = [[UIImageView alloc] init];
-    imageV.backgroundColor = COLOR_UI_000000;
+    imageV.image = imageNamed(@"IntegralExchange_top_bg");
     [self addSubview:imageV];
     
     CGFloat imageVHeight = SCREEN_WIDTH * 200/375.f;

@@ -36,7 +36,7 @@
     self.backgroundColor = COLOR_UI_FFFFFF;
     
     UIImageView *imageV = [[UIImageView alloc] init];
-    imageV.backgroundColor = COLOR_UI_000000;
+    imageV.image = imageNamed(@"MakeMoney_top_bg");
     [self addSubview:imageV];
     
     CGFloat imageVHeight = SCREEN_WIDTH * 150/375.f;

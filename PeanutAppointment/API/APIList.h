@@ -19,7 +19,7 @@ static NSString * const BaseURL = @"http://www.xxxx.com";//正式
 
 #else
 
-//static NSString * const BaseURL = @"http://192.168.1.104:8080";//本地
+//static NSString * const BaseURL = @"http://192.168.31.54:8080";//本地
 static NSString * const BaseURL = @"http://39.107.76.196:8080";//测试
 
 #endif
@@ -28,6 +28,7 @@ static NSString * const BaseURL = @"http://39.107.76.196:8080";//测试
 static NSString * const APITypeQuery = @"/appQuery/query";
 static NSString * const APITypeWrite = @"/appWrite/write";
 
+#define shareAddressWithPhone(phone) [NSString stringWithFormat:@"%@/page/toRegistered?phone=%@",BaseURL,phone]
 
 
 //获取Sts信息接口（用于视频上传/直播开启）
@@ -84,7 +85,7 @@ static NSString * const API_NUM_10005 = @"10005";//
 //个人中心-设置-建议与反馈接口
 static NSString * const API_NUM_10006 = @"10006";//
 
-//关于app及规则
+//关于APP及规则
 static NSString * const API_NUM_20012 = @"20012";//
 
 //APP首页底部-去约单接口
@@ -92,6 +93,9 @@ static NSString * const API_NUM_20013 = @"20013";//
 
 //APP首页底部-去约单-获取用户接口
 static NSString * const API_NUM_20014 = @"20014";//
+
+//APP首页底部-去约单-发布需求接口（和单个发布接口共用）   success
+static NSString * const API_NUM_10007 = @"10007";
 
 //APP首页底部-去赚钱接口
 static NSString * const API_NUM_20015 = @"20015";//
@@ -195,16 +199,16 @@ static NSString * const API_NUM_20032 = @"20032";
 static NSString * const API_NUM_20033 = @"20033";
 
 //APP首页-游戏-开通VIP查询接口
-static NSString * const API_NUM_20034 = @"20034";
+static NSString * const API_NUM_20034 = @"20034";//
 
 //APP首页-游戏-开通VIP接口
-static NSString * const API_NUM_10026 = @"10026";
+static NSString * const API_NUM_10026 = @"10026";//
 
 //APP首页-游戏-购买房卡查询
-static NSString * const API_NUM_20035 = @"20035";
+static NSString * const API_NUM_20035 = @"20035";//
 
 //APP首页-游戏-购买房卡接口
-static NSString * const API_NUM_10027 = @"10027";
+static NSString * const API_NUM_10027 = @"10027";//
 
 //用户技能查询接口：（通过用户id获取用户的所有技能，此接口用于在约单个用户的时候 在发布需求界面会用到，如果是从APP首页--》〉去约单--》〉在发布需求界面的技能就直接从去约单里面带过去。）
 static NSString * const API_NUM_20036 = @"20036";
@@ -229,6 +233,13 @@ static NSString * const API_NUM_10031 = @"10031";
 
 //删除直播间接口
 static NSString * const API_NUM_10032 = @"10032";
+
+//领取红包接口
+static NSString * const API_NUM_10033 = @"10033";
+
+//金砖充值价格查询接口
+static NSString * const API_NUM_20039 = @"20039";
+
 
 
 

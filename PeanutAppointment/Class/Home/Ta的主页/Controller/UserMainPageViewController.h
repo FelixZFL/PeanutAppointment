@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UserMainPageViewController : BaseTableViewController
 
+///用户id
+@property (nonatomic, copy) NSString *userId;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -44,7 +44,7 @@
     self.backgroundColor = COLOR_UI_FFFFFF;
     
     UIImageView *imageV = [[UIImageView alloc] init];
-    imageV.backgroundColor = COLOR_UI_999999;
+    imageV.image = imageNamed(@"MyAccount_top_bg");
     [self addSubview:imageV];
     
     CGFloat imageVHeight = SCREEN_WIDTH * 212/375.f;

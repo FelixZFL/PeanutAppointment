@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MyMainPageHeadView : UIView
 
+@property (nonatomic, copy) void(^photoClickBlock) (void);
+
 + (CGFloat )getHeightWithModel:(MyMainPageModel *)model;
 
 - (void)updateWithModel:(MyMainPageModel *)model;

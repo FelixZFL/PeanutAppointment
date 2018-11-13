@@ -12,8 +12,17 @@
 #import "CommentListAlertView.h"
 #import "RewardAlertView.h"
 #import "RechargeAlertView.h"
+#import "AlertShareView.h"
+#import "LocationManager.h"
 
 #import "HomeIndexUserModel.h"
+#import "ShareDataModel.h"
+
+#import "UserMainPageViewController.h"//ta的主页
+#import "StarOfTodayViewController.h"//今日之星
+#import "AppointmentHerViewController.h"//约ta
+
+
 
 @interface SearchViewController ()<UITextFieldDelegate>
 
@@ -21,7 +30,7 @@
 
 @property (nonatomic, strong) UITextField *searchTF;
 
-@property (nonatomic, copy) NSString *searchText;
+@property (nonatomic, strong) CLLocation *location;//当前定位
 
 @end
 
@@ -113,11 +122,14 @@
     
     [self.customNavBar setTitleView:self.searchTF];
     
+    __weak __typeof(self)weakSelf = self;
     [self.customNavBar setRightButtonWithImage:imageNamed(@"main_nav_search")];
     [self.customNavBar setOnClickRightButton:^(UIButton *btn) {
         if (self.searchTF.text.length > 0) {
             NSLog(@"点击了搜索");
             //请求数据
+            [weakSelf.view endEditing:YES];
+            [weakSelf.tableView.mj_header beginRefreshing];
         }
     }];
 }
@@ -145,31 +157,66 @@
 #pragma mark - network
 
 - (void)getData {
-    if (_selectIndex == 0) {
-        
-    } else if (_selectIndex == 1) {
-        
-    } else {
-        
-    }
-    /*pasId：技能分类id  page：页数  limit：条数
-     cjl：1    （成交量  非必传）
-     price：1   （价格 非必传）
-     lng：（长）经度 非必传
-     lat：（短）纬度：非必传
-     content：搜索的内容}*/
-    NSString *pasId = self.pasId?:@"";
-    [YQNetworking postWithApiNumber:API_NUM_20022 params:@{@"pasId":pasId,@"content":@"", @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)} successBlock:^(id response) {
-        if (getResponseIsSuccess(response)) {
-            
-            [self.dataArr addObjectsFromArray:[HomeIndexUserModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
-            [self.tableView reloadData];
+    
+    if (_location) {
+        NSString *cjl = @"";
+        NSString *price = @"";
+        NSString *lng = @"";
+        NSString *lat = @"";
+        if (_selectIndex == 0) {
+            lng = [NSString stringWithFormat:@"%f",_location.coordinate.longitude];
+            lat = [NSString stringWithFormat:@"%f",_location.coordinate.latitude];
+        } else if (_selectIndex == 1) {
+            cjl = @"1";
+        } else {
+            price = @"1";
         }
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
-    } failBlock:^(NSError *error) {
-        [self.tableView.mj_header endRefreshing];
-        [self.tableView.mj_footer endRefreshing];
+        /*pasId：技能分类id  page：页数  limit：条数
+         cjl：1    （成交量  非必传）
+         price：1   （价格 非必传）
+         lng：（长）经度 非必传
+         lat：（短）纬度：非必传
+         content：搜索的内容}*/
+        NSString *pasId = self.pasId?:@"";
+        NSDictionary *param = @{@"pasId":pasId, @"cjl":cjl, @"price":price, @"lng":lng, @"lat":lat, @"content":@"", @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)};
+        
+        [YQNetworking postWithApiNumber:API_NUM_20022 params:param successBlock:^(id response) {
+            if (getResponseIsSuccess(response)) {
+                
+                [self.dataArr addObjectsFromArray:[HomeIndexUserModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
+                [self.tableView reloadData];
+            }
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
+        } failBlock:^(NSError *error) {
+            [self.tableView.mj_header endRefreshing];
+            [self.tableView.mj_footer endRefreshing];
+        }];
+       
+        [self getLocationToRequest:NO];
+    } else {
+        [self getLocationToRequest:YES];
+    }
+    
+}
+
+
+#pragma mark - private
+///获取位置信息 request 是否需要获取数据
+- (void)getLocationToRequest:(BOOL)request {
+    [[LocationManager sharedManager].locationManager requestLocationWithReGeocode:NO withNetworkState:NO completionBlock:^(BMKLocation * _Nullable location, BMKLocationNetworkState state, NSError * _Nullable error) {
+        if (!error) {
+            self.location = location.location;
+            if (request) {
+                [self getData];
+            }
+        } else {// TODO  暂时这样处理的，百度地图key有问题
+#warning 后面改
+            self.location = [[CLLocation alloc] initWithLatitude:29.678 longitude:106.67328];
+            if (request) {
+                [self getData];
+            }
+        }
     }];
 }
 
@@ -189,16 +236,15 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"点击了搜索");
-    //请求数据
-    [self getData];
+    [self.view endEditing:YES];
+    [self.tableView.mj_header beginRefreshing];
     return YES;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -210,17 +256,41 @@
     HomeCell *cell = (HomeCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[HomeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        [cell setBtnClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {
+        [cell setUserInfoBlock:^(HomeIndexUserModel * _Nonnull model) {
+            UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        [cell setImageClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {
+            StarOfTodayViewController *vc = [[StarOfTodayViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        [cell setBtnClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model, UIButton *btn) {
             if (index == 0) {//分享
-                
+                [YQNetworking postWithApiNumber:API_NUM_10023 params:@{@"userId":model.userId, @"pusId":model.pusId} successBlock:^(id response) {
+                    if (getResponseIsSuccess(response)) {
+                        ShareDataModel *model =[ShareDataModel mj_objectWithKeyValues:getResponseData(response)];
+                        [[AlertShareView alertWithModel:model] showInWindow];
+                    }
+                } failBlock:nil];
             } else if (index == 1) {//评论
                 [[CommentListAlertView alertWithId:model.pusId] showInWindow];
+                
             } else if (index == 2) {//点赞
+                [YQNetworking postWithApiNumber:API_NUM_10015 params:@{@"userId":[PATool getUserId],@"pusId":model.pusId} successBlock:^(id response) {
+                    if (getResponseIsSuccess(response)) {
+                        [btn setButtonStateNormalTitle:[NSString stringWithFormat:@"%ld",[btn.titleLabel.text integerValue] + 1]];
+                    }
+                } failBlock:nil];
             } else if (index == 3) {//打赏
                 [[RewardAlertView alertWithUserId:model.userId thingsID:model.pusId type:RewardAlertType_Skill] showInWindow];
             } else if (index == 4) {//约ta
+                AppointmentHerViewController *vc = [[AppointmentHerViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }];
+    }
+    if (self.dataArr.count > indexPath.row) {
+        [cell setModel:self.dataArr[indexPath.row]];
     }
     return cell;
 }

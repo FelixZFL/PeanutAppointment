@@ -29,12 +29,16 @@
 #import "SearchViewController.h"//搜索
 #import "UserMainPageViewController.h"//ta的主页
 #import "AppointmentOrderViewController.h"//选择分类
+#import "MessageListViewController.h"//消息
+#import "H5ViewController.h"//网页
+#import "AppointmentHerViewController.h"//约ta
 
 @interface HomeViewController ()
 
 @property (nonatomic, strong) CLLocation *location;//当前定位
 
 @property (nonatomic, strong) HomeHeadView *headView;
+@property (nonatomic, strong) UIImageView *redPackageImageV;//红包
 
 @property (nonatomic, strong) HomeModel *model;
 
@@ -54,7 +58,7 @@
     
     [self setupNav];
     
-    [self getData];
+    [self addRefresh];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -89,7 +93,14 @@
 
 - (void)setupUI {
     
-    self.tableView.tableHeaderView = self.headView;
+    //self.tableView.tableHeaderView = self.headView;
+    
+    [self.view addSubview:self.redPackageImageV];
+    [self.redPackageImageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(0);
+        make.size.mas_equalTo(CGSizeMake(100, 122));
+        make.top.mas_equalTo(HomeHannerHeight + 82*2 - 30);
+    }];
     
     [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
@@ -109,13 +120,22 @@
         SearchViewController *vc = [[SearchViewController alloc] init];
         [weakSelf.navigationController pushViewController:vc animated:YES];
     }];
+    [self.customNavBar setRightButtonWithImage:imageNamed(@"message_read")];
+    [self.customNavBar setOnClickRightButton:^(UIButton *btn) {
+        if (![weakSelf cheakLogin]) return;
+        MessageListViewController *vc = [[MessageListViewController alloc] init];
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+    }];
 }
 
 - (void)updateUI {
     if (!self.model) {
         return;
     }
+    self.redPackageImageV.hidden = NO;
     [self.headView updateWithModel:self.model];
+    self.headView.frame = CGRectMake(0, 0, ScreenWidth, [HomeHeadView getHeightWithModel:self.model]);
+    self.tableView.tableHeaderView = self.headView;
     [self.tableView reloadData];
     [self cheackHomeAlert];
 }
@@ -150,16 +170,28 @@
     }
 }
 
+#pragma mark - refresh -
+
+- (void)addRefresh {
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getData];
+    }];
+    [self getData];
+}
+
 #pragma mark - network
 
 - (void)getData {
     if (_location) {
         [YQNetworking postWithApiNumber:API_NUM_20017 params:@{@"userId":[PATool getUserId],@"lng":@(_location.coordinate.longitude),@"lat":@(_location.coordinate.latitude)} successBlock:^(id response) {
+            [self.tableView.mj_header endRefreshing];
             if (getResponseIsSuccess(response)) {
                 self.model  = [HomeModel mj_objectWithKeyValues:getResponseData(response)];
                 [self updateUI];
             }
         } failBlock:^(NSError *error) {
+            [self.tableView.mj_header endRefreshing];
         }];
         [self getLocationToRequest:NO];
     } else {
@@ -190,28 +222,19 @@
     if ([PATool isLogin]) {
         return YES;
     } else {
-        [[AlertBaseView alertWithTitle:@"您还没有登录，请先登录" leftBtn:@"取消" leftBlock:nil rightBtn:@"确定" rightBlock:^{
-            LoginViewController *vc = [[LoginViewController alloc] init];
-            BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-            [self presentViewController:nav animated:YES completion:nil];
-        }] showInWindow];
+        LoginViewController *vc = [[LoginViewController alloc] init];
+        BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:nil];
         return NO;
     }
 }
 
 #pragma mark - action
 
-- (void)starTapAction:(UITapGestureRecognizer *)tapGest {
-    if (tapGest.view == self.headView.starView) {
-        
-        StarOfTodayViewController *vc = [[StarOfTodayViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-        
-    } else if (tapGest.view == self.headView.talentView ) {
-        
-        GotTalentOfTodayViewController *vc = [[GotTalentOfTodayViewController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+- (void)redPackageClickAction:(UITapGestureRecognizer *)tapGes {
+    if (![self cheakLogin]) return;
+    
+    
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -259,7 +282,12 @@
             UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }];
-        [cell setBtnClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {
+        [cell setImageClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {
+            if (![self cheakLogin]) return;
+            StarOfTodayViewController *vc = [[StarOfTodayViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
+        [cell setBtnClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model, UIButton *btn) {
             if (![self cheakLogin]) return;
             if (index == 0) {//分享
                 [YQNetworking postWithApiNumber:API_NUM_10023 params:@{@"userId":model.userId, @"pusId":model.pusId} successBlock:^(id response) {
@@ -274,13 +302,14 @@
             } else if (index == 2) {//点赞
                 [YQNetworking postWithApiNumber:API_NUM_10015 params:@{@"userId":[PATool getUserId],@"pusId":model.pusId} successBlock:^(id response) {
                     if (getResponseIsSuccess(response)) {
-                        
+                        [btn setButtonStateNormalTitle:[NSString stringWithFormat:@"%ld",[btn.titleLabel.text integerValue] + 1]];
                     }
                 } failBlock:nil];
             } else if (index == 3) {//打赏
                 [[RewardAlertView alertWithUserId:model.userId thingsID:model.pusId type:RewardAlertType_Skill] showInWindow];
             } else if (index == 4) {//约ta
-                
+                AppointmentHerViewController *vc = [[AppointmentHerViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }];
     }
@@ -301,9 +330,7 @@
 - (HomeHeadView *)headView {
     if (!_headView) {
         __weak __typeof(self)weakSelf = self;
-        _headView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [HomeHeadView getHeight])];
-        [_headView.starView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(starTapAction:)]];
-        [_headView.talentView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(starTapAction:)]];
+        _headView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [HomeHeadView getHeightWithModel:nil])];
         [_headView setHeadButtonBlock:^(HomeSkillBtnModel * _Nonnull model) {
             if (![weakSelf cheakLogin]) return;
             //
@@ -317,18 +344,43 @@
                 [weakSelf.navigationController pushViewController:vc animated:YES];
             }
         }];
-        [_headView.activityView setImageTapAction:^(NSInteger index) {
+        [_headView.activityView setImageTapAction:^(NSInteger index, HomeGamesModel * _Nonnull model) {
             if (![weakSelf cheakLogin]) return;
-            if (index == 0) {
+            if ([model.pType integerValue] == 1) {
+                if ([model.clickUrl hasPrefix:@"http"]) {
+                    H5ViewController *vc = [[H5ViewController alloc] init];
+                    vc.jump_URL = model.clickUrl;
+                    [weakSelf.navigationController pushViewController:vc animated:YES];
+                }
+            } else if ([model.pType integerValue] == 2) {
                 MaJiangViewController *vc = [[MaJiangViewController alloc] init];
                 [weakSelf.navigationController pushViewController:vc animated:YES];
             }
+        }];
+        [_headView.starView setTapActionBlcok:^(HomeHotUserModel * _Nonnull model) {
+            UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
+            vc.userId = model.userId;
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }];
+        
+        [_headView.talentView setTapActionBlcok:^(HomeVideoHotUserModel * _Nonnull model) {
+            GotTalentOfTodayViewController *vc = [[GotTalentOfTodayViewController alloc] init];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
         }];
     }
     return _headView;
 }
 
-
+- (UIImageView *)redPackageImageV {
+    if (!_redPackageImageV) {
+        _redPackageImageV = [[UIImageView alloc] init];
+        _redPackageImageV.image = imageNamed(@"home_redPackage");
+        _redPackageImageV.userInteractionEnabled = YES;
+        _redPackageImageV.hidden = YES;
+        [_redPackageImageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redPackageClickAction:)]];
+    }
+    return _redPackageImageV;
+}
 
 @end
 

@@ -7,10 +7,15 @@
 //
 
 #import "HomeActivityView.h"
+#import "HomeModel.h"
 
-#define IMAGETAG 500
+#define kImageTag 500
 
 @interface HomeActivityView()
+
+@property (nonatomic, strong) UIImageView *image1;
+@property (nonatomic, strong) UIImageView *image2;
+@property (nonatomic, strong) UIImageView *image3;
 
 @end
 
@@ -38,22 +43,19 @@
     for (int i = 0 ; i < 3; i++) {
         
         UIImageView *imageV = [[UIImageView alloc] init];
-        imageV.tag = IMAGETAG + i;
+        imageV.image = imageNamed(@"placeholder_image_loadFaile");
+        imageV.tag = kImageTag + i;
         imageV.userInteractionEnabled = YES;
         [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClickAction:)]];
         [self addSubview:imageV];
         
         if (i == 0) {
-//            imageV.image = imageNamed(@"home_advertising_majiang");
             self.image1 = imageV;
         } else if (i == 1) {
-//            imageV.image = imageNamed(@"home_advertising_makemoney");
             self.image2 = imageV;
         } else {
-//            imageV.image = imageNamed(@"home_advertising_makemoney");
             self.image3 = imageV;
         }
-        
     }
     
     __weak __typeof(self)weakSelf = self;
@@ -101,12 +103,27 @@
     return imageVHeight * 3 + MARGIN_1 + MARGIN_10 + MARGIN_10;
 }
 
+- (void)setGamesArray:(NSArray<HomeGamesModel *> *)gamesArray {
+    _gamesArray = gamesArray;
+    
+    for (int i = 0; i < gamesArray.count; i++) {
+        HomeGamesModel *model = gamesArray[i];
+        if (i == 0) {
+            [self.image1 sd_setImageWithURL:URLWithString(model.photoUrl)];
+        } else if (i == 1) {
+            [self.image2 sd_setImageWithURL:URLWithString(model.photoUrl)];
+        } else if (i == 2) {
+            [self.image3 sd_setImageWithURL:URLWithString(model.photoUrl)];
+        }
+    }
+}
 
 #pragma mark - action -
 
 - (void)imageClickAction:(UITapGestureRecognizer *)tap {
-    if (self.imageTapAction) {
-        self.imageTapAction(tap.view.tag - IMAGETAG);
+    NSInteger index = tap.view.tag - kImageTag;
+    if (self.imageTapAction && self.gamesArray.count > index) {
+        self.imageTapAction(index, self.gamesArray[index]);
     }
 }
 

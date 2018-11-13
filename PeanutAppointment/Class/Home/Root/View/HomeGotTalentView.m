@@ -9,8 +9,13 @@
 #import "HomeGotTalentView.h"
 #import "HomeTitleView.h"
 
+#import "HomeModel.h"
+
+#define kImageTag 4524
+
 @interface HomeGotTalentView()
 
+//@property (nonatomic, strong) NSMutableArray *photoViewArray;
 
 @end
 
@@ -46,46 +51,46 @@
         make.height.mas_equalTo(titleHeight);
     }];
     
-    
-    CGFloat photoWidth = (SCREEN_WIDTH - MARGIN_15 * 2 - MARGIN_1 * 2)/3.f;
-    _photoViewArray = [NSMutableArray arrayWithCapacity:1];
-    for (int i = 0; i < 6; i++) {
-        
-        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_15 + i%3 * (photoWidth + MARGIN_1), titleHeight + i/3 * (photoWidth + MARGIN_1), photoWidth, photoWidth)];
-        imageV.image = imageNamed(@"");
-        imageV.backgroundColor = COLOR_UI_000000;
-        [self addSubview:imageV];
-       [_photoViewArray addObject:imageV];
-    }
-    
-    HomeNoticeView *noticeView = [[HomeNoticeView alloc] init];
-    [self addSubview:noticeView];
-    [noticeView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(-MARGIN_10);
-        make.height.mas_equalTo([HomeNoticeView getHeight]);
-    }];
-    self.noticeView = noticeView;
-    
-    UIView *bottomLineView = [[UIView alloc] init];
-    bottomLineView.backgroundColor = COLOR_UI_F0F0F0;
-    [self addSubview:bottomLineView];
-    [bottomLineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.right.mas_equalTo(0);
-        make.height.mas_equalTo(MARGIN_10);
-    }];
-    
 }
 
 #pragma mark - public -
 
-+ (CGFloat)getHeight {
++ (CGFloat )getHeightWithArray:(NSArray *)array {
+    
     CGFloat photoWidth = (SCREEN_WIDTH - MARGIN_15 * 2 - MARGIN_1 * 2)/3.f;
+    return [HomeTitleView getHeight] + (photoWidth + MARGIN_1) * ((array.count - 1) + 1) + MARGIN_15;
+}
 
-    return [HomeTitleView getHeight] + photoWidth*2 + MARGIN_1 + MARGIN_15 + [HomeNoticeView getHeight] + MARGIN_10;
+- (void)setDataArray:(NSArray<HomeVideoHotUserModel *> *)dataArray {
+    _dataArray = dataArray;
+    
+    for (UIView *view in self.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    CGFloat titleHeight = [HomeTitleView getHeight];
+    CGFloat photoWidth = (SCREEN_WIDTH - MARGIN_15 * 2 - MARGIN_1 * 2)/3.f;
+    for (int i = 0; i < dataArray.count; i++) {
+        
+        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_15 + i%3 * (photoWidth + MARGIN_1), titleHeight + i/3 * (photoWidth + MARGIN_1), photoWidth, photoWidth)];
+        imageV.image = imageNamed(@"placeholder_image_loadFaile");
+        imageV.tag = kImageTag + i;
+        imageV.userInteractionEnabled = YES;
+        [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClickAction:)]];
+        [self addSubview:imageV];
+    }
+}
+
+#pragma mark - action -
+
+- (void)imageClickAction:(UITapGestureRecognizer *)tap {
+    NSInteger index = tap.view.tag - kImageTag;
+    if (self.tapActionBlcok && self.dataArray.count > index) {
+        self.tapActionBlcok(self.dataArray[index]);
+    }
 }
 
 #pragma mark - getter -
-
 
 @end

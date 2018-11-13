@@ -8,6 +8,8 @@
 
 #import "RechargeAlertCell.h"
 
+#import "RechargeAlertListModel.h"
+
 @interface RechargeAlertCell()
 
 @property (nonatomic, strong) UIImageView *imageV;
@@ -52,6 +54,13 @@
 
 + (NSString *) reuseIdentifier {
     return NSStringFromClass([self class]);
+}
+
+- (void)setModel:(RechargeAlertListModel *)model {
+    _model = model;
+    
+    self.diamondCountLabel.text = [NSString stringWithFormat:@"%@钻",model.jzNumber];
+    self.moneyLabel.text = [NSString stringWithFormat:@"%@元",model.rmb];
 }
 
 #pragma mark - getter -

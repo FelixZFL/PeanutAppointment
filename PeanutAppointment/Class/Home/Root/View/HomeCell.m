@@ -12,16 +12,14 @@
 #import "HomeIndexUserModel.h"
 
 #define kBtnTag 235
+#define kImageTag 5636
+
 
 @interface HomeCell()
 
 @property (nonatomic, strong) UserBaseInfoView *userView;
 
 @property (nonatomic, strong) UIView *photoView;
-
-//@property (nonatomic, strong) UIImageView *photo1;
-//@property (nonatomic, strong) UIImageView *photo2;
-//@property (nonatomic, strong) UIImageView *photo3;
 
 @property (nonatomic, strong) UIButton *shareButton;
 @property (nonatomic, strong) UIButton *commentButton;
@@ -69,17 +67,11 @@
     for (int i = 0; i < 3; i++) {
         
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_15 + i * (photoWidth + MARGIN_1), 0, photoWidth, photoWidth)];
-        imageV.image = imageNamed(@"");
-        imageV.backgroundColor = COLOR_UI_000000;
+        imageV.image = imageNamed(@"placeholder_image_loadFaile");
+        imageV.tag = kImageTag + i;
+        imageV.userInteractionEnabled = YES;
+        [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClickAction:)]];
         [photoView addSubview:imageV];
-//        if (i == 0) {
-//            self.photo1 = imageV;
-//        }else if (i == 1) {
-//            self.photo2 = imageV;
-//        }else {
-//            self.photo3 = imageV;
-//        }
-        
     }
     
     CGFloat btnHeight = 44;
@@ -147,10 +139,9 @@
         UIImageView *imageV = self.photoView.subviews[i];
         NSArray *photoArray = [model.photos componentsSeparatedByString:@","];
         if (photoArray.count > i) {
-            imageV.hidden = NO;
-            [imageV sd_setImageWithURL:URLWithString(photoArray[i])];
+            [imageV sd_setImageWithURL:URLWithString(photoArray[i]) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
         } else {
-            imageV.hidden = YES;
+            imageV.image = imageNamed(@"placeholder_image_loadFaile");
         }
     }
     
@@ -193,7 +184,7 @@
 
 - (void)btnClickAction:(UIButton *)sender {
     if (self.btnClickBlock && self.model) {
-        self.btnClickBlock(sender.tag - kBtnTag, self.model);
+        self.btnClickBlock(sender.tag - kBtnTag, self.model, sender);
     }
 }
 
@@ -203,6 +194,12 @@
     }
 }
 
+- (void)imageClickAction:(UITapGestureRecognizer *)tap {
+    NSInteger index = tap.view.tag - kImageTag;
+    if (self.imageClickBlock && self.model) {
+        self.imageClickBlock(index, self.model);
+    }
+}
 #pragma mark - getter -
 
 - (UserBaseInfoView *)userView {

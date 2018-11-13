@@ -96,8 +96,13 @@
     //积分兑换 暂时缺接口
     [YQNetworking postWithApiNumber:API_NUM_10005 params:@{@"userId":[PATool getUserId],@"piId":self.chooseModel.piId} successBlock:^(id response) {
         if (getResponseIsSuccess(response)) {
-            [self getData];
-            [[AlertBaseView alertWithTitle:@"兑换成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
+            NSDictionary *dic = getResponseData(response);
+            if ([dic[@"isSuccess"] integerValue] == 1) {
+                [self getData];
+                [[AlertBaseView alertWithTitle:@"兑换成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
+            } else {
+                [SVProgressHUD showSuccessWithStatus:@"兑换失败"];
+            }
         }
     } failBlock:nil];
 }

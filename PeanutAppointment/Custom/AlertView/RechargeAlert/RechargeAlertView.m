@@ -9,13 +9,15 @@
 #import "RechargeAlertView.h"
 #import "RechargeAlertCell.h"
 
+#import "RechargeAlertListModel.h"
+
 @interface RechargeAlertView()<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (nonatomic, strong) UIView *layerView;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, assign) NSInteger selectIndex;
-
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
 
@@ -92,6 +94,7 @@
     
     [window addSubview:self];
     self.y = window.height - 385;
+    [self getData];
 }
 
 - (void)removFromWindow {
@@ -105,22 +108,43 @@
     return alert;
 }
 
+
+#pragma mark - network -
+
+- (void)getData{
+    [YQNetworking postWithApiNumber:API_NUM_20039 params:@{} successBlock:^(id response) {
+        if (getResponseIsSuccess(response)) {
+            self.dataArray = [RechargeAlertListModel mj_objectArrayWithKeyValuesArray:getResponseData(response)];
+            self.selectIndex = 0;
+            [self.collectionView reloadData];
+        } else {
+            [self removFromWindow];
+        }
+    } failBlock:^(NSError *error) {
+        [self removFromWindow];
+    }];
+}
+
+
 #pragma mark - action -
 
 - (void)sureClickAction:(UIButton *)sender {
     
-    [YQNetworking postWithApiNumber:API_NUM_10022 params:@{@"userId":[PATool getUserId], @"money":@"",@"id":@""} successBlock:^(id response) {
-        if (getResponseIsSuccess(response)) {
-            [self removFromWindow];
-        }
-    } failBlock:nil];
+    if (self.dataArray.count > _selectIndex) {
+        RechargeAlertListModel *model = self.dataArray[_selectIndex];
+        [YQNetworking postWithApiNumber:API_NUM_10022 params:@{@"userId":[PATool getUserId], @"money":model.rmb,@"id":model.ID} successBlock:^(id response) {
+            if (getResponseIsSuccess(response)) {
+                [self removFromWindow];
+            }
+        } failBlock:nil];
+    }
     
 }
 
 #pragma mark - UICollectionViewDelegate, UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-    return 15;//self.dataArr.count;
+    return self.dataArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -128,6 +152,9 @@
     RechargeAlertCell *cell = (RechargeAlertCell *)[collectionView cellForItemAtIndexPath:indexPath];
     if (cell == nil) {
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:[RechargeAlertCell reuseIdentifier] forIndexPath:indexPath];
+    }
+    if (self.dataArray.count > indexPath.row) {
+        [cell setModel:self.dataArray[indexPath.row]];
     }
     [cell setborderColor:COLOR_UI_THEME_RED borderWidth:_selectIndex == indexPath.row ? 1 : 0];
     return cell;
@@ -155,6 +182,13 @@
         _collectionView.dataSource = self;
     }
     return _collectionView;
+}
+
+- (NSMutableArray *)dataArray {
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray arrayWithCapacity:1];
+    }
+    return _dataArray;
 }
 
 @end

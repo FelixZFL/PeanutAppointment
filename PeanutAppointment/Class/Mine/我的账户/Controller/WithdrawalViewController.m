@@ -170,11 +170,18 @@
     [YQNetworking postWithApiNumber:API_NUM_10003 params:@{@"userId":userId,@"money":withdrawalMoney,@"moneyType":self.selectIndex == 0 ? @"1" : @"2"} successBlock:^(id response) {
         
         if (getResponseIsSuccess(response)) {
-            [SVProgressHUD showSuccessWithStatus:@"提现申请成功"];
-            if (self.submitSuccessBlock) {
-                self.submitSuccessBlock();
+            
+            NSDictionary *dic = getResponseData(response);
+            if ([dic[@"isSuccess"] integerValue] == 1) {
+                [SVProgressHUD showSuccessWithStatus:@"提现申请成功"];
+                if (self.submitSuccessBlock) {
+                    self.submitSuccessBlock();
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            } else if ([dic[@"isSuccess"] integerValue] == 2){
+                [SVProgressHUD showSuccessWithStatus:@"余额不足"];
             }
-            [self.navigationController popViewControllerAnimated:YES];
+            
         }
         
     } failBlock:nil];

@@ -521,6 +521,9 @@
 		5AD6382E2195E0E800FBC87C /* AlivcUtilsSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD634D02195928400FBC87C /* AlivcUtilsSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5AD6C1122188C0330074FE63 /* ReleaseOrderUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6C1112188C0330074FE63 /* ReleaseOrderUserModel.m */; };
 		5AD6C1152188D1FE0074FE63 /* MakeMoneySkillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD6C1142188D1FE0074FE63 /* MakeMoneySkillModel.m */; };
+		5ADDEDFC219B2723008FD824 /* MajiangVipModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDEDFB219B2722008FD824 /* MajiangVipModel.m */; };
+		5ADDEDFF219B2753008FD824 /* MajiangRoomCardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDEDFE219B2753008FD824 /* MajiangRoomCardModel.m */; };
+		5ADDEE02219B65F7008FD824 /* RechargeAlertListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDEE01219B65F7008FD824 /* RechargeAlertListModel.m */; };
 		5AE90F5721639684009A1597 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90F5621639684009A1597 /* LoginViewController.m */; };
 		5AE90F5A2163BBF9009A1597 /* SkillModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90F592163BBF9009A1597 /* SkillModel.m */; };
 		5AE90F5D2163BF77009A1597 /* SkillCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90F5C2163BF77009A1597 /* SkillCollectionCell.m */; };
@@ -1570,6 +1573,12 @@
 		5AD6C1112188C0330074FE63 /* ReleaseOrderUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReleaseOrderUserModel.m; sourceTree = "<group>"; };
 		5AD6C1132188D1FE0074FE63 /* MakeMoneySkillModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MakeMoneySkillModel.h; sourceTree = "<group>"; };
 		5AD6C1142188D1FE0074FE63 /* MakeMoneySkillModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakeMoneySkillModel.m; sourceTree = "<group>"; };
+		5ADDEDFA219B2722008FD824 /* MajiangVipModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MajiangVipModel.h; sourceTree = "<group>"; };
+		5ADDEDFB219B2722008FD824 /* MajiangVipModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MajiangVipModel.m; sourceTree = "<group>"; };
+		5ADDEDFD219B2753008FD824 /* MajiangRoomCardModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MajiangRoomCardModel.h; sourceTree = "<group>"; };
+		5ADDEDFE219B2753008FD824 /* MajiangRoomCardModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MajiangRoomCardModel.m; sourceTree = "<group>"; };
+		5ADDEE00219B65F7008FD824 /* RechargeAlertListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RechargeAlertListModel.h; sourceTree = "<group>"; };
+		5ADDEE01219B65F7008FD824 /* RechargeAlertListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RechargeAlertListModel.m; sourceTree = "<group>"; };
 		5AE90F5521639684009A1597 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		5AE90F5621639684009A1597 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		5AE90F582163BBF9009A1597 /* SkillModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkillModel.h; sourceTree = "<group>"; };
@@ -2925,6 +2934,8 @@
 				5A31FADB217CFDF9004BB5BD /* RechargeAlertView.m */,
 				5ACCF65F217E0369004A6C7E /* RechargeAlertCell.h */,
 				5ACCF660217E0369004A6C7E /* RechargeAlertCell.m */,
+				5ADDEE00219B65F7008FD824 /* RechargeAlertListModel.h */,
+				5ADDEE01219B65F7008FD824 /* RechargeAlertListModel.m */,
 			);
 			path = RechargeAlert;
 			sourceTree = "<group>";
@@ -3169,6 +3180,10 @@
 		5A92DF7E2173755200EA4F6E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5ADDEDFA219B2722008FD824 /* MajiangVipModel.h */,
+				5ADDEDFB219B2722008FD824 /* MajiangVipModel.m */,
+				5ADDEDFD219B2753008FD824 /* MajiangRoomCardModel.h */,
+				5ADDEDFE219B2753008FD824 /* MajiangRoomCardModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5658,6 +5673,7 @@
 				5AD636F52195928600FBC87C /* AliyunFontItemView.m in Sources */,
 				5ACE3FCF2165F72700CFC957 /* DeviceIDInKeychainTool.m in Sources */,
 				5AD6374D2195928600FBC87C /* AVC_VP_PlaySettingVC.m in Sources */,
+				5ADDEE02219B65F7008FD824 /* RechargeAlertListModel.m in Sources */,
 				5A121C0C21651C12007709B1 /* RebateRankingViewController.m in Sources */,
 				5A4809E9216BC6E6003B291F /* UIImage+Extension.m in Sources */,
 				5AF714CB219708AC006F52F4 /* STSInfoModel.m in Sources */,
@@ -5837,6 +5853,7 @@
 				5ABCE9D321686A8800845324 /* PayManager.m in Sources */,
 				5A92DF7B2171E95D00EA4F6E /* SignInAlertView.m in Sources */,
 				DC167441216078EB005C9ECD /* TitleImageButton.m in Sources */,
+				5ADDEDFF219B2753008FD824 /* MajiangRoomCardModel.m in Sources */,
 				5AD636F12195928600FBC87C /* AliyunColorItemView.m in Sources */,
 				5AF0B476217FB38600BF8020 /* DemandDetailHeadView.m in Sources */,
 				5AD636B12195928600FBC87C /* AliyunEffectResourceModel.m in Sources */,
@@ -6054,6 +6071,7 @@
 				5A5634FC2184B87200D8D442 /* MyAccountInfoModel.m in Sources */,
 				5AD6350B2195928500FBC87C /* AlivcMessageListView.m in Sources */,
 				5AD637A5219592B200FBC87C /* AlivcBaseNavigationController+aliyun_autorotate.m in Sources */,
+				5ADDEDFC219B2723008FD824 /* MajiangVipModel.m in Sources */,
 				5A31D3CB21455D8E001E2043 /* NSObject+Extension.m in Sources */,
 				5AF7153E21976CE2006F52F4 /* AlivcSweepCodeView.m in Sources */,
 				5AD636A82195928600FBC87C /* AliyunMusicPickModel.m in Sources */,

@@ -7,6 +7,9 @@
 //
 
 #import "MaJiangRoomCardFootView.h"
+#import "MajiangRoomCardModel.h"
+
+#define kImageTag 7438
 
 @interface MaJiangRoomCardFootView()
 
@@ -39,15 +42,17 @@
     CGFloat viewHeight = 60;
     
     for (int i = 0; i < _dataArray.count; i++) {
+        MajiangRoomCardModel *model = _dataArray[i];
         
         UIImageView *view = [[UIImageView alloc] initWithImage:imageNamed(@"majiang_roomCard")];
         view.frame = CGRectMake(i%2 == 0 ? MARGIN_15 : SCREEN_WIDTH - viewWidth - MARGIN_15, MARGIN_15 + i/2 * (viewHeight + MARGIN_15), viewWidth, viewHeight);
+        view.tag = kImageTag + i;
         view.userInteractionEnabled = YES;
-        
+        [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(itemClick:)]];
         [self addSubview:view];
         
         UILabel *moneyLabel = [UILabel labelWithFont:KFont(17) textColor:COLOR_UI_FFFFFF textAlignment:NSTextAlignmentRight];
-        moneyLabel.text = @"￥100元";
+        moneyLabel.text = [NSString stringWithFormat:@"￥%@元",model.price];
         [view addSubview:moneyLabel];
         [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(-MARGIN_15);
@@ -55,7 +60,7 @@
         }];
         
         UILabel *label = [UILabel labelWithFont:KFont(12) textColor:COLOR_UI_FFFFFF textAlignment:NSTextAlignmentLeft];
-        label.text = @"55张房卡";
+        label.text = [NSString stringWithFormat:@"%@张房卡",model.roomCardNumber];
         [view addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(MARGIN_10);
@@ -79,6 +84,13 @@
 }
 
 #pragma mark - action -
+
+- (void)itemClick:(UITapGestureRecognizer *)tapGes {
+    NSInteger index = tapGes.view.tag - kImageTag;
+    if (self.itemClickBlock && self.dataArray.count > index) {
+        self.itemClickBlock(self.dataArray[index]);
+    }
+}
 
 
 @end

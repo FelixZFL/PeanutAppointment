@@ -15,6 +15,7 @@
 
 #import "ReleaseOrderViewController.h"//发布
 #import "SearchViewController.h"//搜索
+#import "MessageListViewController.h"//消息
 
 @interface AppointmentOrderViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HorizontalCollectionLayoutDelegate>
 
@@ -63,6 +64,14 @@
 
 - (void)setupNav {
     [self.customNavBar setTitle:_type == AppointmentOrderViewControllerType_ChooseType ? @"选择类型" : @"发布需求"];
+    if (_type == AppointmentOrderViewControllerType_Default) {
+        [self.customNavBar setRightButtonWithImage:imageNamed(@"message_read")];
+        __weak __typeof(self)weakSelf = self;
+        [self.customNavBar setOnClickRightButton:^(UIButton *btn) {
+            MessageListViewController *vc = [[MessageListViewController alloc] init];
+            [weakSelf.navigationController pushViewController:vc animated:YES];
+        }];
+    }
 }
 
 

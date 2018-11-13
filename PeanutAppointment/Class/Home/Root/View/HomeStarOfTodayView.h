@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class HomeHotUserModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeStarOfTodayView : UIView
 
-@property (nonatomic, strong) NSMutableArray *photoViewArray;
+@property (nonatomic, copy) void(^tapActionBlcok) (HomeHotUserModel *model);
+
+@property (nonatomic, strong) NSArray<HomeHotUserModel *> *dataArray;
 
 + (CGFloat )getHeight;
 
