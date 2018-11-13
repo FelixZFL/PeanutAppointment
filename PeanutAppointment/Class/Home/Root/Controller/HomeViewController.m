@@ -99,7 +99,7 @@
     [self.redPackageImageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(0);
         make.size.mas_equalTo(CGSizeMake(100, 122));
-        make.top.mas_equalTo(HomeHannerHeight + 82*2 - 30);
+        make.top.mas_equalTo(HomeHannerHeight + 82*2 - 10);
     }];
     
     [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
