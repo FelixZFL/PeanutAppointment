@@ -41,7 +41,7 @@
     [self addSubview:self.authimgLabel];
     
     __weak __typeof(self)weakSelf = self;
-    
+    [self.headImageV setCorner:45/2.f];
     [self.headImageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(MARGIN_15);
         make.centerY.equalTo(weakSelf.mas_centerY);

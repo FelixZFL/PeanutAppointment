@@ -143,7 +143,8 @@
 + (void) logout
 {
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [def removeObjectForKey:KEY_USER_LOGIN_INFO];
+    [def removeObjectForKey:KEY_USERID];
+    [def removeObjectForKey:KEY_USER_BOUND_PHONE];
     [def synchronize];
 }
 

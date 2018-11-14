@@ -13,6 +13,7 @@
 #import "HomeSkillBtnModel.h"
 
 @class HomeModel;
+@class HomeBannerModel;
 
 #define HomeHannerHeight (SCREEN_WIDTH * 188/375.f)
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HomeHeadView : UIView
 
 @property (nonatomic, copy) void(^headButtonBlock) (HomeSkillBtnModel *model);
+@property (nonatomic, copy) void(^bannerClickBlock) (HomeBannerModel *model);
 
 @property (nonatomic, strong) HomeActivityView *activityView;//活动
 @property (nonatomic, strong) HomeStarOfTodayView *starView;//今日之星

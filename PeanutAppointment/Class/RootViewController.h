@@ -10,4 +10,7 @@
 
 @interface RootViewController : UITabBarController
 
+///退出登录到首页
+- (void)logoutToHomePage;
+
 @end

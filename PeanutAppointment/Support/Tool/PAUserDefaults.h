@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define KEY_USER_LOGIN_INFO @"KEY_USER_LOGIN_INFO"
+//#define KEY_USER_LOGIN_INFO @"KEY_USER_LOGIN_INFO"
 
 @interface PAUserDefaults : NSObject
 

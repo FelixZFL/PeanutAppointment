@@ -54,7 +54,7 @@
     
     
     UIButton *addSkillBtn = [[UIButton alloc] init];
-    [addSkillBtn setButtonStateNormalTitle:@"添加技能" Font:KFont(14) textColor:COLOR_UI_FFFFFF];
+    [addSkillBtn setButtonStateNormalTitle:@"添加照片" Font:KFont(14) textColor:COLOR_UI_FFFFFF];
     addSkillBtn.backgroundColor = COLOR_UI_THEME_RED;
     [addSkillBtn addTarget:self action:@selector(addSkillBtnAction) forControlEvents:UIControlEventTouchUpInside];
     

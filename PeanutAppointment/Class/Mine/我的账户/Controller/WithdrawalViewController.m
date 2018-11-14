@@ -135,7 +135,7 @@
         if (getResponseIsSuccess(response)) {
             MyAccountInfoModel *model = [MyAccountInfoModel mj_objectWithKeyValues:getResponseData(response)];
             self.model = model;
-            self.moneyLabel.text = [NSString stringWithFormat:@"可提余额￥%@",model.balanceOutstanding];
+            self.moneyLabel.text = [NSString stringWithFormat:@"可提余额￥%@",model.balanceOutstanding?:@""];
         }
         
     } failBlock:^(NSError *error) {

@@ -15,8 +15,8 @@
 #import "OrderManageViewController.h"//订单管理
 #import "MakeMoneyViewController.h"//去挣钱
 #import "MineViewController.h"//个人中心
-//
-//#import "LoginViewController.h"//登录
+
+#import "LoginViewController.h"//登录
 
 
 @interface RootViewController ()<UITabBarControllerDelegate>
@@ -37,6 +37,19 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -- public -
+
+- (void)logoutToHomePage {
+    if (self.selectedIndex == 0) {
+        [[[self topViewController] navigationController] popViewControllerAnimated:YES];
+    }else {
+        //获取当前的nav
+        UINavigationController *nav = [[self topViewController] navigationController];
+        self.selectedIndex = 0;
+        [nav popToRootViewControllerAnimated:YES];
+    }
 }
 
 #pragma mark - private
@@ -89,17 +102,14 @@
 #pragma mark - UITabBarControllerDelegate
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     
-//    if (tabBarController.tabBar.selectedItem.tag==1003 && ![PATool isLogin]) {
-//
-//        LoginViewController *vc = [[LoginViewController alloc] init];
-//        [vc setLoginSuccessBlock:^{
-//            self.selectedIndex = 2;
-//        }];
-//        BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
-//        [self presentViewController:nav animated:YES completion:nil];
-//
-//        return NO;
-//    }
+    if (![PATool isLogin]) {
+        
+        LoginViewController *vc = [[LoginViewController alloc] init];
+        BaseNavigationController *nav = [[BaseNavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nav animated:YES completion:nil];
+
+        return NO;
+    }
     
     return YES;
 }
