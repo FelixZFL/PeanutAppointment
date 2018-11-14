@@ -29,10 +29,7 @@ static NSString * const WeChatAppId = @"wx3b113565e7197660";
 static NSString * const WeChatSecret = @"2eeb7f0f2d934a6810cc8717b5f0be62";
 
 #pragma mark - 百度地图 -
-static NSString* const BaiDuAppKey                   = @"rIDcGHwwkqURPHW59FkGX81qp6KbsdUO";
-
-#pragma mark - 高德地图 -
-//static NSString * const AMapAppKey = @"9593ea681842725c309e4175b61dfaac";
+static NSString* const BaiDuAppKey                   = @"CGgNVOeDQHXz4UDLiocW56hlx2F2bkwt";
 
 #pragma mark - TencentOAuth -
 static NSString *const TencentOAuthID = @"1107900054";//

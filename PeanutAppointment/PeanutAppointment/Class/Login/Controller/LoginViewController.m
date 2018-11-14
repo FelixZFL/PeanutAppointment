@@ -109,6 +109,7 @@
             } else {
                 self.coordinate = location.location.coordinate;
                 self.cityCode = location.rgcData.cityCode;
+                self.address = location.rgcData.locationDescribe;
             }
             [self sendAuthRequest];
         }];
@@ -171,7 +172,7 @@
                             @"chatAccount":[NSString stringWithFormat:@"%@,%@",self.userInfoModel.openid,self.userInfoModel.nickname],
                             @"age":@"18",
                             @"sex":@(self.userInfoModel.sex),
-                            @"addr":self.address
+                            @"addr":self.address?:@""
                             };
     [YQNetworking postWithApiNumber:API_NUM_10012 params:param successBlock:^(id response) {
         

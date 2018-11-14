@@ -252,16 +252,23 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [HomeSectionHeadView getHeight];
+    if (self.model) {
+        return [HomeSectionHeadView getHeight];
+    }
+    return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *identifier = [HomeSectionHeadView reuseIdentifier];
-    HomeSectionHeadView *sectionHeadView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
-    if(!sectionHeadView){
-        sectionHeadView = [[HomeSectionHeadView alloc] initWithReuseIdentifier:identifier];
+    if (self.model) {
+        NSString *identifier = [HomeSectionHeadView reuseIdentifier];
+        HomeSectionHeadView *sectionHeadView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
+        if(!sectionHeadView){
+            sectionHeadView = [[HomeSectionHeadView alloc] initWithReuseIdentifier:identifier];
+        }
+        return sectionHeadView;
+    } else {
+        return [[UIView alloc] init];
     }
-    return sectionHeadView;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -280,6 +287,7 @@
         [cell setUserInfoBlock:^(HomeIndexUserModel * _Nonnull model) {
             if (![self cheakLogin]) return;
             UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
+            vc.userId = model.userId;
             [self.navigationController pushViewController:vc animated:YES];
         }];
         [cell setImageClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {
@@ -331,6 +339,14 @@
     if (!_headView) {
         __weak __typeof(self)weakSelf = self;
         _headView = [[HomeHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [HomeHeadView getHeightWithModel:nil])];
+        [_headView setBannerClickBlock:^(HomeBannerModel * _Nonnull model) {
+            if (![weakSelf cheakLogin]) return;
+            if ([model.clickUrl hasPrefix:@"http"]) {
+                H5ViewController *vc = [[H5ViewController alloc] init];
+                vc.jump_URL = model.clickUrl;
+                [weakSelf.navigationController pushViewController:vc animated:YES];
+            }
+        }];
         [_headView setHeadButtonBlock:^(HomeSkillBtnModel * _Nonnull model) {
             if (![weakSelf cheakLogin]) return;
             //

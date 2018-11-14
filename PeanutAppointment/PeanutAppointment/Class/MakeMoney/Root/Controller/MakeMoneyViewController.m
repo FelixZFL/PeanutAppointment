@@ -12,12 +12,14 @@
 #import "VideoTypeAlertView.h"
 
 #import "MakeMoneySkillModel.h"
+#import "MyAccountInfoModel.h"
 
 #import "upYunTool.h"
 
 #import "AddSkillViewController.h"//添加技能
 #import "PersonalAuthViewController.h"//个人认证
 #import "PhotoAlbumViewController.h"//相册
+#import "CardAuthViewController.h"//身份认证
 
 //module
 #import "AliyunMediator.h"
@@ -146,14 +148,13 @@
     if (!cell) {
         cell = [[MakeMoneySkillCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         [cell setEditBlock:^(MakeMoneySkillModel * _Nonnull model) {
+        }];
+        [cell setDeleteBlock:^(MakeMoneySkillModel * _Nonnull model) {
             [YQNetworking postWithApiNumber:API_NUM_10009 params:@{@"userId":[PATool getUserId],@"id":model.ID} successBlock:^(id response) {
                 if (getResponseIsSuccess(response)) {
                     [self getData];
                 }
             } failBlock:nil];
-        }];
-        [cell setDeleteBlock:^(MakeMoneySkillModel * _Nonnull model) {
-            
         }];
     }
     if (self.dataArr.count > indexPath.row) {
@@ -374,8 +375,26 @@
         [_headView setButtonClickBlock:^(NSInteger index) {
             // @[@"添加技能",@"上传视频",@"个人认证",@"上传相册",@"上传头像"];
             if (index == 0) {
-                AddSkillViewController *vc = [[AddSkillViewController alloc] init];
-                [weakSelf.navigationController pushViewController:vc animated:YES];
+                [YQNetworking postWithApiNumber:API_NUM_20004 params:@{@"phone":[PAUserDefaults getUserBoundPhone]} successBlock:^(id response) {
+                    
+                    if (getResponseIsSuccess(response)) {
+                        MyAccountInfoModel *model = [MyAccountInfoModel mj_objectWithKeyValues:getResponseData(response)];
+                        //身份证审核状态(0：未认证/1：已认证/2：待审核/3：审核失败)
+                        if ([model.idCard integerValue] == 1) {
+                            AddSkillViewController *vc = [[AddSkillViewController alloc] init];
+                            [weakSelf.navigationController pushViewController:vc animated:YES];
+                        } else if ([model.idCard integerValue] == 2) {
+                            [SVProgressHUD showInfoWithStatus:@"身份认证正在等待审核"];
+                        } else {
+                            [SVProgressHUD showInfoWithStatus:@"请先进行身份认证"];
+                            CardAuthViewController *vc = [[CardAuthViewController alloc] init];
+                            [weakSelf.navigationController pushViewController:vc animated:YES];
+                        }
+                    }
+                    
+                } failBlock:^(NSError *error) {
+                }];
+                
             } else if (index == 1) {
                 //@[@"视频拍摄",@"互动直播"];
                 [[VideoTypeAlertView alertWithBlock:^(NSInteger index) {

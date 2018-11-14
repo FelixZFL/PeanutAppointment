@@ -62,7 +62,7 @@
     self.selectIndex = 0;
     TypeChooseView *headView = [TypeChooseView typeViewWithTypeArr:@[@"距离",@"成交量",@"价格"] withSelectIndex:0 chooseBlock:^(NSInteger selectIndex) {
         self.selectIndex = selectIndex;
-        [self.tableView reloadData];
+        [self.tableView.mj_header beginRefreshing];
     }];
     
     [self.view addSubview:headView];
@@ -171,14 +171,13 @@
         } else {
             price = @"1";
         }
-        /*pasId：技能分类id  page：页数  limit：条数
-         cjl：1    （成交量  非必传）
-         price：1   （价格 非必传）
+        /*pasId：技能分类id  page：页数  limit：条数 cjl：1    （成交量  非必传） price：1   （价格 非必传）
          lng：（长）经度 非必传
          lat：（短）纬度：非必传
          content：搜索的内容}*/
         NSString *pasId = self.pasId?:@"";
-        NSDictionary *param = @{@"pasId":pasId, @"cjl":cjl, @"price":price, @"lng":lng, @"lat":lat, @"content":@"", @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)};
+        NSString *searchText = self.searchTF.text;
+        NSDictionary *param = @{@"pasId":pasId, @"cjl":cjl, @"price":price, @"lng":lng, @"lat":lat, @"content":searchText, @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)};
         
         [YQNetworking postWithApiNumber:API_NUM_20022 params:param successBlock:^(id response) {
             if (getResponseIsSuccess(response)) {
@@ -186,6 +185,9 @@
                 [self.dataArr addObjectsFromArray:[HomeIndexUserModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
                 [self.tableView reloadData];
             }
+            
+            self.placeholderView.hidden = self.dataArr.count > 0;
+            
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
         } failBlock:^(NSError *error) {
@@ -258,6 +260,7 @@
         cell = [[HomeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         [cell setUserInfoBlock:^(HomeIndexUserModel * _Nonnull model) {
             UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
+            vc.userId = model.userId;
             [self.navigationController pushViewController:vc animated:YES];
         }];
         [cell setImageClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {

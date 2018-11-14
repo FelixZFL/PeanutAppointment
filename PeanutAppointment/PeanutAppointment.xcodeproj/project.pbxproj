@@ -616,6 +616,8 @@
 		DC2ACA082176E81C006C415D /* GotTalentOfTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2ACA072176E81C006C415D /* GotTalentOfTodayViewController.m */; };
 		DC2ACA112176E969006C415D /* GotTalentOfTodayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2ACA102176E969006C415D /* GotTalentOfTodayCell.m */; };
 		DC2ACA142176EA5F006C415D /* StarOfTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2ACA132176EA5F006C415D /* StarOfTodayViewController.m */; };
+		DC72C2FA219C29D300BD8276 /* HomeSortAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72C2F9219C29D200BD8276 /* HomeSortAlertView.m */; };
+		DC72C2FD219C2A6A00BD8276 /* HomeFiltrateAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC72C2FC219C2A6A00BD8276 /* HomeFiltrateAlertView.m */; };
 		DCA889F121928218004D5145 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DCA889F021928218004D5145 /* README.md */; };
 		DCACC2052181597200677667 /* AppointmentHerHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCACC2042181597200677667 /* AppointmentHerHeadView.m */; };
 		DCB1CCD721903C7100103B3F /* HomeIndexUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB1CCD621903C7100103B3F /* HomeIndexUserModel.m */; };
@@ -1748,6 +1750,10 @@
 		DC2ACA102176E969006C415D /* GotTalentOfTodayCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GotTalentOfTodayCell.m; sourceTree = "<group>"; };
 		DC2ACA122176EA5F006C415D /* StarOfTodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarOfTodayViewController.h; sourceTree = "<group>"; };
 		DC2ACA132176EA5F006C415D /* StarOfTodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StarOfTodayViewController.m; sourceTree = "<group>"; };
+		DC72C2F8219C29D200BD8276 /* HomeSortAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeSortAlertView.h; sourceTree = "<group>"; };
+		DC72C2F9219C29D200BD8276 /* HomeSortAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeSortAlertView.m; sourceTree = "<group>"; };
+		DC72C2FB219C2A6A00BD8276 /* HomeFiltrateAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeFiltrateAlertView.h; sourceTree = "<group>"; };
+		DC72C2FC219C2A6A00BD8276 /* HomeFiltrateAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeFiltrateAlertView.m; sourceTree = "<group>"; };
 		DCA889F021928218004D5145 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DCACC2032181597200677667 /* AppointmentHerHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppointmentHerHeadView.h; sourceTree = "<group>"; };
 		DCACC2042181597200677667 /* AppointmentHerHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppointmentHerHeadView.m; sourceTree = "<group>"; };
@@ -2943,6 +2949,7 @@
 		5A4809E3216BB66B003B291F /* AlertView */ = {
 			isa = PBXGroup;
 			children = (
+				DC72C2F7219C297C00BD8276 /* HomeFiltrateAlert */,
 				5A180CEA2198063D00F989F7 /* ShareAlert */,
 				5A180CE0219804B500F989F7 /* VersionUpdateAlert */,
 				5A31FAD9217CFDD6004BB5BD /* RechargeAlert */,
@@ -5371,6 +5378,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		DC72C2F7219C297C00BD8276 /* HomeFiltrateAlert */ = {
+			isa = PBXGroup;
+			children = (
+				DC72C2F8219C29D200BD8276 /* HomeSortAlertView.h */,
+				DC72C2F9219C29D200BD8276 /* HomeSortAlertView.m */,
+				DC72C2FB219C2A6A00BD8276 /* HomeFiltrateAlertView.h */,
+				DC72C2FC219C2A6A00BD8276 /* HomeFiltrateAlertView.m */,
+			);
+			path = HomeFiltrateAlert;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5691,6 +5709,7 @@
 				5A31D3ED21456415001E2043 /* RootViewController.m in Sources */,
 				5AD635052195928500FBC87C /* AlivcMessageInputView.m in Sources */,
 				5AD6380C2195933700FBC87C /* AlivcNicknameEditViewController.m in Sources */,
+				DC72C2FD219C2A6A00BD8276 /* HomeFiltrateAlertView.m in Sources */,
 				DC16743E2160649A005C9ECD /* OrderManageManageCell.m in Sources */,
 				5AE90F942163E89C009A1597 /* UIImage+SGImageSize.m in Sources */,
 				5A0C97782165C6020083D1BE /* UITextField+BXExtension.m in Sources */,
@@ -5910,6 +5929,7 @@
 				5AD636DF2195928600FBC87C /* AliyunPasterCollectionViewCell.m in Sources */,
 				5AE90F702163E6BE009A1597 /* MyPeanutsSingleCell.m in Sources */,
 				5AD635152195928500FBC87C /* AlivcLivePlayViewController.m in Sources */,
+				DC72C2FA219C29D300BD8276 /* HomeSortAlertView.m in Sources */,
 				5AAE9CC2216CF845001FA488 /* BillListViewController.m in Sources */,
 				5A121BF1216499F2007709B1 /* MyInfoViewController.m in Sources */,
 				5AD636862195928600FBC87C /* AliyunPhotoLibraryManager.m in Sources */,

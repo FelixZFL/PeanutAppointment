@@ -182,6 +182,9 @@
     if (self.model.banner.count > index) {
         HomeBannerModel *banner = self.model.banner[index];
         NSLog(@"图片地址 ===   %@",banner.clickUrl);
+        if (self.bannerClickBlock) {
+            self.bannerClickBlock(banner);
+        }
     }
 }
 

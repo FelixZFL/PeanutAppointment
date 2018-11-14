@@ -63,7 +63,7 @@
 }
 
 - (void)setupNav {
-    [self.customNavBar setTitle:_type == AppointmentOrderViewControllerType_ChooseType ? @"选择类型" : @"发布需求"];
+    [self.customNavBar setTitle:_type == AppointmentOrderViewControllerType_ChooseType ? @"全部分类" : @"发布需求"];
     if (_type == AppointmentOrderViewControllerType_Default) {
         [self.customNavBar setRightButtonWithImage:imageNamed(@"message_read")];
         __weak __typeof(self)weakSelf = self;

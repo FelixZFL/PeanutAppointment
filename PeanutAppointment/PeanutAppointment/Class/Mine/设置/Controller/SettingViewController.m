@@ -11,6 +11,7 @@
 
 #import "ChangePasswordViewController.h"
 #import "FeedbackViewController.h"
+#import "RootViewController.h"
 
 @interface SettingViewController ()
 
@@ -68,6 +69,10 @@
 - (void)logoutBtnAction {
     [[AlertBaseView alertWithTitle:@"您确定要退出登录" leftBtn:@"取消" leftBlock:nil rightBtn:@"确定" rightBlock:^{
         //TODO  退出
+        [PAUserDefaults logout];
+        RootViewController *tabbarVC = (RootViewController *)self.tabBarController;
+        [tabbarVC logoutToHomePage];
+        
     }] showInWindow];
 }
 
