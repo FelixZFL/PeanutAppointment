@@ -97,6 +97,9 @@
 - (void)typeBtnAction:(UIButton *)btn {
     
     if (self.selectBtn.tag == btn.tag) {
+        if (self.chooseBlock && _canClickMoreTimes) {
+            self.chooseBlock(btn.tag - 888);
+        }
         return;
     }
     

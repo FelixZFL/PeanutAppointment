@@ -18,6 +18,8 @@
 #import "RechargeAlertView.h"
 #import "CommentListAlertView.h"
 #import "LocationManager.h"
+#import "HomeSortAlertView.h"
+#import "HomeFiltrateAlertView.h"
 
 #import "HomeModel.h"
 #import "ShareDataModel.h"
@@ -41,8 +43,12 @@
 @property (nonatomic, strong) UIImageView *redPackageImageV;//红包
 
 @property (nonatomic, strong) HomeModel *model;
-
 @property (nonatomic, assign) BOOL isShowSign;//是否显示过签到弹出
+
+@property (nonatomic, copy) NSString *sex;//筛选 性别
+@property (nonatomic, copy) NSString *distance;//筛选 距离
+@property (nonatomic, copy) NSString *age;//筛选 年龄段
+
 
 @end
 
@@ -178,9 +184,34 @@
         [self getData];
     }];
     [self getData];
+    
+    self.pageNum = 0;
+    self.pageSize = 10;
+    self.tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
+        self.pageNum += 1;
+        [self getFiltrateData];
+    }];
+    
+    self.sex = @"";
+    self.distance = @"";
+    self.age = @"";
 }
 
 #pragma mark - network
+//获取筛选数据
+- (void)getFiltrateData {
+    
+    [YQNetworking postWithApiNumber:API_NUM_20021 params:@{@"sex":_sex, @"distance":_distance, @"age":_age, @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)} successBlock:^(id response) {
+        if (getResponseIsSuccess(response)) {
+            [self.dataArr addObjectsFromArray:[HomeIndexUserModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
+            [self.tableView reloadData];
+        }
+        [self.tableView.mj_footer endRefreshing];
+    } failBlock:^(NSError *error) {
+        [self.tableView.mj_footer endRefreshing];
+    }];
+    
+}
 
 - (void)getData {
     if (_location) {
@@ -264,6 +295,26 @@
         HomeSectionHeadView *sectionHeadView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
         if(!sectionHeadView){
             sectionHeadView = [[HomeSectionHeadView alloc] initWithReuseIdentifier:identifier];
+            [sectionHeadView setChoosedBlcok:^(NSInteger index) {
+                if (index == 0) {
+                    //智能排序
+                    [[HomeSortAlertView alertWithBlock:^(NSInteger index) {
+                        
+                    }] showInWindow];
+                    
+                } else {
+                    //筛选
+                    //sex：性别（1:男 /0:女）distance：距离 （单位：公里） age：25 25-35 35（25：小于25 25-35 35:小于35）
+                    [[HomeFiltrateAlertView alertWithBlock:^(NSString *sex, NSString *age, NSString *distance) {
+                        self.pageNum = 0;
+                        [self.dataArr removeAllObjects];
+                        self.sex = sex;
+                        self.age = age;
+                        self.distance = distance;
+                        [self getFiltrateData];
+                    }] showInWindow];
+                }
+            }];
         }
         return sectionHeadView;
     } else {
@@ -288,6 +339,7 @@
             if (![self cheakLogin]) return;
             UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
             vc.userId = model.userId;
+            vc.pusId = model.pusId;
             [self.navigationController pushViewController:vc animated:YES];
         }];
         [cell setImageClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {

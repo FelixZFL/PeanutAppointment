@@ -49,10 +49,12 @@
     CGFloat btnWidth = 80;
     
     for (int i = 0; i < btnArr.count; i++) {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(i*btnWidth, MARGIN_15, btnWidth, 30)];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(MARGIN_15 + i * (btnWidth + MARGIN_10), MARGIN_15, btnWidth, 30)];
         [btn setButtonStateNormalTitle:btnArr[i] Font:KFont(12) textColor:COLOR_UI_666666];
+        [btn setborderColor:COLOR_UI_999999];
+        [btn setDefaultCorner];
         btn.tag = kBtnTag + i;
-        [btn addTarget:self action:@selector(shareBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(btnClickAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
     }
     
@@ -76,7 +78,7 @@
     }];
     
     [window addSubview:self];
-//    self.y = window.height - KbtnHeight - HOMEBAR_HEIGHT;
+    self.y = window.height - SortAlertViewHeight;
 }
 
 - (void)removFromWindow {
@@ -94,7 +96,11 @@
 #pragma mark - action -
 
 
-- (void)shareBtnAction:(UIButton *)sender {
+- (void)btnClickAction:(UIButton *)sender {
+    
+    if (self.chooseBlock) {
+        self.chooseBlock(sender.tag - kBtnTag);
+    }
     
     [self removFromWindow];
 }

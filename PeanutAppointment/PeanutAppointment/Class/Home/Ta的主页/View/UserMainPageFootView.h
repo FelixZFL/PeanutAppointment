@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class UserMainPageModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UserMainPageFootView : UIView

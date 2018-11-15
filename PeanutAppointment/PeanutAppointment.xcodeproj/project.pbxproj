@@ -30,6 +30,7 @@
 		5A121C2C21654EA3007709B1 /* CardAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A121C2B21654EA3007709B1 /* CardAuthViewController.m */; };
 		5A121C2F21654EEB007709B1 /* CardAuthHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A121C2E21654EEB007709B1 /* CardAuthHeadView.m */; };
 		5A121C4221655753007709B1 /* PhotoAlbumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A121C4121655753007709B1 /* PhotoAlbumViewController.m */; };
+		5A17F1D8219C798900379FEC /* UserMainPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A17F1D7219C798900379FEC /* UserMainPageModel.m */; };
 		5A180CE32198054800F989F7 /* NetworkResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A180CE22198054800F989F7 /* NetworkResponseModel.m */; };
 		5A180CE62198056000F989F7 /* VersionUpdateAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A180CE42198056000F989F7 /* VersionUpdateAlertView.m */; };
 		5A180CE92198057F00F989F7 /* VersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A180CE82198057F00F989F7 /* VersionModel.m */; };
@@ -699,6 +700,8 @@
 		5A121C2E21654EEB007709B1 /* CardAuthHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardAuthHeadView.m; sourceTree = "<group>"; };
 		5A121C4021655753007709B1 /* PhotoAlbumViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoAlbumViewController.h; sourceTree = "<group>"; };
 		5A121C4121655753007709B1 /* PhotoAlbumViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoAlbumViewController.m; sourceTree = "<group>"; };
+		5A17F1D6219C798900379FEC /* UserMainPageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMainPageModel.h; sourceTree = "<group>"; };
+		5A17F1D7219C798900379FEC /* UserMainPageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMainPageModel.m; sourceTree = "<group>"; };
 		5A180CE12198054800F989F7 /* NetworkResponseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkResponseModel.h; sourceTree = "<group>"; };
 		5A180CE22198054800F989F7 /* NetworkResponseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkResponseModel.m; sourceTree = "<group>"; };
 		5A180CE42198056000F989F7 /* VersionUpdateAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionUpdateAlertView.m; sourceTree = "<group>"; };
@@ -5131,6 +5134,8 @@
 		5AF0B462217F531200BF8020 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5A17F1D6219C798900379FEC /* UserMainPageModel.h */,
+				5A17F1D7219C798900379FEC /* UserMainPageModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6030,6 +6035,7 @@
 				5AAE9CD7216D2122001FA488 /* FeedbackHeadView.m in Sources */,
 				5AD636C42195928600FBC87C /* AliyunTimelineFilterItem.m in Sources */,
 				5A121C2C21654EA3007709B1 /* CardAuthViewController.m in Sources */,
+				5A17F1D8219C798900379FEC /* UserMainPageModel.m in Sources */,
 				5AD6368C2195928600FBC87C /* AliyunPhotoAssetSelectedView.m in Sources */,
 				5AD636B62195928600FBC87C /* AliyunResourceDownloadManager.m in Sources */,
 				5A31D3FB2145645A001E2043 /* BaseTableViewCell.m in Sources */,

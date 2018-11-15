@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^ChooseIndexBlock)(NSInteger index);
+typedef void(^ChooseFiltrateBlock)(NSString *sex, NSString *age, NSString *distance);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removFromWindow;
 
-+ (instancetype )alertWithBlock:(ChooseIndexBlock)block;
++ (instancetype )alertWithBlock:(ChooseFiltrateBlock)block;
 
 @end
 

@@ -11,6 +11,8 @@
 #import "UserMainPageFootView.h"
 #import "LocationManager.h"
 
+#import "UserMainPageModel.h"
+
 #import "AppointmentHerViewController.h"
 
 @interface UserMainPageViewController ()
@@ -118,7 +120,7 @@
 - (void)getData {
     if (_location) {
         NSDictionary *param = @{@"userId":_userId?:@"", @"pusId":@"", @"lng":@(_location.coordinate.longitude), @"lat":@(_location.coordinate.latitude)};
-        [YQNetworking postWithApiNumber:API_NUM_20033 params:param successBlock:^(id response) {
+        [YQNetworking postWithApiNumber:API_NUM_20032 params:param successBlock:^(id response) {
             if (getResponseIsSuccess(response)) {
                 
             }
