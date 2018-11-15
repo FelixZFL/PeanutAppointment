@@ -64,6 +64,14 @@
     [mDic setObject:num forKey:@"num"];
     [mDic setObject:@"1" forKey:@"key"];
     
+    //判断值为空字符串的就不传
+    for (NSString *key in [mDic allKeys]) {
+        NSString *value = [NSString stringWithFormat:@"%@",[params objectForKey:key]];
+        if ([value length] == 0) {
+            [mDic removeObjectForKey:key];
+        }
+    }
+    
 //    if ([[PATool getUserId] length] > 0) {
 //        [mDic setObject:[PATool getUserId] forKey:@"duserId"];
 //    }

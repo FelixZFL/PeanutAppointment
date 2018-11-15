@@ -8,6 +8,8 @@
 
 #import "UserMainPageFootView.h"
 
+#import "UserMainPageModel.h"
+
 @interface UserMainPageFootView()
 
 @end

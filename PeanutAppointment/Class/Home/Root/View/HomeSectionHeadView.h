@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) TypeChooseView *typeView;
 
+@property (nonatomic, copy) void(^choosedBlcok)(NSInteger index);
+
 + (NSString *) reuseIdentifier;
 
 + (CGFloat)getHeight;

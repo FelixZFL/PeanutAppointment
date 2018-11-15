@@ -27,10 +27,13 @@
 - (void)setupUI {
     
     self.contentView.backgroundColor = COLOR_UI_FFFFFF;
-    
+    __weak __typeof(self)weakSelf = self;
     self.typeView = [TypeChooseView typeViewWithTypeArr:@[@"智能排序",@"筛选"] withSelectIndex:0 chooseBlock:^(NSInteger selectIndex) {
-        
+        if (weakSelf.choosedBlcok) {
+            weakSelf.choosedBlcok(selectIndex);
+        }
     }];
+    self.typeView.canClickMoreTimes = YES;
     [self addSubview:self.typeView];
     [self.typeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.left.right.mas_equalTo(0);

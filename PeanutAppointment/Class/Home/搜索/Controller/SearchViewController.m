@@ -261,6 +261,7 @@
         [cell setUserInfoBlock:^(HomeIndexUserModel * _Nonnull model) {
             UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
             vc.userId = model.userId;
+            vc.pusId = model.pusId;
             [self.navigationController pushViewController:vc animated:YES];
         }];
         [cell setImageClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {

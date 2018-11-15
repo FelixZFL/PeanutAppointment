@@ -8,8 +8,20 @@
 
 #import "UserMainPageHeadView.h"
 
+#import "UserMainPageModel.h"
+
 @interface UserMainPageHeadView()
 
+@property (nonatomic, strong) UIImageView *imageV;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *ageLabel;
+@property (nonatomic, strong) UILabel *genderLabel;
+@property (nonatomic, strong) UILabel *distanceLabel;
+@property (nonatomic, strong) UILabel *addressLabel;
+@property (nonatomic, strong) UIView *photosView;//个人相册
+@property (nonatomic, strong) UILabel *authLabel;//认证信息
+@property (nonatomic, strong) UILabel *visitorCountLabel;
+@property (nonatomic, strong) UILabel *visitorCountView;//访客量视图
 @end
 
 @implementation UserMainPageHeadView
@@ -34,16 +46,16 @@
     self.backgroundColor = COLOR_UI_FFFFFF;
     
     UIImageView *imageV = [[UIImageView alloc] init];
-    imageV.backgroundColor = KColor(blackColor);
     [self addSubview:imageV];
     [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.mas_equalTo(0);
         make.height.mas_equalTo(SCREEN_WIDTH);
     }];
+    self.imageV = imageV;
     
     CGFloat marginLeft = 85;
     
-    NSArray *titleArray = @[@"用户昵称",@"地理位置",@"个人相册",@"认证",@"等级积分",@"访客量",@"Ta的技能"];
+    NSArray *titleArray = @[@"用户昵称",@"地理位置",@"个人相册",@"认证",@"访客量",@"Ta的技能"];
     UIView *lastView = imageV;
     
     for (int i = 0; i < titleArray.count; i++) {
@@ -83,8 +95,9 @@
                 make.left.mas_equalTo(marginLeft);
                 make.centerY.equalTo(titleLabel);
             }];
-            nameLabel.text = @"笑笑";
-            
+            self.nameLabel = nameLabel;
+//            nameLabel.text = @"笑笑";
+
             UILabel *ageLabel = [UILabel labelWithFont:KFont(10) textColor:COLOR_UI_FFFFFF textAlignment:NSTextAlignmentCenter];
             ageLabel.backgroundColor = COLOR_UI_THEME_RED;
             [ageLabel setDefaultCorner];
@@ -93,7 +106,8 @@
                 make.left.equalTo(nameLabel.mas_right).with.mas_offset(MARGIN_10);
                 make.centerY.equalTo(nameLabel);
             }];
-            ageLabel.text = @" 23岁 ";
+            self.ageLabel = ageLabel;
+//            ageLabel.text = @" 23岁 ";
             
             UILabel *genderLabel = [UILabel labelWithFont:KFont(10) textColor:COLOR_UI_FFFFFF textAlignment:NSTextAlignmentCenter];
             genderLabel.backgroundColor = COLOR_UI_THEME_RED;
@@ -103,7 +117,8 @@
                 make.left.equalTo(ageLabel.mas_right).with.mas_offset(MARGIN_10);
                 make.centerY.equalTo(ageLabel);
             }];
-            genderLabel.text = @" 女 ";
+            self.genderLabel = genderLabel;
+//            genderLabel.text = @" 女 ";
             
             UILabel *distanceLabel = [UILabel labelWithFont:KFont(12) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentRight];
             [singleView addSubview:distanceLabel];
@@ -111,7 +126,8 @@
                 make.right.mas_equalTo(-MARGIN_15);
                 make.centerY.equalTo(titleLabel);
             }];
-            distanceLabel.text = @"10KM";
+            self.distanceLabel = distanceLabel;
+//            distanceLabel.text = @"10KM";
             
             
         } else if (i == 1) {
@@ -123,60 +139,34 @@
                 make.right.mas_equalTo(-MARGIN_15);
                 make.top.mas_equalTo(MARGIN_10);
             }];
-            NSString *contentStr = @"老是卡迪克兰啊付款结算单撒大了饭卡上撒 啊可是对方哈啊撒地方了卡拉山口附件";
-            contentLabel.text = contentStr;
-            CGFloat contentHeight = [contentStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
-            if (contentHeight > 35 ) {
-                [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_equalTo(contentHeight);
-                }];
-            }
+            self.addressLabel = contentLabel;
         } else if (i == 2) {
-            CGFloat imgWidth = 30;
-            for (int j = 0; j < 6; j++) {
-                UIImageView *imageV = [[UIImageView alloc] init];
-                imageV.backgroundColor = COLOR_UI_000000;
-                [imageV setDefaultCorner];
-                [singleView addSubview:imageV];
-                [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.mas_equalTo(marginLeft + j * (imgWidth + MARGIN_5));
-                    make.top.mas_equalTo((42 - imgWidth)/2.f);
-                    make.width.mas_equalTo(imgWidth);
-                    make.height.mas_equalTo(imgWidth);
-                }];
-            }
             [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(42);
             }];
+            self.photosView = singleView;
         } else if (i == 3) {
             UILabel *authimgLabel = [[UILabel alloc] init];
-            //实现富文本
-            NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
-            for (int i = 0; i < 3; i++) {
-                //进行图文混排
-                NSTextAttachment *textAttachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
-                textAttachment.image = [UIImage imageNamed:@"mine_icon_vip"];
-                textAttachment.bounds =CGRectMake(0,0, 16,16);
-                NSAttributedString * textAttachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-                [string insertAttributedString:textAttachmentString atIndex:string.length];
-            }
-            authimgLabel.attributedText = string;
+            [authimgLabel setLabelFont:KFont(14) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentLeft];
             [singleView addSubview:authimgLabel];
             [authimgLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(marginLeft);
                 make.right.mas_equalTo(-MARGIN_15);
                 make.centerY.equalTo(titleLabel);
             }];
-        } else if (i == 4) {
-            UILabel *jifenLabel = [UILabel labelWithFont:KFont(14) textColor:COLOR_UI_THEME_RED textAlignment:NSTextAlignmentLeft];
-            [singleView addSubview:jifenLabel];
-            [jifenLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.mas_equalTo(marginLeft);
-                make.right.mas_equalTo(-MARGIN_15);
-                make.centerY.equalTo(titleLabel);
-            }];
-            jifenLabel.text = @"256362";
-        } else if (i == 5) {
+            self.authLabel = authimgLabel;
+        }
+//        else if (i == 4) {
+//            UILabel *jifenLabel = [UILabel labelWithFont:KFont(14) textColor:COLOR_UI_THEME_RED textAlignment:NSTextAlignmentLeft];
+//            [singleView addSubview:jifenLabel];
+//            [jifenLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.left.mas_equalTo(marginLeft);
+//                make.right.mas_equalTo(-MARGIN_15);
+//                make.centerY.equalTo(titleLabel);
+//            }];
+//            jifenLabel.text = @"256362";
+//        }
+        else if (i == 4) {
             UILabel *visitorCountLabel = [UILabel labelWithFont:KFont(14) textColor:COLOR_UI_THEME_RED textAlignment:NSTextAlignmentLeft];
             [singleView addSubview:visitorCountLabel];
             [visitorCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -184,27 +174,15 @@
                 make.right.mas_equalTo(-MARGIN_15);
                 make.centerY.equalTo(titleLabel);
             }];
-            visitorCountLabel.text = @"256362";
+            self.visitorCountLabel = visitorCountLabel;
+//            visitorCountLabel.text = @"256362";
             
             CGFloat imgWidth = 30;
-            NSInteger count = floorf((SCREEN_WIDTH - marginLeft - MARGIN_15 + MARGIN_5)/(imgWidth + MARGIN_5));
-            for (int j = 0; j < count; j++) {
-                UIImageView *imageV = [[UIImageView alloc] init];
-                imageV.backgroundColor = COLOR_UI_000000;
-                [imageV setCorner:imgWidth/2.f];
-                [singleView addSubview:imageV];
-                [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.mas_equalTo(marginLeft + j * (imgWidth + MARGIN_5));
-                    make.top.mas_equalTo(35);
-                    make.width.mas_equalTo(imgWidth);
-                    make.height.mas_equalTo(imgWidth);
-                }];
-            }
-            
             [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(35 + imgWidth + MARGIN_10);
             }];
-        } else if (i == 6) {
+            self.visitorCountView = singleView;
+        } else if (i == 5) {
             
             CGFloat btnX = marginLeft;
             CGFloat btnY = MARGIN_10;
@@ -251,43 +229,141 @@
 
 #pragma mark - public -
 
-+ (CGFloat)getHeight {
-    CGFloat marginLeft = 85;
-    CGFloat imgWidth = 30;
-    NSString *contentStr = @"老是卡迪克兰啊付款结算单撒大了饭卡上撒 啊可是对方哈啊撒地方了卡拉山口附件";
-    CGFloat contentHeight = [contentStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
-    CGFloat height2 = contentHeight > 35 ? contentHeight : 35;
-    CGFloat height3 = 42;
-    CGFloat height6 = 35 + imgWidth + MARGIN_10;
++ (CGFloat )getHeightWithModel:(UserMainPageModel *)model {
     
-    
-    CGFloat btnX = marginLeft;
-    CGFloat btnY = MARGIN_10;
-    CGFloat btnHeight = 30;
-    UIButton *lastBtn = nil;
-    NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
-    UIView *view = [[UIView alloc] init];
-    for (int j = 0; j < titleArray.count; j++ ) {
-        UIButton *btn = [[UIButton alloc] init];
-        [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
-        [btn setDefaultCorner];
-        [btn setborderColor:COLOR_UI_999999];
-        [btn setBackgroundColor:COLOR_UI_FFFFFF];
-        [view addSubview:btn];
-        CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
-        if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
-            btnX = marginLeft;
-            btnY += btnHeight + MARGIN_10;
-        }
-        btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
+    if (model) {
         
-        btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
-        lastBtn = btn;
+        CGFloat marginLeft = 85;
+        CGFloat imgWidth = 30;
+        CGFloat contentHeight = [model.userInfo.addr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
+        CGFloat height2 = MAX(contentHeight, 35);
+        CGFloat height3 = 42;
+        CGFloat height6 = 35 + imgWidth + MARGIN_10;
+        
+        
+        CGFloat btnX = marginLeft;
+        CGFloat btnY = MARGIN_10;
+        CGFloat btnHeight = 30;
+        UIButton *lastBtn = nil;
+        NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
+        UIView *view = [[UIView alloc] init];
+        for (int j = 0; j < titleArray.count; j++ ) {
+            UIButton *btn = [[UIButton alloc] init];
+            [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
+            [btn setDefaultCorner];
+            [btn setborderColor:COLOR_UI_999999];
+            [btn setBackgroundColor:COLOR_UI_FFFFFF];
+            [view addSubview:btn];
+            CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
+            if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
+                btnX = marginLeft;
+                btnY += btnHeight + MARGIN_10;
+            }
+            btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
+            
+            btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
+            lastBtn = btn;
+        }
+        
+        CGFloat height7 = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
+        return  SCREEN_WIDTH + 35 * 3 + height2 + height3 + height6 + height7 + MARGIN_10;
+    }
+    return 0;
+}
+
+- (void)setModel:(UserMainPageModel *)model {
+    _model = model;
+    
+    CGFloat marginLeft = 85;
+    
+    [self.imageV sd_setImageWithURL:URLWithString(model.userInfo.headUrl) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
+    self.nameLabel.text = model.userInfo.nikeName;
+    self.ageLabel.text = [NSString stringWithFormat:@" %@ ",model.userInfo.age];
+    self.genderLabel.text = [NSString stringWithFormat:@" %@ ",[model.userInfo.sex integerValue] == 1 ? @"男" : @"女"];
+    self.distanceLabel.text = [NSString stringWithFormat:@"%@KM",model.userInfo.distance];
+    
+    self.addressLabel.text = model.userInfo.addr;
+    CGFloat contentHeight = [model.userInfo.addr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
+    [self.addressLabel.superview mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(MAX(contentHeight, 35));
+    }];
+    
+    for (UIView *view in self.photosView.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    CGFloat imgWidth = 30;
+    NSInteger maxCount = floorf((ScreenWidth - marginLeft - MARGIN_15)/(imgWidth + MARGIN_5));
+    NSInteger repeat = MIN(maxCount, model.phontList.count);
+    for (int i = 0; i < repeat; i++) {
+        UserMainPagePhotoListModel *photo = model.phontList[i];
+        UIImageView *imageV = [[UIImageView alloc] init];
+        imageV.image = imageNamed(@"placeholder_image_loadFaile");
+        [imageV sd_setImageWithURL:URLWithString(photo.photosUrl) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
+        [imageV setDefaultCorner];
+        [self.photosView addSubview:imageV];
+        [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(marginLeft + i * (imgWidth + MARGIN_5));
+            make.top.mas_equalTo((42 - imgWidth)/2.f);
+            make.width.mas_equalTo(imgWidth);
+            make.height.mas_equalTo(imgWidth);
+        }];
+    }
+    //认证
+    [self setAuthImageWithModel:model.userInfo];
+    
+    //访客量
+    self.visitorCountLabel.text =
+    for (UIView *view in self.photosView.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    self.visitorCountView
+    NSInteger count = floorf((SCREEN_WIDTH - marginLeft - MARGIN_15 + MARGIN_5)/(imgWidth + MARGIN_5));
+    NSInteger maxRepeat = MIN(count, model.accessList.count);
+    for (int i = 0; i < maxRepeat; i++) {
+        UserMainPageAccessListModel *accessModel = model.accessList[i];
+        UIImageView *imageV = [[UIImageView alloc] init];
+        imageV.image = imageNamed(placeHolderHeadImageName);
+        [imageV setCorner:imgWidth/2.f];
+        [self.visitorCountView addSubview:imageV];
+        [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(marginLeft + i * (imgWidth + MARGIN_5));
+            make.top.mas_equalTo(35);
+            make.width.mas_equalTo(imgWidth);
+            make.height.mas_equalTo(imgWidth);
+        }];
     }
     
-    CGFloat height7 = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
-    return  SCREEN_WIDTH + 35 * 3 + height2 + height3 + height6 + height7 + MARGIN_10;
+    
 }
+
+#pragma mark - private
+
+- (void)setAuthImageWithModel:(UserMainPageUserInfoModel *)model {
+    
+    NSMutableArray *authImages = [NSMutableArray array];
+    if (model.phone.length > 0) {//手机认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_phone")];
+    }
+    if (model.wxNumber.length > 0) {//微信认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_weichat")];
+    }
+    if (model.isCertification.length == 1) {//身份认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_idCard")];
+    }
+    if (model.aliPayNumber.length > 0) {//支付宝认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_alipay")];
+    }
+    //    if ([model.xxx integerValue] == 1) {//技能认证
+    //        [authImages addObject:imageNamed(@"personalAuth_icon_skill")];
+    //    }
+    
+    [self.authLabel setAuthImages:authImages];
+}
+
 
 #pragma mark - getter -
 

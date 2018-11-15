@@ -15,6 +15,9 @@ typedef void(^TypeChooseBlock)(NSInteger selectIndex);
 
 @interface TypeChooseView : UIView
 
+///可以点击多次
+@property (nonatomic, assign) BOOL canClickMoreTimes;
+
 @property (nonatomic, assign) NSInteger index;
 
 + (instancetype)typeViewWithTypeArr:(NSArray *)typeArr withSelectIndex:(NSInteger)selectIndex chooseBlock:(TypeChooseBlock)block;

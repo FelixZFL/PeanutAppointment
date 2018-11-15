@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class UserMainPageModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UserMainPageHeadView : UIView
 
-+ (CGFloat )getHeight;
+@property (nonatomic, strong) UserMainPageModel *model;
+
++ (CGFloat )getHeightWithModel:(UserMainPageModel *)model;
 
 @end
 
