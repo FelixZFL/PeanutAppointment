@@ -9,9 +9,22 @@
 #import "DemandDetailCell.h"
 #import "UserBaseInfoView.h"
 
+#import "DemanDetailModel.h"
+
+#define kBtnTag 57376
+
 @interface DemandDetailCell()
 
 @property (nonatomic, strong) UserBaseInfoView *userView;
+
+@property (nonatomic, strong) UILabel *priceLabel;
+@property (nonatomic, strong) UILabel *personIndouceLabel;
+@property (nonatomic, strong) UILabel *timeLabel;
+
+@property (nonatomic, strong) UIButton *button1;
+@property (nonatomic, strong) UIButton *button2;
+@property (nonatomic, strong) UIButton *button3;
+@property (nonatomic, strong) UIButton *button4;
 
 @end
 
@@ -102,18 +115,14 @@
         }];
 
         if (i == 0) {
-            contentLabel.text = @"256.00元/小时";
+            //contentLabel.text = @"256.00元/小时";
+            self.priceLabel = contentLabel;
         } else if (i == 1) {
-            NSString *contentStr = @"路边数据库里的发送旅客阿斯顿发卡看 得见啊发哈是大力开发和撒地方了看见 发来看哈是阿斯顿联发科技啊号是";
-            contentLabel.text = contentStr;
-            CGFloat contentHeight = [contentStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 * 3 font:KFont(14)] + MARGIN_10 * 2;
-            if (contentHeight > 35 ) {
-                [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_equalTo(contentHeight);
-                }];
-            }
+            
+            self.personIndouceLabel = contentLabel;
         } else if (i == 2) {
-            contentLabel.text = @"2018-08-31 05:25:25";
+            //contentLabel.text = @"2018-08-31 05:25:25";
+            self.timeLabel = contentLabel;
         }
         lastView = singleView;
     }
@@ -125,11 +134,9 @@
     CGFloat marginX = (SCREEN_WIDTH - MARGIN_15 * 2 - btnWith * btnArray.count)/(btnArray.count + 1);
     
     for (int i = 0; i < btnArray.count; i++) {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(MARGIN_15 + i * (btnWith + marginX), MARGIN_5, btnWith, btnHeight)];
-        btn.titleLabel.font = KFont(14);
-        [btn setDefaultCorner];
-        [btn setborderColor:COLOR_UI_THEME_RED];
+        UIButton *btn = [self getSingleBtn];
         [btn setButtonStateNormalTitle:btnArray[i]];
+        btn.tag = kBtnTag + i;
         [btn addTarget:self action:@selector(btnClickAction:) forControlEvents:UIControlEventTouchUpInside];
         [whiteBgView addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -139,35 +146,86 @@
             make.height.mas_equalTo(btnHeight);
         }];
         if (i == 0) {
-            btn.backgroundColor = COLOR_UI_FFFFFF;
-            [btn setTitleColor:COLOR_UI_THEME_RED forState:UIControlStateNormal];
+            self.button1 = btn;
         } else if (i == 1) {
-            btn.backgroundColor = COLOR_UI_FFFFFF;
-            [btn setTitleColor:COLOR_UI_THEME_RED forState:UIControlStateNormal];
+            self.button2 = btn;
         } else if (i == 2) {
-            btn.backgroundColor = COLOR_UI_FFFFFF;
-            [btn setTitleColor:COLOR_UI_THEME_RED forState:UIControlStateNormal];
+            self.button3 = btn;
         } else if (i == 3) {
-            btn.backgroundColor = COLOR_UI_THEME_RED;
-            [btn setTitleColor:COLOR_UI_FFFFFF forState:UIControlStateNormal];
+            self.button4 = btn;
+            btn.selected = YES;
         }
     }
     self.bottomLine.hidden = YES;
 }
 
 #pragma mark - public -
-//- (void)setModel:(MyExceptionalModel * _Nonnull)model index:(NSInteger )index {
-//    _model = model;
-//
-//    self.numLabel.text = [NSString stringWithFormat:@"%ld",index + 1];
-//}
-
-+ (CGFloat)getCellHeight {
++ (CGFloat)getCellHeightWithModel:(DemanDetailModel *)model {
     CGFloat marginLeft = 85;
-    NSString *contentStr = @"路边数据库里的发送旅客阿斯顿发卡看 得见啊发哈是大力开发和撒地方了看见 发来看哈是阿斯顿联发科技啊号是";
-    CGFloat contentHeight = [contentStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 * 3 font:KFont(14)] + MARGIN_10 * 2;
+    CGFloat contentHeight = MAX([model.experience getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 * 3 font:KFont(14)] + MARGIN_10 * 2, 35) ;
     return [UserBaseInfoView getHeight] + 35 * 2 + contentHeight + MARGIN_15 * 2 + 30 + MARGIN_10;
 }
+
+- (void)setModel:(DemanDetailModel *)model {
+    _model = model;
+    
+    [self.userView.headImageV sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
+    self.userView.typeLevelLabel.text = model.pasName;
+    self.userView.nickNameLabel.text = model.nikeName;
+    self.userView.ageLabel.text = [NSString stringWithFormat:@" %@  ",model.age];
+    self.userView.genderLabel.text = [model.sex integerValue] == 1 ? @" 男 " : @" 女 ";
+    [self setAuthImageWithModel:model];
+    
+    self.priceLabel.text = [NSString stringWithFormat:@"%@元",model.servicePrice];
+    
+    self.personIndouceLabel.text = model.experience;
+    CGFloat marginLeft = 85;
+    CGFloat contentHeight = MAX([model.experience getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 * 3 font:KFont(14)] + MARGIN_10 * 2, 35) ;
+    [self.personIndouceLabel.superview mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(contentHeight);
+    }];
+    
+    self.timeLabel.text = model.yyTIme;
+    
+}
+
+#pragma mark - private -
+
+- (void)setAuthImageWithModel:(DemanDetailModel *)model {
+    
+    NSMutableArray *authImages = [NSMutableArray array];
+    if (model.phone.length > 0) {//手机认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_phone")];
+    }
+    if (model.wxNumber.length > 0) {//微信认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_weichat")];
+    }
+//    if (YES) {//身份认证
+//        [authImages addObject:imageNamed(@"personalAuth_icon_idCard")];
+//    }
+    if (model.aliPayNumber.length > 0) {//支付宝认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_alipay")];
+    }
+    //    if ([model.xxx integerValue] == 1) {//技能认证
+    //        [authImages addObject:imageNamed(@"personalAuth_icon_skill")];
+    //    }
+    
+    [self.userView.authimgLabel setAuthImages:authImages];
+}
+
+- (UIButton *)getSingleBtn {
+    UIButton *btn = [[UIButton alloc] init];
+    [btn setButtonStateNormalTitle:@"" Font:KFont(14) textColor:COLOR_UI_666666];
+    [btn setborderColor:COLOR_UI_999999];
+    [btn setDefaultCorner];
+    [btn setBackgroundImage:[UIImage createImageWithColor:COLOR_UI_FFFFFF] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage createImageWithColor:COLOR_UI_THEME_RED] forState:UIControlStateSelected];
+    [btn setTitleColor:COLOR_UI_666666 forState:UIControlStateNormal];
+    [btn setTitleColor:COLOR_UI_FFFFFF forState:UIControlStateSelected];
+    return btn;
+}
+
+
 
 #pragma mark - action
 

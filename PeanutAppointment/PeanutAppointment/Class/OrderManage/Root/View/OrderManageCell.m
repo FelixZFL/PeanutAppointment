@@ -9,6 +9,8 @@
 #import "OrderManageCell.h"
 #import "UserBaseInfoView.h"
 
+#import "OrderManageDoneListModel.h"
+
 #define kBtnTag 5743
 
 @interface OrderManageCell()
@@ -21,6 +23,9 @@
 @property (nonatomic, strong) UIButton *button1;
 @property (nonatomic, strong) UIButton *button2;
 @property (nonatomic, strong) UIButton *button3;
+
+@property (nonatomic, strong) OrderManageDoneListModel *model;
+
 
 @end
 
@@ -100,7 +105,7 @@
         
         
         if (i == 0) {
-            [btn setButtonStateNormalTitle:@"已完成"];
+            [btn setButtonStateNormalTitle:@""];
             self.button1 = btn;
         } else if (i == 1) {
             [btn setButtonStateNormalTitle:@"删除订单"];
@@ -126,12 +131,79 @@
     return [UserBaseInfoView getHeight] + 50 + MARGIN_10;
 }
 
+- (void)setModel:(OrderManageDoneListModel * _Nonnull)model isDone:(BOOL)isDone {
+    _model = model;
+    
+    [self.userView.headImageV sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
+    self.userView.typeLevelLabel.text = model.pasName;
+    self.userView.distanceLabel.text = [NSString stringWithFormat:@"%@KM",model.distance];
+    self.userView.nickNameLabel.text = model.nikeName;
+    self.userView.ageLabel.text = [NSString stringWithFormat:@" %@  ",model.age];
+    self.userView.genderLabel.text = [model.sex integerValue] == 1 ? @" 男 " : @" 女 ";
+    [self setAuthImageWithModel:model];
+    
+    self.timeLabel.text = [NSString stringWithFormat:@"发布时间：%@",model.createTime];
+    self.hintLabel.hidden = isDone;
+    
+    if (isDone) {//已完成
+        
+        self.button3.hidden = [model.state integerValue] != 2;
+        
+        self.button1.backgroundColor = COLOR_UI_FFFFFF;
+        [self.button1 setTitleColor:COLOR_UI_666666 forState:UIControlStateNormal];
+        //1:已过期   2:已评价    3:未评价
+        if ([model.state integerValue] == 1) {
+            [self.button1 setButtonStateNormalTitle:@"已过期"];
+        } else {
+            [self.button1 setButtonStateNormalTitle:@"已完成"];
+        }
+        [self.button1 setButtonStateNormalTitle:@""];
+        
+    } else {//接单中
+        self.button3.hidden = YES;
+        
+        self.button1.backgroundColor = COLOR_UI_THEME_RED;
+        [self.button1 setTitleColor:COLOR_UI_FFFFFF forState:UIControlStateNormal];
+        
+        if ([model.state integerValue] == 2) {
+            [self.button1 setButtonStateNormalTitle:@"应邀赚钱"];
+        } else {
+            [self.button1 setButtonStateNormalTitle:@"发消息"];
+        }
+    }    
+}
+
+#pragma mark - private
+
+- (void)setAuthImageWithModel:(OrderManageDoneListModel *)model {
+    
+    NSMutableArray *authImages = [NSMutableArray array];
+    if (model.phone.length > 0) {//手机认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_phone")];
+    }
+    if (model.wxNumber.length > 0) {//微信认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_weichat")];
+    }
+    if (YES) {//身份认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_idCard")];
+    }
+    if (model.aliPayNumber.length > 0) {//支付宝认证
+        [authImages addObject:imageNamed(@"personalAuth_icon_alipay")];
+    }
+//    if ([model.xxx integerValue] == 1) {//技能认证
+//        [authImages addObject:imageNamed(@"personalAuth_icon_skill")];
+//    }
+    
+    [self.userView.authimgLabel setAuthImages:authImages];
+}
+
+
 #pragma mark - action
 
 - (void)btnClickAction:(UIButton *)sender {
     
-    if (self.buttonClickBlock) {
-        self.buttonClickBlock(sender.tag - kBtnTag);
+    if (self.buttonClickBlock && self.model) {
+        self.buttonClickBlock(sender, self.model);
     }
     
 }

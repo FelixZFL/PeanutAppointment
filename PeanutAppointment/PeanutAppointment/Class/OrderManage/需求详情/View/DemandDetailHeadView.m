@@ -8,12 +8,17 @@
 
 #import "DemandDetailHeadView.h"
 
+#import "DemanDetailModel.h"
+
 #define SingleViewHeight 50.f
 
 @interface DemandDetailHeadView()
 
-@property (nonatomic, strong) UILabel *receiveLabel;
-@property (nonatomic, strong) UILabel *returnLabel;
+@property (nonatomic, strong) UILabel *typeLabel;
+@property (nonatomic, strong) UILabel *startTimeLabel;
+@property (nonatomic, strong) UILabel *endTimeLabel;
+@property (nonatomic, strong) UILabel *sexLabel;
+@property (nonatomic, strong) UILabel *serverTypeLabel;
 
 @end
 
@@ -81,15 +86,20 @@
         }];
         
         if (i == 0) {
-            contentLabel.text = @"棋牌";
+            //contentLabel.text = @"棋牌";
+            self.typeLabel = contentLabel;
         } else if (i == 1) {
-            contentLabel.text = @"2018-08-30";
+            //contentLabel.text = @"2018-08-30";
+            self.startTimeLabel = contentLabel;
         } else if (i == 2) {
-            contentLabel.text = @"2018-08-30";
+            //contentLabel.text = @"2018-08-30";
+            self.endTimeLabel = contentLabel;
         } else if (i == 3) {
-            contentLabel.text = @"不限";
+            //contentLabel.text = @"不限";
+            self.sexLabel = contentLabel;
         } else if (i == 4) {
-            contentLabel.text = @"客户找我·我去找客户";
+            //contentLabel.text = @@"客户找我 · 我找客户";
+            self.serverTypeLabel = contentLabel;
         }
         lastView = singleView;
     }
@@ -114,6 +124,29 @@
 + (CGFloat)getHeight {
     
     return 35 * 5 + 60;
+}
+
+- (void)setModel:(DemanDetailModel *)model {
+    _model = model;
+    
+    self.typeLabel.text = model.pasName;
+    self.startTimeLabel.text = model.createTime;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *startDate = [dateFormatter dateFromString:model.createTime];
+    NSDate *endDate = [NSDate dateWithTimeInterval:[model.dayNumber integerValue] * 24 * 60 * 60 sinceDate:startDate];
+    
+    self.endTimeLabel.text = [dateFormatter stringFromDate:endDate];
+    self.sexLabel.text = @"";
+    
+    if ([model.serviceType integerValue] == 1) {
+        self.serverTypeLabel.text = @"客户找我";
+    } else if ([model.serviceType integerValue] == 2) {
+        self.serverTypeLabel.text = @"我找客户";
+    } else if ([model.serviceType integerValue] == 3) {
+        self.serverTypeLabel.text = @"客户找我 · 我找客户";
+    }
+    
 }
 
 #pragma mark - action -

@@ -10,9 +10,14 @@
 #import "DemandDetailHeadView.h"
 #import "DemandDetailCell.h"
 
+#import "DemanDetailModel.h"
+
+
 @interface DemandDetailViewController ()
 
 @property (nonatomic, strong) DemandDetailHeadView *headView;
+
+@property (nonatomic, strong) DemanDetailModel *model;
 
 @end
 
@@ -27,7 +32,7 @@
     
     [self setupUI];
     
-//    [self getData];
+    [self getData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,7 +50,14 @@
 
 - (void)setupUI {
     
-    self.tableView.tableHeaderView = self.headView;
+}
+
+- (void)updateUI {
+    if (self.model) {
+        [self.headView setModel:self.model];
+        self.tableView.tableHeaderView = self.headView;
+        [self.tableView reloadData];
+    }
 }
 
 
@@ -53,20 +65,16 @@
 
 - (void)getData {
     
-//    [YQNetworking postWithApiNumber:API_NUM_20008 params:@{@"userId":[PATool getUserId], @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)} successBlock:^(id response) {
-//
-//        if (getResponseIsSuccess(response)) {
-//            [self.dataArr addObjectsFromArray:[MyExceptionalModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
-//            [self.tableView reloadData];
-//        }
-//        self.placeholderView.hidden = self.dataArr.count > 0;
-//
-//        [self.tableView.mj_header endRefreshing];
-//        [self.tableView.mj_footer endRefreshing];
-//    } failBlock:^(NSError *error) {
-//        [self.tableView.mj_header endRefreshing];
-//        [self.tableView.mj_footer endRefreshing];
-//    }];
+    [YQNetworking postWithApiNumber:API_NUM_20029 params:@{@"orderId":_orderId, @"yUserId":_yUserId} successBlock:^(id response) {
+
+        if (getResponseIsSuccess(response)) {
+            
+            self.model = [DemanDetailModel mj_objectWithKeyValues:getResponseData(response)];
+            [self updateUI];
+        }
+
+    } failBlock:^(NSError *error) {
+    }];
 }
 
 #pragma mark - action
@@ -75,11 +83,17 @@
 #pragma mark - delegate&&datasource -
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;//self.dataArr.count;
+    if (self.model) {
+        return 1;
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [DemandDetailCell getCellHeight];
+    if (self.model) {
+        return [DemandDetailCell getCellHeightWithModel:self.model];
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -89,8 +103,8 @@
     if (!cell) {
         cell = [[DemandDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
-    if (self.dataArr.count > indexPath.row) {
-//        [cell setModel:self.dataArr[indexPath.row] index:indexPath.row];
+    if (self.model) {
+        [cell setModel:self.model];
     }
     return cell;
 }

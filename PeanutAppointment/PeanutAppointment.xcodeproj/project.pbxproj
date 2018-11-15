@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A050564219DDB81006FC345 /* OrderManageDoingListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A050563219DDB81006FC345 /* OrderManageDoingListModel.m */; };
+		5A050567219DDB9A006FC345 /* OrderManageDoneListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A050566219DDB9A006FC345 /* OrderManageDoneListModel.m */; };
+		5A05056A219E0493006FC345 /* DemanDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A050569219E0493006FC345 /* DemanDetailModel.m */; };
+		5A05056E219E18AA006FC345 /* LMJScrollTextView2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A05056C219E18AA006FC345 /* LMJScrollTextView2.m */; };
 		5A0C97772165C6020083D1BE /* BXTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0C97712165C6010083D1BE /* BXTextField.m */; };
 		5A0C97782165C6020083D1BE /* UITextField+BXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0C97722165C6010083D1BE /* UITextField+BXExtension.m */; };
 		5A0C97792165C6020083D1BE /* UIView+BXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0C97732165C6020083D1BE /* UIView+BXExtension.m */; };
@@ -655,6 +659,14 @@
 
 /* Begin PBXFileReference section */
 		41C5CEBDF7A132572D9293DF /* Pods-PeanutAppointment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PeanutAppointment.release.xcconfig"; path = "Pods/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment.release.xcconfig"; sourceTree = "<group>"; };
+		5A050562219DDB81006FC345 /* OrderManageDoingListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderManageDoingListModel.h; sourceTree = "<group>"; };
+		5A050563219DDB81006FC345 /* OrderManageDoingListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderManageDoingListModel.m; sourceTree = "<group>"; };
+		5A050565219DDB9A006FC345 /* OrderManageDoneListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderManageDoneListModel.h; sourceTree = "<group>"; };
+		5A050566219DDB9A006FC345 /* OrderManageDoneListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderManageDoneListModel.m; sourceTree = "<group>"; };
+		5A050568219E0493006FC345 /* DemanDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemanDetailModel.h; sourceTree = "<group>"; };
+		5A050569219E0493006FC345 /* DemanDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemanDetailModel.m; sourceTree = "<group>"; };
+		5A05056C219E18AA006FC345 /* LMJScrollTextView2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMJScrollTextView2.m; sourceTree = "<group>"; };
+		5A05056D219E18AA006FC345 /* LMJScrollTextView2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMJScrollTextView2.h; sourceTree = "<group>"; };
 		5A0C97712165C6010083D1BE /* BXTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXTextField.m; sourceTree = "<group>"; };
 		5A0C97722165C6010083D1BE /* UITextField+BXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+BXExtension.m"; sourceTree = "<group>"; };
 		5A0C97732165C6020083D1BE /* UIView+BXExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BXExtension.m"; sourceTree = "<group>"; };
@@ -1845,6 +1857,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5A05056B219E18AA006FC345 /* LMJScrollTextView2 */ = {
+			isa = PBXGroup;
+			children = (
+				5A05056D219E18AA006FC345 /* LMJScrollTextView2.h */,
+				5A05056C219E18AA006FC345 /* LMJScrollTextView2.m */,
+			);
+			path = LMJScrollTextView2;
+			sourceTree = "<group>";
+		};
 		5A0C97702165C6010083D1BE /* JYJKeyBoard */ = {
 			isa = PBXGroup;
 			children = (
@@ -2474,6 +2495,7 @@
 		5A31D39F21455D8E001E2043 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				5A05056B219E18AA006FC345 /* LMJScrollTextView2 */,
 				5AD630BE2195927200FBC87C /* AliyunVideo */,
 				5A5635002184E3FD00D8D442 /* UpYunSDK */,
 				5A0C977A2165C60C0083D1BE /* TencentOpenAPI */,
@@ -2744,6 +2766,10 @@
 			children = (
 				5ACB8F052191F33300AB5DC1 /* OrderManageListModel.h */,
 				5ACB8F062191F33300AB5DC1 /* OrderManageListModel.m */,
+				5A050562219DDB81006FC345 /* OrderManageDoingListModel.h */,
+				5A050563219DDB81006FC345 /* OrderManageDoingListModel.m */,
+				5A050565219DDB9A006FC345 /* OrderManageDoneListModel.h */,
+				5A050566219DDB9A006FC345 /* OrderManageDoneListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3930,18 +3956,18 @@
 			children = (
 				5AD633392195928200FBC87C /* ResourceManager */,
 				5AD6335E2195928200FBC87C /* QUTimeline */,
-				5AD6336B2195928200FBC87C /* AliyunEditButtonsView.h */,
-				5AD6336C2195928200FBC87C /* AliyunEditHeaderView.m */,
-				5AD6336D2195928200FBC87C /* AliyunEditViewController.m */,
 				5AD6336E2195928200FBC87C /* AliAssetImageGenerator */,
 				5AD633712195928200FBC87C /* QUPasterUIComponent */,
 				5AD633802195928200FBC87C /* Model */,
-				5AD633952195928200FBC87C /* AliyunEditHeaderView.h */,
 				5AD633962195928200FBC87C /* QUEffectBottomView */,
-				5AD633C02195928300FBC87C /* AliyunEditButtonsView.m */,
 				5AD633C12195928300FBC87C /* CustomFilter */,
 				5AD633C42195928300FBC87C /* QUTabController */,
 				5AD633D32195928300FBC87C /* AliyunEditViewController.h */,
+				5AD6336D2195928200FBC87C /* AliyunEditViewController.m */,
+				5AD633952195928200FBC87C /* AliyunEditHeaderView.h */,
+				5AD6336C2195928200FBC87C /* AliyunEditHeaderView.m */,
+				5AD6336B2195928200FBC87C /* AliyunEditButtonsView.h */,
+				5AD633C02195928300FBC87C /* AliyunEditButtonsView.m */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -5178,6 +5204,8 @@
 		5AF0B46F217FB2F100BF8020 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5A050568219E0493006FC345 /* DemanDetailModel.h */,
+				5A050569219E0493006FC345 /* DemanDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5853,6 +5881,7 @@
 				5A180CE92198057F00F989F7 /* VersionModel.m in Sources */,
 				5A31D3CA21455D8E001E2043 /* UIColor+FLExtension.m in Sources */,
 				5AD6375C2195928600FBC87C /* AVCVideoConfig.m in Sources */,
+				5A05056A219E0493006FC345 /* DemanDetailModel.m in Sources */,
 				5A31D3D721455F73001E2043 /* PAUserDefaults.m in Sources */,
 				5AD634F72195928400FBC87C /* AlivcLiveEntity.m in Sources */,
 				5AD6373E2195928600FBC87C /* AliyunPlayerViewGestureView.m in Sources */,
@@ -5869,6 +5898,8 @@
 				5AF7155021976CE2006F52F4 /* AliyunJSONModel.m in Sources */,
 				5AD637D42195931500FBC87C /* AlivcAppServer.m in Sources */,
 				5AD637312195928600FBC87C /* AVCLogView.m in Sources */,
+				5A050564219DDB81006FC345 /* OrderManageDoingListModel.m in Sources */,
+				5A05056E219E18AA006FC345 /* LMJScrollTextView2.m in Sources */,
 				5AD636C82195928600FBC87C /* AliyunEditViewController.m in Sources */,
 				5AD6369A2195928600FBC87C /* AliyunCropViewController.m in Sources */,
 				5AD637452195928600FBC87C /* AliyunPlayerViewGifView.m in Sources */,
@@ -5986,6 +6017,7 @@
 				5AD637772195928700FBC87C /* AlivcUploadMainViewController.m in Sources */,
 				5AD6370C2195928600FBC87C /* AliyunCompressManager.m in Sources */,
 				5AF7154221976CE2006F52F4 /* AlivcPublisherView.m in Sources */,
+				5A050567219DDB9A006FC345 /* OrderManageDoneListModel.m in Sources */,
 				5AD636852195928600FBC87C /* AliyunAlbumModel.m in Sources */,
 				5AD636D42195928600FBC87C /* AliyunEffectMvInfo.m in Sources */,
 				5AD6368D2195928600FBC87C /* AliyunPhotoListViewCell.m in Sources */,

@@ -17,7 +17,8 @@
              @"toDayVideoHotUser":[HomeVideoHotUserModel class],
              @"indexUser":[HomeIndexUserModel class],
              @"tools":[HomeToolModel class],
-             @"typeList":[HomeTypeListModel class]};
+             @"typeList":[HomeTypeListModel class],
+             @"notice":[HomeNoticeListModel class] };
 }
 
 @end
@@ -38,6 +39,9 @@
 @end
 
 @implementation HomeTypeListModel
+@end
+
+@implementation HomeNoticeListModel
 @end
 
 

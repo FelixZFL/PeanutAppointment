@@ -157,9 +157,7 @@
     }];
     [self.talentView setDataArray:model.toDayVideoHotUser];
     
-    
-    self.noticeView.contentLabel.text = model.notice;
-    
+    [self.noticeView setArray:model.notice];
 }
 
 #pragma mark - action -

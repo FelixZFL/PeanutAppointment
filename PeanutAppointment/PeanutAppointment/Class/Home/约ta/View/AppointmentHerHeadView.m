@@ -10,6 +10,10 @@
 #import "HomeIndexUserModel.h"
 #import "SkillListModel.h"
 
+#define kPriceBtnTag 54323
+#define kValidDayBtnTag 7584
+#define kSkillBtnTag 3257
+
 #define hintString @"如果约单没有成功，在有效天数过后，订金可退回到本人帐户中，不会对需求发布人造成损失。"
 
 @interface AppointmentHerHeadView()
@@ -19,8 +23,11 @@
 @property (nonatomic, strong) UILabel *ageLabel;
 @property (nonatomic, strong) UILabel *genderLabel;
 
-@property (nonatomic, strong) UIView *priceBtnsView;
-@property (nonatomic, strong) UIView *skillsView;
+@property (nonatomic, strong) UIView *priceBtnsView;//价格
+@property (nonatomic, strong) UIView *validDaysView;//有效天数
+@property (nonatomic, strong) UIView *skillsView;//技能
+
+
 
 @end
 
@@ -97,6 +104,10 @@
     CGFloat btnHeight = 30;
     UIView *lastView = nil;
     
+    _choosedPrice = @"50";
+    _choosedPusId = @"";
+    _choosedVailDays = @"1";
+    
     for (int i = 0; i < titleArray.count; i++) {
         UIView *singleView = [[UIView alloc] init];
         [self addSubview:singleView];
@@ -121,10 +132,10 @@
             CGFloat btnWidth = (SCREEN_WIDTH - marginLeft - MARGIN_15 * 4)/4;
             NSArray *titleArray = @[@"50元",@"100元",@"150元",@"200元",@"250元",@"300元",@"350元",@"400元"];
             for (int j = 0; j < titleArray.count; j++) {
-                UIButton *btn = [[UIButton alloc] init];
-                [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
-                [btn setDefaultCorner];
-                [btn setborderColor:COLOR_UI_999999];
+                UIButton *btn = [self getSingleBtn];
+                [btn setButtonStateNormalTitle:titleArray[j]];
+                btn.selected = j == 0;
+                btn.tag = kPriceBtnTag + j;
                 [btn addTarget:self action:@selector(priceBtnClcikAction:) forControlEvents:UIControlEventTouchUpInside];
                 [singleView addSubview:btn];
                 [btn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -163,10 +174,10 @@
             CGFloat btnWidth = (SCREEN_WIDTH - marginLeft - MARGIN_15 * 4)/4;
             NSArray *titleArray = @[@"一天",@"两天",@"三天",@"四天",@"五天",@"六天"];
             for (int j = 0; j < titleArray.count; j++) {
-                UIButton *btn = [[UIButton alloc] init];
-                [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
-                [btn setDefaultCorner];
-                [btn setborderColor:COLOR_UI_999999];
+                UIButton *btn = [self getSingleBtn];
+                [btn setButtonStateNormalTitle:titleArray[j]];
+                btn.selected = j == 0;
+                btn.tag = kValidDayBtnTag + j;
                 [btn addTarget:self action:@selector(daysBtnClcikAction:) forControlEvents:UIControlEventTouchUpInside];
                 [singleView addSubview:btn];
                 [btn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -181,6 +192,7 @@
                 make.height.mas_equalTo(MARGIN_10 + 2 * (btnHeight + MARGIN_10));
             }];
             
+            self.validDaysView = singleView;
         }
         lastView = singleView;
     }
@@ -198,21 +210,19 @@
         CGFloat hintHeight = [hintString getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(12)];
         CGFloat hight1 = btnsHeight + MARGIN_10 * 2 + hintHeight;
         
-        CGFloat height2 = 0;
+        CGFloat height2 = 35;
         if (skillArray.count > 0) {
             CGFloat btnX = marginLeft;
             CGFloat btnY = MARGIN_10;
             UIButton *lastBtn = nil;
-            NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
             UIView *view = [[UIView alloc] init];
-            for (int j = 0; j < titleArray.count; j++ ) {
+            for (int j = 0; j < skillArray.count; j++ ) {
+                
+                SkillListModel *model = skillArray[j];
                 UIButton *btn = [[UIButton alloc] init];
-                [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
-                [btn setDefaultCorner];
-                [btn setborderColor:COLOR_UI_999999];
-                [btn setBackgroundColor:COLOR_UI_FFFFFF];
+                [btn setButtonStateNormalTitle:model.jnName Font:KFont(14) textColor:COLOR_UI_666666];
                 [view addSubview:btn];
-                CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
+                CGFloat btnWith = [model.jnName getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
                 if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
                     btnX = marginLeft;
                     btnY += btnHeight + MARGIN_10;
@@ -223,7 +233,7 @@
                 lastBtn = btn;
             }
             
-            height2 = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
+            height2 = MAX(CGRectGetMaxY(lastBtn.frame) + MARGIN_10, 35);
         }
         
         
@@ -238,59 +248,112 @@
 - (void)setModel:(HomeIndexUserModel *)model {
     _model = model;
     
-    
+    [self.headImageV sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
+    self.nickNameLabel.text = model.nikeName;
+    self.ageLabel.text = [NSString stringWithFormat:@" %@岁 ",model.age];
+    self.genderLabel.text = [NSString stringWithFormat:@" %@ ",[model.sex integerValue] == 1 ? @"男" : @"女"];
 }
 
 - (void)setSkillArray:(NSArray<SkillListModel *> *)skillArray {
     _skillArray = skillArray;
     
-//    for (UIView *view in self.skillsView.subviews) {
-//        [view removeFromSuperview];
-//    }
-//    CGFloat marginLeft = 85;
-//    CGFloat btnX = marginLeft;
-//    CGFloat btnY = MARGIN_10;
-//    UIButton *lastBtn = nil;
-//    NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
-//    for (int j = 0; j < titleArray.count; j++ ) {
-//        UIButton *btn = [[UIButton alloc] init];
-//        [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
-//        [btn setDefaultCorner];
-//        [btn setborderColor:COLOR_UI_999999];
-//        [btn setBackgroundColor:COLOR_UI_FFFFFF];
-//        [self.skillsView addSubview:btn];
-//        [btn addTarget:self action:@selector(skillBtnClcikAction:) forControlEvents:UIControlEventTouchUpInside];
-//        CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
-//        if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
-//            btnX = marginLeft;
-//            btnY += btnHeight + MARGIN_10;
-//        }
-//        btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
-//
-//        btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
-//        lastBtn = btn;
-//    }
-//
-//    CGFloat height = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
-//
-//    [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-//        make.height.mas_equalTo(height);
-//    }];
+    for (UIView *view in self.skillsView.subviews) {
+        if ([view isKindOfClass:[UIButton class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    CGFloat btnHeight = 30;
+    CGFloat marginLeft = 85;
+    CGFloat btnX = marginLeft;
+    CGFloat btnY = MARGIN_10;
+    UIButton *lastBtn = nil;
+    if (skillArray.count > 0) {
+        SkillListModel *model = skillArray.firstObject;
+        self.choosedPusId = model.jnId;
+    }
+    for (int j = 0; j < skillArray.count; j++ ) {
+        SkillListModel *model = skillArray[j];
+        UIButton *btn = [self getSingleBtn];
+        [btn setButtonStateNormalTitle:model.jnName];
+        btn.selected = j == 0;
+        btn.tag = kSkillBtnTag + j;
+        [self.skillsView addSubview:btn];
+        [btn addTarget:self action:@selector(skillBtnClcikAction:) forControlEvents:UIControlEventTouchUpInside];
+        CGFloat btnWith = [model.jnName getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
+        if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
+            btnX = marginLeft;
+            btnY += btnHeight + MARGIN_10;
+        }
+        btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
+
+        btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
+        lastBtn = btn;
+    }
+
+    CGFloat height = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
+
+    [self.skillsView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(height);
+    }];
     
 }
 
 #pragma mark -- action -
 
 - (void)priceBtnClcikAction:(UIButton *)sender {
-    
+    if (sender.selected) {
+        return;
+    }
+    NSArray *array = @[@"50",@"100",@"150",@"200",@"250",@"300",@"350",@"400"];
+    if (array.count > sender.tag - kPriceBtnTag) {
+        self.choosedPrice = array[sender.tag - kPriceBtnTag];
+    }
+    [self seleBtn:sender];
 }
 
 - (void)skillBtnClcikAction:(UIButton *)sender {
-    
+    if (sender.selected) {
+        return;
+    }
+    if (self.skillArray.count > sender.tag - kSkillBtnTag) {
+        SkillListModel *model = self.skillArray[sender.tag - kSkillBtnTag];
+        self.choosedPusId = model.jnId;
+    }
+    [self seleBtn:sender];
 }
 
 - (void)daysBtnClcikAction:(UIButton *)sender {
-    
+    if (sender.selected) {
+        return;
+    }
+    self.choosedVailDays = [NSString stringWithFormat:@"%ld",sender.tag - kValidDayBtnTag + 1];
+    [self seleBtn:sender];
+}
+
+#pragma mark - private
+
+- (void)seleBtn:(UIButton *)sender {
+    for (UIView *view in sender.superview.subviews) {
+        if ([view isKindOfClass:[UIButton class]]) {
+            if (sender == view) {
+                [(UIButton *)view setSelected:YES];
+            } else {
+                [(UIButton *)view setSelected:NO];
+            }
+        }
+    }
+}
+
+- (UIButton *)getSingleBtn {
+    UIButton *btn = [[UIButton alloc] init];
+    [btn setButtonStateNormalTitle:@"" Font:KFont(14) textColor:COLOR_UI_666666];
+    [btn setborderColor:COLOR_UI_999999];
+    [btn setDefaultCorner];
+    [btn setBackgroundImage:[UIImage createImageWithColor:COLOR_UI_FFFFFF] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage createImageWithColor:COLOR_UI_THEME_RED] forState:UIControlStateSelected];
+    [btn setTitleColor:COLOR_UI_666666 forState:UIControlStateNormal];
+    [btn setTitleColor:COLOR_UI_FFFFFF forState:UIControlStateSelected];
+    return btn;
 }
 
 
@@ -308,7 +371,7 @@
     if (!_nickNameLabel) {
         _nickNameLabel = [[UILabel alloc] init];
         [_nickNameLabel setLabelFont:KFont(14) textColor:COLOR_UI_222222 textAlignment:NSTextAlignmentLeft];
-        _nickNameLabel.text = @"笑笑";
+        _nickNameLabel.text = @"";
     }
     return _nickNameLabel;
 }
@@ -319,7 +382,7 @@
         [_ageLabel setLabelFont:KFont(10) textColor:COLOR_UI_FFFFFF textAlignment:NSTextAlignmentLeft];
         _ageLabel.backgroundColor = COLOR_UI_THEME_RED;
         [_ageLabel setDefaultCorner];
-        _ageLabel.text = @" 23岁 ";
+        _ageLabel.text = @"";
     }
     return _ageLabel;
 }
@@ -330,11 +393,10 @@
         [_genderLabel setLabelFont:KFont(10) textColor:COLOR_UI_FFFFFF textAlignment:NSTextAlignmentLeft];
         _genderLabel.backgroundColor = COLOR_UI_THEME_RED;
         [_genderLabel setDefaultCorner];
-        _genderLabel.text = @" 男 ";
+        _genderLabel.text = @"";
     }
     return _genderLabel;
 }
-
 
 
 @end

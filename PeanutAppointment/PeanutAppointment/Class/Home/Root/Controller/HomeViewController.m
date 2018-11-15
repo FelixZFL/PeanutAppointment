@@ -138,7 +138,7 @@
     if (!self.model) {
         return;
     }
-    self.redPackageImageV.hidden = NO;
+    self.redPackageImageV.hidden = [self.model.isShowRedPage integerValue] != 1;
     [self.headView updateWithModel:self.model];
     self.headView.frame = CGRectMake(0, 0, ScreenWidth, [HomeHeadView getHeightWithModel:self.model]);
     self.tableView.tableHeaderView = self.headView;
@@ -265,7 +265,25 @@
 - (void)redPackageClickAction:(UITapGestureRecognizer *)tapGes {
     if (![self cheakLogin]) return;
     
+    [YQNetworking postWithApiNumber:API_NUM_10033 params:@{@"userId":[PATool getUserId]} successBlock:^(id response) {
+        
+        if (getResponseIsSuccess(response)) {
+            NSDictionary *dic = getResponseData(response);
+            //1:领取成功   2:已领取
+            if ([dic[@"isRedPage"] integerValue] == 1) {
+                self.redPackageImageV.hidden = YES;
+                [SVProgressHUD showSuccessWithStatus:@"领取成功"];
+            } else if ([dic[@"isRedPage"] integerValue] == 2){
+                self.redPackageImageV.hidden = YES;
+                [SVProgressHUD showErrorWithStatus:@"已领取"];
+            }
+        }
+    } failBlock:nil];
     
+}
+
+- (void)closeRedPackageAction {
+    self.redPackageImageV.hidden = YES;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -448,6 +466,15 @@
         _redPackageImageV.userInteractionEnabled = YES;
         _redPackageImageV.hidden = YES;
         [_redPackageImageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(redPackageClickAction:)]];
+        
+        UIButton *closeBtn = [[UIButton alloc] init];
+        [closeBtn setButtonStateNormalImage:imageNamed(@"home_redPackage_close")];
+        [closeBtn addTarget:self action:@selector(closeRedPackageAction) forControlEvents:UIControlEventTouchUpInside];
+        [_redPackageImageV addSubview:closeBtn];
+        [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.right.mas_equalTo(0);
+            make.width.height.mas_equalTo(40);
+        }];
     }
     return _redPackageImageV;
 }
