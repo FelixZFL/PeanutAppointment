@@ -7,6 +7,10 @@
 //
 
 #import "AppointmentHerHeadView.h"
+#import "HomeIndexUserModel.h"
+#import "SkillListModel.h"
+
+#define hintString @"如果约单没有成功，在有效天数过后，订金可退回到本人帐户中，不会对需求发布人造成损失。"
 
 @interface AppointmentHerHeadView()
 
@@ -16,6 +20,7 @@
 @property (nonatomic, strong) UILabel *genderLabel;
 
 @property (nonatomic, strong) UIView *priceBtnsView;
+@property (nonatomic, strong) UIView *skillsView;
 
 @end
 
@@ -132,8 +137,7 @@
             
             UILabel *hintLabel = [UILabel labelWithFont:KFont(12) textColor:KHexColor(@"692222") textAlignment:NSTextAlignmentLeft];
             hintLabel.numberOfLines = 0;
-            NSString *hintStr = @"如果约单没有成功，在有效天数过后，订金可退回到本人帐户中，不会对需求发布人造成损失。";
-            hintLabel.text = hintStr;
+            hintLabel.text = hintString;
             [singleView addSubview:hintLabel];
             [hintLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(marginLeft);
@@ -142,41 +146,16 @@
             }];
             
             CGFloat btnsHeight = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
-            CGFloat hintHeight = [hintStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(12)];
+            CGFloat hintHeight = [hintString getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(12)];
             [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(btnsHeight + MARGIN_10 * 2 + hintHeight);
             }];
             
             self.priceBtnsView = singleView;
         } else if (i == 1) {
-            CGFloat btnX = marginLeft;
-            CGFloat btnY = MARGIN_10;
-            UIButton *lastBtn = nil;
-            NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
-            for (int j = 0; j < titleArray.count; j++ ) {
-                UIButton *btn = [[UIButton alloc] init];
-                [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
-                [btn setDefaultCorner];
-                [btn setborderColor:COLOR_UI_999999];
-                [btn setBackgroundColor:COLOR_UI_FFFFFF];
-                [singleView addSubview:btn];
-                [btn addTarget:self action:@selector(skillBtnClcikAction:) forControlEvents:UIControlEventTouchUpInside];
-                CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
-                if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
-                    btnX = marginLeft;
-                    btnY += btnHeight + MARGIN_10;
-                }
-                btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
-                
-                btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
-                lastBtn = btn;
-            }
             
-            CGFloat height = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
+            self.skillsView = singleView;
             
-            [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_equalTo(height);
-            }];
         } else if (i == 2) {
             
             
@@ -210,43 +189,94 @@
 
 #pragma mark - public -
 
-+ (CGFloat)getHeight {
-    NSString *hintStr = @"如果约单没有成功，在有效天数过后，订金可退回到本人帐户中，不会对需求发布人造成损失。";
-    CGFloat btnHeight = 30;
-    CGFloat marginLeft = 85;
-    CGFloat btnsHeight = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
-    CGFloat hintHeight = [hintStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(12)];
-    CGFloat hight1 = btnsHeight + MARGIN_10 * 2 + hintHeight;
++ (CGFloat )getHeightWithModel:(HomeIndexUserModel *)model skills:(NSArray *)skillArray {
     
-    
-    CGFloat btnX = marginLeft;
-    CGFloat btnY = MARGIN_10;
-    UIButton *lastBtn = nil;
-    NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
-    UIView *view = [[UIView alloc] init];
-    for (int j = 0; j < titleArray.count; j++ ) {
-        UIButton *btn = [[UIButton alloc] init];
-        [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
-        [btn setDefaultCorner];
-        [btn setborderColor:COLOR_UI_999999];
-        [btn setBackgroundColor:COLOR_UI_FFFFFF];
-        [view addSubview:btn];
-        CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
-        if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
-            btnX = marginLeft;
-            btnY += btnHeight + MARGIN_10;
-        }
-        btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
+    if (model) {
+        CGFloat btnHeight = 30;
+        CGFloat marginLeft = 85;
+        CGFloat btnsHeight = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
+        CGFloat hintHeight = [hintString getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(12)];
+        CGFloat hight1 = btnsHeight + MARGIN_10 * 2 + hintHeight;
         
-        btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
-        lastBtn = btn;
+        CGFloat height2 = 0;
+        if (skillArray.count > 0) {
+            CGFloat btnX = marginLeft;
+            CGFloat btnY = MARGIN_10;
+            UIButton *lastBtn = nil;
+            NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
+            UIView *view = [[UIView alloc] init];
+            for (int j = 0; j < titleArray.count; j++ ) {
+                UIButton *btn = [[UIButton alloc] init];
+                [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
+                [btn setDefaultCorner];
+                [btn setborderColor:COLOR_UI_999999];
+                [btn setBackgroundColor:COLOR_UI_FFFFFF];
+                [view addSubview:btn];
+                CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
+                if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
+                    btnX = marginLeft;
+                    btnY += btnHeight + MARGIN_10;
+                }
+                btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
+                
+                btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
+                lastBtn = btn;
+            }
+            
+            height2 = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
+        }
+        
+        
+        CGFloat height3 = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
+        
+        return 65 + hight1 + height2 + height3;
+        
     }
+    return 0;
+}
+
+- (void)setModel:(HomeIndexUserModel *)model {
+    _model = model;
     
-    CGFloat height2 = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
     
-    CGFloat height3 = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
+}
+
+- (void)setSkillArray:(NSArray<SkillListModel *> *)skillArray {
+    _skillArray = skillArray;
     
-    return 65 + hight1 + height2 + height3;
+//    for (UIView *view in self.skillsView.subviews) {
+//        [view removeFromSuperview];
+//    }
+//    CGFloat marginLeft = 85;
+//    CGFloat btnX = marginLeft;
+//    CGFloat btnY = MARGIN_10;
+//    UIButton *lastBtn = nil;
+//    NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
+//    for (int j = 0; j < titleArray.count; j++ ) {
+//        UIButton *btn = [[UIButton alloc] init];
+//        [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
+//        [btn setDefaultCorner];
+//        [btn setborderColor:COLOR_UI_999999];
+//        [btn setBackgroundColor:COLOR_UI_FFFFFF];
+//        [self.skillsView addSubview:btn];
+//        [btn addTarget:self action:@selector(skillBtnClcikAction:) forControlEvents:UIControlEventTouchUpInside];
+//        CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
+//        if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
+//            btnX = marginLeft;
+//            btnY += btnHeight + MARGIN_10;
+//        }
+//        btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
+//
+//        btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
+//        lastBtn = btn;
+//    }
+//
+//    CGFloat height = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
+//
+//    [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.height.mas_equalTo(height);
+//    }];
+    
 }
 
 #pragma mark -- action -

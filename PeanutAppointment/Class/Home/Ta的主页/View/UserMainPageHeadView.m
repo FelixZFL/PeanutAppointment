@@ -21,7 +21,9 @@
 @property (nonatomic, strong) UIView *photosView;//个人相册
 @property (nonatomic, strong) UILabel *authLabel;//认证信息
 @property (nonatomic, strong) UILabel *visitorCountLabel;
-@property (nonatomic, strong) UILabel *visitorCountView;//访客量视图
+@property (nonatomic, strong) UIView *visitorCountView;//访客量视图
+@property (nonatomic, strong) UIView *skillListView;//技能列表视图
+
 @end
 
 @implementation UserMainPageHeadView
@@ -121,9 +123,11 @@
 //            genderLabel.text = @" 女 ";
             
             UILabel *distanceLabel = [UILabel labelWithFont:KFont(12) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentRight];
+            distanceLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
             [singleView addSubview:distanceLabel];
             [distanceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.mas_equalTo(-MARGIN_15);
+                make.width.mas_lessThanOrEqualTo(60);
                 make.centerY.equalTo(titleLabel);
             }];
             self.distanceLabel = distanceLabel;
@@ -177,42 +181,9 @@
             self.visitorCountLabel = visitorCountLabel;
 //            visitorCountLabel.text = @"256362";
             
-            CGFloat imgWidth = 30;
-            [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_equalTo(35 + imgWidth + MARGIN_10);
-            }];
             self.visitorCountView = singleView;
         } else if (i == 5) {
-            
-            CGFloat btnX = marginLeft;
-            CGFloat btnY = MARGIN_10;
-            CGFloat btnHeight = 30;
-            UIButton *lastBtn = nil;
-            NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
-            for (int j = 0; j < titleArray.count; j++ ) {
-                UIButton *btn = [[UIButton alloc] init];
-                [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
-                [btn setDefaultCorner];
-                [btn setborderColor:COLOR_UI_999999];
-                [btn setBackgroundColor:COLOR_UI_FFFFFF];
-                [singleView addSubview:btn];
-                CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
-                
-                if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
-                    btnX = marginLeft;
-                    btnY += btnHeight + MARGIN_10;
-                }
-                btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
-                
-                btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
-                lastBtn = btn;
-            }
-            
-            CGFloat height = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
-            
-            [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_equalTo(height);
-            }];
+            self.skillListView = singleView;
         }
         lastView = singleView;
     }
@@ -238,23 +209,23 @@
         CGFloat contentHeight = [model.userInfo.addr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
         CGFloat height2 = MAX(contentHeight, 35);
         CGFloat height3 = 42;
-        CGFloat height6 = 35 + imgWidth + MARGIN_10;
+        CGFloat height6 = model.accessList.count > 0 ? 35 + imgWidth + MARGIN_10 : 35;
         
         
         CGFloat btnX = marginLeft;
         CGFloat btnY = MARGIN_10;
         CGFloat btnHeight = 30;
         UIButton *lastBtn = nil;
-        NSArray *titleArray = @[@"逛街",@"逛街",@"逛街",@"逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街逛街逛街",@"逛街逛街逛街逛街逛街逛街逛街逛街逛街逛街",@"逛街逛街",@"逛街逛街逛街逛街"];
         UIView *view = [[UIView alloc] init];
-        for (int j = 0; j < titleArray.count; j++ ) {
+        for (int i = 0; i < model.skillList.count; i++ ) {
+            UserMainPageSkillListModel *skill = model.skillList[i];
             UIButton *btn = [[UIButton alloc] init];
-            [btn setButtonStateNormalTitle:titleArray[j] Font:KFont(14) textColor:COLOR_UI_666666];
+            [btn setButtonStateNormalTitle:skill.jnName Font:KFont(14) textColor:COLOR_UI_666666];
             [btn setDefaultCorner];
             [btn setborderColor:COLOR_UI_999999];
             [btn setBackgroundColor:COLOR_UI_FFFFFF];
             [view addSubview:btn];
-            CGFloat btnWith = [titleArray[j] getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
+            CGFloat btnWith = [skill.jnName getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
             if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
                 btnX = marginLeft;
                 btnY += btnHeight + MARGIN_10;
@@ -266,7 +237,8 @@
         }
         
         CGFloat height7 = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
-        return  SCREEN_WIDTH + 35 * 3 + height2 + height3 + height6 + height7 + MARGIN_10;
+        
+        return  SCREEN_WIDTH + 35 * 2 + height2 + height3 + height6 + height7 + MARGIN_10;
     }
     return 0;
 }
@@ -278,8 +250,8 @@
     
     [self.imageV sd_setImageWithURL:URLWithString(model.userInfo.headUrl) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
     self.nameLabel.text = model.userInfo.nikeName;
-    self.ageLabel.text = [NSString stringWithFormat:@" %@ ",model.userInfo.age];
-    self.genderLabel.text = [NSString stringWithFormat:@" %@ ",[model.userInfo.sex integerValue] == 1 ? @"男" : @"女"];
+    self.ageLabel.text = [NSString stringWithFormat:@" %@  ",model.userInfo.age];
+    self.genderLabel.text = [NSString stringWithFormat:@" %@  ",[model.userInfo.sex integerValue] == 1 ? @"男" : @"女"];
     self.distanceLabel.text = [NSString stringWithFormat:@"%@KM",model.userInfo.distance];
     
     self.addressLabel.text = model.userInfo.addr;
@@ -299,7 +271,6 @@
     for (int i = 0; i < repeat; i++) {
         UserMainPagePhotoListModel *photo = model.phontList[i];
         UIImageView *imageV = [[UIImageView alloc] init];
-        imageV.image = imageNamed(@"placeholder_image_loadFaile");
         [imageV sd_setImageWithURL:URLWithString(photo.photosUrl) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
         [imageV setDefaultCorner];
         [self.photosView addSubview:imageV];
@@ -314,19 +285,23 @@
     [self setAuthImageWithModel:model.userInfo];
     
     //访客量
-    self.visitorCountLabel.text =
+    self.visitorCountLabel.text = [NSString stringWithFormat:@"%ld",model.accessList.count];
     for (UIView *view in self.photosView.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             [view removeFromSuperview];
         }
     }
-    self.visitorCountView
+    for (UIView *view in self.visitorCountView.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            [view removeFromSuperview];
+        }
+    }
     NSInteger count = floorf((SCREEN_WIDTH - marginLeft - MARGIN_15 + MARGIN_5)/(imgWidth + MARGIN_5));
     NSInteger maxRepeat = MIN(count, model.accessList.count);
     for (int i = 0; i < maxRepeat; i++) {
         UserMainPageAccessListModel *accessModel = model.accessList[i];
         UIImageView *imageV = [[UIImageView alloc] init];
-        imageV.image = imageNamed(placeHolderHeadImageName);
+        [imageV sd_setImageWithURL:URLWithString(accessModel.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
         [imageV setCorner:imgWidth/2.f];
         [self.visitorCountView addSubview:imageV];
         [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -336,8 +311,46 @@
             make.height.mas_equalTo(imgWidth);
         }];
     }
+    [self.visitorCountView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(model.accessList.count > 0 ? 35 + imgWidth + MARGIN_10 : 35);
+    }];
     
+    for (UIView *view in self.skillListView.subviews) {
+        if ([view isKindOfClass:[UIButton class]]) {
+            [view removeFromSuperview];
+        }
+    }
     
+    CGFloat btnX = marginLeft;
+    CGFloat btnY = MARGIN_10;
+    CGFloat btnHeight = 30;
+    UIButton *lastBtn = nil;
+    
+    for (int i = 0; i < model.skillList.count; i++ ) {
+        UserMainPageSkillListModel *skill = model.skillList[i];
+        UIButton *btn = [[UIButton alloc] init];
+        [btn setButtonStateNormalTitle:skill.jnName Font:KFont(14) textColor:COLOR_UI_666666];
+        [btn setDefaultCorner];
+        [btn setborderColor:COLOR_UI_999999];
+        [btn setBackgroundColor:COLOR_UI_FFFFFF];
+        [self.skillListView addSubview:btn];
+        CGFloat btnWith = [skill.jnName getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
+        
+        if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
+            btnX = marginLeft;
+            btnY += btnHeight + MARGIN_10;
+        }
+        btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
+        
+        btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
+        lastBtn = btn;
+    }
+    
+    CGFloat height = (lastBtn && CGRectGetMaxY(lastBtn.frame) + MARGIN_10 > 35) ? CGRectGetMaxY(lastBtn.frame) + MARGIN_10 : 35;
+    
+    [self.skillListView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(height);
+    }];
 }
 
 #pragma mark - private

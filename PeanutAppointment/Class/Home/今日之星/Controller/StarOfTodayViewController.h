@@ -8,9 +8,15 @@
 
 #import "BaseViewController.h"
 
+@class HomeIndexUserModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface StarOfTodayViewController : BaseViewController
+
+@property (nonatomic, strong) HomeIndexUserModel *model;
+
+@property (nonatomic, assign) NSInteger selectIndex;
 
 @end
 

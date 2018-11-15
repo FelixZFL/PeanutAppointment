@@ -8,14 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class UserMainPageModel;
-
-NS_ASSUME_NONNULL_BEGIN
+@class UserMainPageSkillInfoModel;
 
 @interface UserMainPageFootView : UIView
 
-+ (CGFloat )getHeight;
+@property (nonatomic, strong) UserMainPageSkillInfoModel *model;
+
++ (CGFloat )getHeightWithModel:(UserMainPageSkillInfoModel *)model;
 
 @end
-
-NS_ASSUME_NONNULL_END

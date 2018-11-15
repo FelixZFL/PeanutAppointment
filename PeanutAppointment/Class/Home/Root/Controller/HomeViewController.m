@@ -345,6 +345,7 @@
         [cell setImageClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {
             if (![self cheakLogin]) return;
             StarOfTodayViewController *vc = [[StarOfTodayViewController alloc] init];
+            vc.model = model;
             [self.navigationController pushViewController:vc animated:YES];
         }];
         [cell setBtnClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model, UIButton *btn) {
@@ -369,6 +370,7 @@
                 [[RewardAlertView alertWithUserId:model.userId thingsID:model.pusId type:RewardAlertType_Skill] showInWindow];
             } else if (index == 4) {//约ta
                 AppointmentHerViewController *vc = [[AppointmentHerViewController alloc] init];
+                vc.choosedUser = model;
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }];

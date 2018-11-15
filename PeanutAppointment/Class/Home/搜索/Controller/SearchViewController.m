@@ -289,6 +289,7 @@
                 [[RewardAlertView alertWithUserId:model.userId thingsID:model.pusId type:RewardAlertType_Skill] showInWindow];
             } else if (index == 4) {//约ta
                 AppointmentHerViewController *vc = [[AppointmentHerViewController alloc] init];
+                vc.choosedUser = model;
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }];

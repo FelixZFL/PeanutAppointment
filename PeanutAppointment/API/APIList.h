@@ -140,7 +140,7 @@ static NSString * const API_NUM_20018 = @"20018";//
 static NSString * const API_NUM_20024 = @"20024";//
 
 //APP首页-分类查询接口
-static NSString * const API_NUM_20022 = @"20022";/////!!!
+static NSString * const API_NUM_20022 = @"20022";//
 
 //APP首页-去赚钱-上传视频/开启直播接口
 static NSString * const API_NUM_10017 = @"10017";
@@ -211,10 +211,10 @@ static NSString * const API_NUM_20035 = @"20035";//
 static NSString * const API_NUM_10027 = @"10027";//
 
 //用户技能查询接口：（通过用户id获取用户的所有技能，此接口用于在约单个用户的时候 在发布需求界面会用到，如果是从APP首页--》〉去约单--》〉在发布需求界面的技能就直接从去约单里面带过去。）
-static NSString * const API_NUM_20036 = @"20036";
+static NSString * const API_NUM_20036 = @"20036";//
 
 //APP首页筛选接口
-static NSString * const API_NUM_20021 = @"20021";
+static NSString * const API_NUM_20021 = @"20021";//
 
 //视频/直播 播放次数添加接口：（注：用户在播放视频/直播的时候调用）
 static NSString * const API_NUM_10028 = @"10028";

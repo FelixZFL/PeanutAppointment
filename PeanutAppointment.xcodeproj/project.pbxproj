@@ -623,6 +623,7 @@
 		DCACC2052181597200677667 /* AppointmentHerHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = DCACC2042181597200677667 /* AppointmentHerHeadView.m */; };
 		DCB1CCD721903C7100103B3F /* HomeIndexUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB1CCD621903C7100103B3F /* HomeIndexUserModel.m */; };
 		DCB5BA56219130770055D7E9 /* GotTalentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB5BA55219130770055D7E9 /* GotTalentListModel.m */; };
+		DCC576EA219D7F780089D891 /* SkillListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC576E9219D7F780089D891 /* SkillListModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1764,6 +1765,8 @@
 		DCB1CCD621903C7100103B3F /* HomeIndexUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeIndexUserModel.m; sourceTree = "<group>"; };
 		DCB5BA54219130770055D7E9 /* GotTalentListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GotTalentListModel.h; sourceTree = "<group>"; };
 		DCB5BA55219130770055D7E9 /* GotTalentListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GotTalentListModel.m; sourceTree = "<group>"; };
+		DCC576E8219D7F780089D891 /* SkillListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkillListModel.h; sourceTree = "<group>"; };
+		DCC576E9219D7F780089D891 /* SkillListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SkillListModel.m; sourceTree = "<group>"; };
 		EBE3B643EF82432D9E9D6C8C /* Pods-PeanutAppointment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PeanutAppointment.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -3155,6 +3158,8 @@
 		5A61E9B72180B43400709EEA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DCC576E8219D7F780089D891 /* SkillListModel.h */,
+				DCC576E9219D7F780089D891 /* SkillListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6048,6 +6053,7 @@
 				5A31D4002145645B001E2043 /* BaseTextField.m in Sources */,
 				5AD636F62195928600FBC87C /* AliyunFontItemCell.m in Sources */,
 				5A31D3C321455D8E001E2043 /* CustomNavigationBar.m in Sources */,
+				DCC576EA219D7F780089D891 /* SkillListModel.m in Sources */,
 				5AD446C3216A6FA500997521 /* AddPhotoAlbumFootView.m in Sources */,
 				5AF24CEF2185A2E400706911 /* MyExceptionalListModel.m in Sources */,
 				5AF7154121976CE2006F52F4 /* AlivcDebugChartView.m in Sources */,

@@ -8,6 +8,8 @@
 
 #import "AppointmentHerViewController.h"
 #import "AppointmentHerHeadView.h"
+#import "HomeIndexUserModel.h"
+#import "SkillListModel.h"
 
 @interface AppointmentHerViewController ()
 
@@ -38,7 +40,11 @@
 
 - (void)setupUI {
     
-    self.tableView.tableHeaderView = self.headView;
+    
+    if (_choosedUser) {
+        [self.headView setModel:_choosedUser];
+        self.tableView.tableHeaderView = self.headView;
+    }
     
     UIButton *releaseBtn = [[UIButton alloc] init];
     [releaseBtn setButtonStateNormalTitle:@"发布需求" Font:KFont(14) textColor:COLOR_UI_FFFFFF];
@@ -64,7 +70,18 @@
 
 #pragma mark - network
 
-
+- (void)getData {
+    
+    [YQNetworking postWithApiNumber:API_NUM_20036 params:@{@"userId":[PATool getUserId]} successBlock:^(id response) {
+        
+        if (getResponseIsSuccess(response)) {
+            [self.dataArr addObjectsFromArray:[MakeMoneySkillModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
+            //            self.dataArr = [NSMutableArray arrayWithArray:@[[MakeMoneySkillModel mj_objectWithKeyValues:getResponseData(response)]]];
+            [self.tableView reloadData];
+        }
+    } failBlock:^(NSError *error) {
+    }];
+}
 
 #pragma mark - action
 

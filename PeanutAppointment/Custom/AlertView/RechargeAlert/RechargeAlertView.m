@@ -134,7 +134,14 @@
         RechargeAlertListModel *model = self.dataArray[_selectIndex];
         [YQNetworking postWithApiNumber:API_NUM_10022 params:@{@"userId":[PATool getUserId], @"money":model.rmb,@"id":model.ID} successBlock:^(id response) {
             if (getResponseIsSuccess(response)) {
-                [self removFromWindow];
+                NSDictionary *dic = getResponseData(response);
+                if ([dic[@"isSuccess"] integerValue] == 1) {
+                    [AlertBaseView alertWithTitle:@"充值成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:^{
+                        [self removFromWindow];
+                    }];
+                } else {
+                    [SVProgressHUD showSuccessWithStatus:@"金钻不足"];
+                }
             }
         } failBlock:nil];
     }

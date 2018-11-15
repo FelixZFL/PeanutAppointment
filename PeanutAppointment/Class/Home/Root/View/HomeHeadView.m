@@ -58,11 +58,6 @@
         make.height.mas_equalTo(HomeHannerHeight);
     }];
     
-   
-
-//    NSArray *btnNameArr = @[@"运动健身",@"美术绘画",@"逛街",@"享美食",@"美妆",@"模特",@"玩游戏",@"全部"];
-//    NSArray *btnImageArr = @[@"home_top_btn_1",@"home_top_btn_2",@"home_top_btn_3",@"home_top_btn_4",@"home_top_btn_5",@"home_top_btn_6",@"home_top_btn_7",@"home_top_btn_8"];
-    
     NSInteger column = 4;
     
     CGFloat btnW = SCREEN_WIDTH/column;
