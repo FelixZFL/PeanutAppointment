@@ -12,6 +12,14 @@
 
 @interface UserMainPageFootView()
 
+@property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *typeLabel;
+@property (nonatomic, strong) UILabel *priceLabel;
+@property (nonatomic, strong) UILabel *depositLabel;//定金
+@property (nonatomic, strong) UILabel *skillIntroduceLabel;//技能介绍
+@property (nonatomic, strong) UILabel *serverIntroduceLabel;//服务介绍
+@property (nonatomic, strong) UILabel *workExprenceLabel;//工作经历
+
 @end
 
 @implementation UserMainPageFootView
@@ -79,40 +87,23 @@
         }];
         
         if (i == 0) {
-            contentLabel.text = @"星期 一 二 三 四 五 六 七";
+            //contentLabel.text = @"星期 一 二 三 四 五 六 七";
+            self.timeLabel = contentLabel;
         } else if (i == 1) {
-            contentLabel.text = @"客户找我";
+            //contentLabel.text = @"客户找我";
+            self.typeLabel = contentLabel;
         } else if (i == 2) {
-            contentLabel.text = @"200.00元/次";
+            //contentLabel.text = @"200.00元/次";
+            self.priceLabel = contentLabel;
         } else if (i == 3) {
-            contentLabel.text = @"100.00元";
+            //contentLabel.text = @"100.00元";
+            self.depositLabel = contentLabel;
         } else if (i == 4) {
-            NSString *contentStr = @"老是卡迪克兰啊付款结算单撒大了饭卡上撒 啊可是对方哈啊撒地方了卡拉山口附件";
-            contentLabel.text = contentStr;
-            CGFloat contentHeight = [contentStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
-            if (contentHeight > 35 ) {
-                [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_equalTo(contentHeight);
-                }];
-            }
+            self.skillIntroduceLabel = contentLabel;
         } else if (i == 5) {
-            NSString *contentStr = @"老是卡迪克兰啊付款结算单撒大了饭卡上撒 啊可是对方哈啊撒地方了卡拉山口附件寄过来开发了份";
-            contentLabel.text = contentStr;
-            CGFloat contentHeight = [contentStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
-            if (contentHeight > 35 ) {
-                [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_equalTo(contentHeight);
-                }];
-            }
+            self.serverIntroduceLabel = contentLabel;
         } else if (i == 6) {
-            NSString *contentStr = @"老是卡迪克兰啊付款结算单撒大了饭卡上撒 啊防静电卡李经理咖妃了多久奥卡福打飞机奥斯卡了发动机可是对方哈啊撒地方了卡拉山口附件寄过来开发了份";
-            contentLabel.text = contentStr;
-            CGFloat contentHeight = [contentStr getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
-            if (contentHeight > 35 ) {
-                [singleView mas_updateConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_equalTo(contentHeight);
-                }];
-            }
+            self.workExprenceLabel = contentLabel;
         }
         lastView = singleView;
     }
@@ -120,23 +111,89 @@
 
 #pragma mark - public -
 
-+ (CGFloat)getHeight {
-    CGFloat height = 35 *4 ;
++ (CGFloat)getHeightWithModel:(UserMainPageSkillInfoModel *)model {
     
-    CGFloat marginLeft = 85;
-    NSArray *contentArray = @[@"老是卡迪克兰啊付款结算单撒大了饭卡上撒 啊可是对方哈啊撒地方了卡拉山口附件",
-                              @"老是卡迪克兰啊付款结算单撒大了饭卡上撒 啊可是对方哈啊撒地方了卡拉山口附件寄过来开发了份",
-                              @"老是卡迪克兰啊付款结算单撒大了饭卡上撒 啊防静电卡李经理咖妃了多久奥卡福打飞机奥斯卡了发动机可是对方哈啊撒地方了卡拉山口附件寄过来开发了份"];
-    for (int i = 0; i < contentArray.count; i++) {
-        CGFloat contentHeight = [contentArray[i] getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
-        if (contentHeight > 35 ) {
-            height += contentHeight;
-        } else {
-            height += 35;
+    if (model) {
+        CGFloat height = 35 *4 ;
+        
+        CGFloat marginLeft = 85;
+        NSArray *contentArray = @[model.introduce,
+                                  model.selfIntroduction,
+                                  model.experience];
+        for (int i = 0; i < contentArray.count; i++) {
+            CGFloat contentHeight = [contentArray[i] getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
+            if (contentHeight > 35 ) {
+                height += contentHeight;
+            } else {
+                height += 35;
+            }
+        }
+        return  height;
+    }
+    return 0;
+    
+}
+
+- (void)setModel:(UserMainPageSkillInfoModel *)model {
+    _model = model;
+    
+    if (model) {
+        
+        NSString *timeString = @"星期 ";
+        NSArray *timeArr = [model.serviceTime componentsSeparatedByString:@","];
+        for (NSString *time in timeArr) {
+            if ([time isEqualToString:@"1"]) {
+                timeString = [timeString stringByAppendingString:@"一 "];
+            } else if ([time isEqualToString:@"2"]) {
+                timeString = [timeString stringByAppendingString:@"二 "];
+            } else if ([time isEqualToString:@"3"]) {
+                timeString = [timeString stringByAppendingString:@"三 "];
+            } else if ([time isEqualToString:@"4"]) {
+                timeString = [timeString stringByAppendingString:@"四 "];
+            } else if ([time isEqualToString:@"5"]) {
+                timeString = [timeString stringByAppendingString:@"五 "];
+            } else if ([time isEqualToString:@"6"]) {
+                timeString = [timeString stringByAppendingString:@"六 "];
+            } else if ([time isEqualToString:@"7"]) {
+                timeString = [timeString stringByAppendingString:@"日 "];
+            }
+        }
+        self.timeLabel.text = timeString;
+        
+        //1:Ta找我 2:我找Ta 3:两个都选  客户找我
+        if ([model.serviceType integerValue] == 1) {
+            self.typeLabel.text = @"客户找我";
+        } else if ([model.serviceType integerValue] == 2) {
+            self.typeLabel.text = @"我找客户";
+        } else if ([model.serviceType integerValue] == 3) {
+            self.typeLabel.text = @"客户找我 / 我找客户";
+        }
+        self.priceLabel.text = model.servicePrice;
+
+        CGFloat marginLeft = 85;
+        
+        if (model.introduce) {//技能介绍
+            self.skillIntroduceLabel.text = model.introduce;
+            CGFloat contentHeight = [model.introduce getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
+            [self.skillIntroduceLabel.superview mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(MAX(contentHeight, 35));
+            }];
+        } else if (model.selfIntroduction) {//服务介绍
+            self.serverIntroduceLabel.text = model.selfIntroduction;
+            CGFloat contentHeight = [model.selfIntroduction getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
+            [self.serverIntroduceLabel.superview mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(MAX(contentHeight, 35));
+            }];
+        } else if (model.experience) {//工作经历 服务经历        self.depositLabel.text = model.downPayment;
+
+            self.workExprenceLabel.text = model.experience;
+            CGFloat contentHeight = [model.experience getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(14)] + MARGIN_10 * 2;
+            [self.workExprenceLabel.superview mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(MAX(contentHeight, 35));
+            }];
         }
     }
     
-    return  height;
 }
 
 #pragma mark - getter -

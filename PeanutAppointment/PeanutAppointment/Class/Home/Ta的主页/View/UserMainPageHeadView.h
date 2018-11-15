@@ -10,8 +10,6 @@
 
 @class UserMainPageModel;
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface UserMainPageHeadView : UIView
 
 @property (nonatomic, strong) UserMainPageModel *model;
@@ -20,4 +18,3 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-NS_ASSUME_NONNULL_END

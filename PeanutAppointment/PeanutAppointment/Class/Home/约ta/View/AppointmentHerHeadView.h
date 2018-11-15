@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@class HomeIndexUserModel;
+@class SkillListModel;
 
 @interface AppointmentHerHeadView : UIView
 
-+ (CGFloat )getHeight;
+@property (nonatomic, strong) HomeIndexUserModel *model;
+
+@property (nonatomic, strong) NSArray<SkillListModel *> *skillArray;
+
++ (CGFloat )getHeightWithModel:(HomeIndexUserModel *)model skills:(NSArray *)skillArray;
 
 @end
 
-NS_ASSUME_NONNULL_END

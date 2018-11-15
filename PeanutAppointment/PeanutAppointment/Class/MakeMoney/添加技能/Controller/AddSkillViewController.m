@@ -120,6 +120,7 @@
             SkillModel *skill = typeModel.list[_selectIndexP.row];
             AddSkillDetailViewController *vc = [[AddSkillDetailViewController alloc] init];
             vc.pasName = skill.pasName;
+            vc.pasId = skill.pasId;
             [self.navigationController pushViewController:vc animated:YES];
         }
     }

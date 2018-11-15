@@ -18,6 +18,7 @@
 @interface UserMainPageViewController ()
 
 @property (nonatomic, strong) CLLocation *location;//当前定位
+@property (nonatomic, strong) UserMainPageModel *model;
 
 @property (nonatomic, strong) UserMainPageHeadView *headView;
 @property (nonatomic, strong) UserMainPageFootView *footView;
@@ -51,8 +52,28 @@
     
     self.view.backgroundColor = self.tableView.backgroundColor = COLOR_UI_FFFFFF;
     
+    
+}
+
+- (void)setupNav {
+    [self.customNavBar setTitle:@"Ta的主页"];
+    [self setNavStyle:CustomNavStyle_Default];
+    [self.customNavBar setRightButtonWithTitle:@"举报" titleColor:COLOR_UI_222222];
+}
+
+- (void)updateUI {
+    if (self.model == nil) {
+        return;
+    }
+    self.headView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageHeadView getHeightWithModel:self.model]);
+    [self.headView setModel:self.model];
     self.tableView.tableHeaderView = self.headView;
-    self.tableView.tableFooterView = self.footView;
+    
+    if (self.model.skillInfo) {
+        self.footView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageFootView getHeightWithModel:self.model.skillInfo]);
+        [self.footView setModel:self.model.skillInfo];
+        self.tableView.tableFooterView = self.footView;
+    }
     
     UIView *btnView = [[UIView alloc] init];
     [self.view addSubview:btnView];
@@ -102,14 +123,6 @@
     [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.mas_equalTo(-HOMEBAR_HEIGHT - BUTTON_HEIGHT_50);
     }];
-    
-    
-}
-
-- (void)setupNav {
-    [self.customNavBar setTitle:@"Ta的主页"];
-    [self setNavStyle:CustomNavStyle_Default];
-    [self.customNavBar setRightButtonWithTitle:@"举报" titleColor:COLOR_UI_222222];
 }
 
 
@@ -119,12 +132,17 @@
 
 - (void)getData {
     if (_location) {
-        NSDictionary *param = @{@"userId":_userId?:@"", @"pusId":@"", @"lng":@(_location.coordinate.longitude), @"lat":@(_location.coordinate.latitude)};
+        
+        [SVProgressHUD show];
+        NSDictionary *param = @{@"userId":_userId?:@"", @"pusId":_pusId?:@"", @"lng":@(_location.coordinate.longitude), @"lat":@(_location.coordinate.latitude)};
         [YQNetworking postWithApiNumber:API_NUM_20032 params:param successBlock:^(id response) {
+            [SVProgressHUD dismiss];
             if (getResponseIsSuccess(response)) {
-                
+                self.model = [UserMainPageModel mj_objectWithKeyValues:getResponseData(response)];
+                [self updateUI];
             }
         } failBlock:^(NSError *error) {
+            [SVProgressHUD dismiss];
         }];
         [self getLocationToRequest:NO];
     } else {
@@ -166,14 +184,14 @@
 
 - (UserMainPageHeadView *)headView {
     if (!_headView) {
-        _headView = [[UserMainPageHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageHeadView getHeight])];
+        _headView = [[UserMainPageHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageHeadView getHeightWithModel:nil])];
     }
     return _headView;
 }
 
 - (UserMainPageFootView *)footView {
     if (!_footView) {
-        _footView = [[UserMainPageFootView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageFootView getHeight])];
+        _footView = [[UserMainPageFootView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageFootView getHeightWithModel:nil])];
     }
     return _footView;
 }

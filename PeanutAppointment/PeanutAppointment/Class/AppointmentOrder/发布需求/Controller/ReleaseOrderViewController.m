@@ -92,7 +92,8 @@
 
 - (void)getData {
     if (_location) {
-        [YQNetworking postWithApiNumber:API_NUM_20014 params:@{@"lng":@(_location.coordinate.longitude),@"lat":@(_location.coordinate.latitude), @"userId":[PATool getUserId], @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)} successBlock:^(id response) {
+        NSString *jnId = _pasId ?:@"";
+        [YQNetworking postWithApiNumber:API_NUM_20014 params:@{@"jnId":jnId,@"lng":@(_location.coordinate.longitude),@"lat":@(_location.coordinate.latitude), @"userId":[PATool getUserId], @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)} successBlock:^(id response) {
             
             if (getResponseIsSuccess(response)) {
                 [self.dataArr addObjectsFromArray:[ReleaseOrderUserModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];

@@ -69,6 +69,8 @@
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_15 + i * (photoWidth + MARGIN_1), 0, photoWidth, photoWidth)];
         imageV.image = imageNamed(@"placeholder_image_loadFaile");
         imageV.tag = kImageTag + i;
+        imageV.contentMode = UIViewContentModeScaleAspectFill;
+        imageV.clipsToBounds = YES;
         imageV.userInteractionEnabled = YES;
         [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClickAction:)]];
         [photoView addSubview:imageV];
@@ -131,18 +133,18 @@
     self.userView.typeLevelLabel.text = @"";
     self.userView.distanceLabel.text = [NSString stringWithFormat:@"%.2fKM",[model.distance integerValue]/1000.f];
     self.userView.nickNameLabel.text = model.nikeName;
-    self.userView.ageLabel.text = model.age;
-    self.userView.genderLabel.text = [model.sex integerValue] == 1 ? @"男" : @"女";
+    self.userView.ageLabel.text = [NSString stringWithFormat:@" %@  ",model.age];
+    self.userView.genderLabel.text = [model.sex integerValue] == 1 ? @" 男 " : @" 女 ";
     [self setAuthImageWithModel:model];
     
+    NSArray *photoArray = [model.photos componentsSeparatedByString:@","];
     for (int i = 0; i < self.photoView.subviews.count; i++) {
         UIImageView *imageV = self.photoView.subviews[i];
-        NSArray *photoArray = [model.photos componentsSeparatedByString:@","];
+        NSString *photo = @"";
         if (photoArray.count > i) {
-            [imageV sd_setImageWithURL:URLWithString(photoArray[i]) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
-        } else {
-            imageV.image = imageNamed(@"placeholder_image_loadFaile");
+            photo = photoArray[i];
         }
+        [imageV sd_setImageWithURL:URLWithString(photo) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
     }
     
     [self.commentButton setButtonStateNormalTitle:model.commentNumber];

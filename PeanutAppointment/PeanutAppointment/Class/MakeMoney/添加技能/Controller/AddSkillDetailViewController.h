@@ -22,8 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///技能名
 @property (nonatomic, strong) NSString *pasName;
 
-
-//@property (nonatomic, strong) <#Class#> *<#name#>;
+//技能id
+@property (nonatomic, strong) NSString *pasId;
 
 @end
 

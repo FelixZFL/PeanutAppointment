@@ -137,7 +137,7 @@
     NSString *photosStr = [self.photoUrlArray componentsJoinedByString:@","];
     NSString *serverTiemStr = [_headView.serverDaysArray componentsJoinedByString:@","];
     
-    NSDictionary *dic = @{@"userId":[PATool getUserId],@"jnName":_pasName, @"serviceType":@(_headView.serverType),@"downPayment":_headView.depositTF.text,@"servicePrice":_headView.priceTF.text, @"unit":@(_headView.PriceUnit), @"serviceTime":serverTiemStr, @"experience":_headView.serverExperienceTextV.text, @"introduce":_headView.serverIntroduceTextV.text, @"photos":photosStr, @"selfIntroduction":_headView.personalIntroductionTextV.text};
+    NSDictionary *dic = @{@"userId":[PATool getUserId],@"jnName":_pasName,@"pasId":_pasId, @"serviceType":@(_headView.serverType),@"downPayment":_headView.depositTF.text,@"servicePrice":_headView.priceTF.text, @"unit":@(_headView.PriceUnit), @"serviceTime":serverTiemStr, @"experience":_headView.serverExperienceTextV.text, @"introduce":_headView.serverIntroduceTextV.text, @"photos":photosStr, @"selfIntroduction":_headView.personalIntroductionTextV.text};
     
     [YQNetworking postWithApiNumber:API_NUM_10008 params:dic successBlock:^(id response) {
         
