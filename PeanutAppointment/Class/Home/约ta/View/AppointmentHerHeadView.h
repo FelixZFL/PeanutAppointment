@@ -13,6 +13,10 @@
 
 @interface AppointmentHerHeadView : UIView
 
+@property (nonatomic, copy) NSString *choosedPusId;//选择的技能id
+@property (nonatomic, copy) NSString *choosedVailDays;//有效天数
+@property (nonatomic, copy) NSString *choosedPrice;//定金
+
 @property (nonatomic, strong) HomeIndexUserModel *model;
 
 @property (nonatomic, strong) NSArray<SkillListModel *> *skillArray;

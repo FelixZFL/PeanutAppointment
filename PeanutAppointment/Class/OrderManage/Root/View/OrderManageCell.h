@@ -8,11 +8,15 @@
 
 #import "BaseTableViewCell.h"
 
+@class OrderManageDoneListModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface OrderManageCell : BaseTableViewCell
 
-@property (nonatomic, copy) void(^buttonClickBlock) (NSInteger index);
+@property (nonatomic, copy) void(^buttonClickBlock) (UIButton *sender, OrderManageDoneListModel *model);
+
+- (void)setModel:(OrderManageDoneListModel * _Nonnull)model isDone:(BOOL)isDone;
 
 @end
 

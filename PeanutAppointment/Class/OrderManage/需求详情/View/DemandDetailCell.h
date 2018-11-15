@@ -8,9 +8,15 @@
 
 #import "BaseTableViewCell.h"
 
+@class DemanDetailModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DemandDetailCell : BaseTableViewCell
+
+@property (nonatomic, strong) DemanDetailModel *model;
+
++ (CGFloat)getCellHeightWithModel:(DemanDetailModel *)model;
 
 @end
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HomeIndexUserModel.h"
-@class HomeBannerModel,HomeGamesModel,HomeHotUserModel,HomeVideoHotUserModel,HomeToolModel,HomeTypeListModel;
+@class HomeBannerModel,HomeGamesModel,HomeHotUserModel,HomeVideoHotUserModel,HomeToolModel,HomeTypeListModel,HomeNoticeListModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,12 +28,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) HomeToolModel *tools;
 ///首页分类类型
 @property (nonatomic, strong) NSArray<HomeTypeListModel *> *typeList;
-///
+///上线通知
+@property (nonatomic, strong) NSArray<HomeNoticeListModel *> *notice;
+///是否显示红包
 @property (nonatomic, copy) NSString *isShowRedPage;
 ///
-@property (nonatomic, copy) NSString *notice;
+@property (nonatomic, copy) NSString *sign;
 
 /*
+ sign = 1;
  isShowRedPage = 1;
  notice = "xxx\U4e0a\U7ebf\U4e86";
  */
@@ -130,6 +133,18 @@ NS_ASSUME_NONNULL_END
 /*
  pasId = 20;
  pasName = "\U901b\U8857";
+ */
+
+@end
+
+
+@interface HomeNoticeListModel : NSObject
+
+///昵称
+@property (nonatomic, copy) NSString *nikeName;
+
+/*
+ nikeName = "\U6210\U719f\U9700\U8981\U7684\U662f\U7d93\U66c6\U3001\U4e0a\U7ebf\U4e86";
  */
 
 @end

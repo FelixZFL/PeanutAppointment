@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class DemanDetailModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DemandDetailHeadView : UIView
+
+@property (nonatomic, strong) DemanDetailModel *model;
 
 + (CGFloat )getHeight;
 

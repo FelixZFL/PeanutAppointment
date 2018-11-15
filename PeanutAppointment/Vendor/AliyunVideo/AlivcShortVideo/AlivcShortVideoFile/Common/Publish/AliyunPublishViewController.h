@@ -15,3 +15,4 @@
 @property (nonatomic, strong) AliyunMediaConfig *config;
 @property (nonatomic, assign) CGSize outputSize;
 @end
+ 

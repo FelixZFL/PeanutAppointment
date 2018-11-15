@@ -166,7 +166,7 @@
         } else if ([model.serviceType integerValue] == 2) {
             self.typeLabel.text = @"我找客户";
         } else if ([model.serviceType integerValue] == 3) {
-            self.typeLabel.text = @"客户找我 / 我找客户";
+            self.typeLabel.text = @"客户找我 · 我找客户";
         }
         self.priceLabel.text = model.servicePrice;
 

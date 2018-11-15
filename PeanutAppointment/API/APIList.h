@@ -94,8 +94,8 @@ static NSString * const API_NUM_20013 = @"20013";//
 //APP首页底部-去约单-获取用户接口
 static NSString * const API_NUM_20014 = @"20014";//
 
-//APP首页底部-去约单-发布需求接口（和单个发布接口共用）   success
-static NSString * const API_NUM_10007 = @"10007";
+//APP首页底部-去约单-发布需求接口（和单个发布接口共用）   
+static NSString * const API_NUM_10007 = @"10007";//
 
 //APP首页底部-去赚钱接口
 static NSString * const API_NUM_20015 = @"20015";//
@@ -143,30 +143,30 @@ static NSString * const API_NUM_20024 = @"20024";//
 static NSString * const API_NUM_20022 = @"20022";//
 
 //APP首页-去赚钱-上传视频/开启直播接口
-static NSString * const API_NUM_10017 = @"10017";
+static NSString * const API_NUM_10017 = @"10017";//
 
 //APP首页-今日达人列表接口
 static NSString * const API_NUM_20025 = @"20025";//
 
 //APP首页-订单管理-需求管理接口
-static NSString * const API_NUM_20026 = @"20026";/////!!!
+static NSString * const API_NUM_20026 = @"20026";//
 
 //APP首页-订单管理-接单中接口：
-static NSString * const API_NUM_20027 = @"20027";/////!!!
+static NSString * const API_NUM_20027 = @"20027";//
 
 //APP首页-订单管理-已完成接口
-static NSString * const API_NUM_20028 = @"20028";/////!!!
+static NSString * const API_NUM_20028 = @"20028";//
 
 //APP首页-订单管理-已完成-评价接口（调用之前的技能评论接口，本身是对技能进行评价的）
 
 //APP首页-订单管理-删除订单
-static NSString * const API_NUM_10018 = @"10018";/////!!!
+static NSString * const API_NUM_10018 = @"10018";//
 
 //APP首页-订单管理-订单中-应邀赚钱接口
-static NSString * const API_NUM_10019 = @"10019";
+static NSString * const API_NUM_10019 = @"10019";//
 
 //APP首页-订单管理-需求管理-查看应邀者信息接口
-static NSString * const API_NUM_20029 = @"20029";
+static NSString * const API_NUM_20029 = @"20029";//
 
 //支付定金接口：
 static NSString * const API_NUM_10020 = @"10020";
@@ -178,7 +178,7 @@ static NSString * const API_NUM_20030 = @"20030";//礼物缺图片
 static NSString * const API_NUM_10021 = @"10021";//
 
 //APP首页-打赏-金砖充值接口
-static NSString * const API_NUM_10022 = @"10022";//缺少金钻数据id
+static NSString * const API_NUM_10022 = @"10022";//
 
 //APP首页-分享
 static NSString * const API_NUM_10023 = @"10023";//
@@ -190,12 +190,12 @@ static NSString * const API_NUM_10024 = @"10024";//
 static NSString * const API_NUM_20031 = @"20031";//
 
 //个人中心-我的相册-添加相册接口
-static NSString * const API_NUM_10025 = @"10025";/////!!!
+static NSString * const API_NUM_10025 = @"10025";//
 
 //APP首页-查看别人主页接口
 static NSString * const API_NUM_20032 = @"20032";//
 
-//APP首页-查看别人主页-选择不同的技能返回不通的技能信息接口
+//APP首页-查看别人主页-选择不同的技能返回不通的技能信息接口           ------TODO
 static NSString * const API_NUM_20033 = @"20033";
 
 //APP首页-游戏-开通VIP查询接口
@@ -235,10 +235,10 @@ static NSString * const API_NUM_10031 = @"10031";
 static NSString * const API_NUM_10032 = @"10032";
 
 //领取红包接口
-static NSString * const API_NUM_10033 = @"10033";
+static NSString * const API_NUM_10033 = @"10033";//
 
 //金砖充值价格查询接口
-static NSString * const API_NUM_20039 = @"20039";
+static NSString * const API_NUM_20039 = @"20039";//
 
 
 

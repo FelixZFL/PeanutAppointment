@@ -30,7 +30,7 @@ static NSTimeInterval   requestTimeout = 20.f;
 @implementation YQNetworking
 
 BOOL getResponseIsSuccess(id responseObject){
-    return [responseObject[@"code"] integerValue] == 0;
+    return [responseObject[@"code"] integerValue] == 0 && ![responseObject[@"data"] isKindOfClass:[NSNull class]];
 }
 id getResponseData(id responseObject){
     return responseObject[@"data"];

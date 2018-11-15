@@ -179,7 +179,7 @@
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             } else if ([dic[@"isSuccess"] integerValue] == 2){
-                [SVProgressHUD showSuccessWithStatus:@"余额不足"];
+                [SVProgressHUD showErrorWithStatus:@"余额不足"];
             }
             
         }

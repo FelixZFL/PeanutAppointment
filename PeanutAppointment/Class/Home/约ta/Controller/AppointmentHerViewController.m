@@ -11,9 +11,13 @@
 #import "HomeIndexUserModel.h"
 #import "SkillListModel.h"
 
+#import "RechargeViewController.h"
+
 @interface AppointmentHerViewController ()
 
 @property (nonatomic, strong) AppointmentHerHeadView *headView;
+
+@property (nonatomic, strong) NSArray *skillArray;
 
 @end
 
@@ -39,53 +43,85 @@
 #pragma mark - UI
 
 - (void)setupUI {
-    
-    
+    //获取技能信息
     if (_choosedUser) {
-        [self.headView setModel:_choosedUser];
-        self.tableView.tableHeaderView = self.headView;
+        [self getData];
     }
     
-    UIButton *releaseBtn = [[UIButton alloc] init];
-    [releaseBtn setButtonStateNormalTitle:@"发布需求" Font:KFont(14) textColor:COLOR_UI_FFFFFF];
-    releaseBtn.backgroundColor = COLOR_UI_THEME_RED;
-    [releaseBtn addTarget:self action:@selector(releaseBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:releaseBtn];
-    [releaseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(-HOMEBAR_HEIGHT);
-        make.height.mas_equalTo(BUTTON_HEIGHT_50);
-    }];
-    
-    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-HOMEBAR_HEIGHT - BUTTON_HEIGHT_50);
-    }];
 }
 
 - (void)setupNav {
     [self.customNavBar setTitle:@"约Ta"];
 }
 
+- (void)updateUI {
+    if (_choosedUser && self.skillArray.count > 0) {
+        self.headView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [AppointmentHerHeadView getHeightWithModel:_choosedUser skills:self.skillArray]);
+        [self.headView setModel:_choosedUser];
+        [self.headView setSkillArray:self.skillArray];
+        self.tableView.tableHeaderView = self.headView;
+        
+        UIButton *releaseBtn = [[UIButton alloc] init];
+        [releaseBtn setButtonStateNormalTitle:@"发布需求" Font:KFont(14) textColor:COLOR_UI_FFFFFF];
+        releaseBtn.backgroundColor = COLOR_UI_THEME_RED;
+        [releaseBtn addTarget:self action:@selector(releaseBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.view addSubview:releaseBtn];
+        [releaseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.mas_equalTo(0);
+            make.bottom.mas_equalTo(-HOMEBAR_HEIGHT);
+            make.height.mas_equalTo(BUTTON_HEIGHT_50);
+        }];
+        
+        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.bottom.mas_equalTo(-HOMEBAR_HEIGHT - BUTTON_HEIGHT_50);
+        }];
+    }
+}
 
 #pragma mark - network
 
 - (void)getData {
-    
-    [YQNetworking postWithApiNumber:API_NUM_20036 params:@{@"userId":[PATool getUserId]} successBlock:^(id response) {
-        
+    [SVProgressHUD show];
+    [YQNetworking postWithApiNumber:API_NUM_20036 params:@{@"userId":_choosedUser.userId} successBlock:^(id response) {
+        [SVProgressHUD dismiss];
         if (getResponseIsSuccess(response)) {
-            [self.dataArr addObjectsFromArray:[MakeMoneySkillModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
-            //            self.dataArr = [NSMutableArray arrayWithArray:@[[MakeMoneySkillModel mj_objectWithKeyValues:getResponseData(response)]]];
-            [self.tableView reloadData];
+            self.skillArray = [SkillListModel mj_objectArrayWithKeyValuesArray:getResponseData(response)];
+            [self updateUI];
         }
     } failBlock:^(NSError *error) {
+        [SVProgressHUD dismiss];
     }];
 }
 
 #pragma mark - action
 
 - (void)releaseBtnClickAction:(UIButton *)sender {
+    /*  jnId：技能id  有效时间：dayNumber  定金：subscription
+     yUserId：应邀者id （ 多个的情况下 逗号分隔： 111,111,111,111      单个的情况下不需要加逗号）
+     userId：用户id（发布者）*/
+    
+    NSString *jnId = self.headView.choosedPusId;
+    NSString *dayNumber = self.headView.choosedVailDays;
+    NSString *subscription = self.headView.choosedPrice;
+    
+    NSString *yUserId = _choosedUser.userId;
+    
+    [YQNetworking postWithApiNumber:API_NUM_10007 params:@{@"userId":[PATool getUserId],@"yUserId":yUserId,@"jnId":jnId,@"dayNumber":dayNumber,@"subscription":subscription} successBlock:^(id response) {
+        if (getResponseIsSuccess(response)) {
+            NSDictionary *dic = getResponseData(response);
+            //1：发布成功  0:余额不足     （注：在用户发布需求的时候就要扣取定金金额，所以有判断）
+            if ([dic[@"success"] integerValue] == 1) {
+                [[AlertBaseView alertWithTitle:@"发布成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:^{
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }] showInWindow];
+            } else if ([dic[@"success"] integerValue] == 0) {
+                [SVProgressHUD showSuccessWithStatus:@"余额不足"];
+                RechargeViewController *vc = [[RechargeViewController alloc] init];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    } failBlock:nil];
     
 }
 
@@ -93,7 +129,7 @@
 
 - (AppointmentHerHeadView *)headView {
     if (!_headView) {
-        _headView = [[AppointmentHerHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [AppointmentHerHeadView getHeight])];
+        _headView = [[AppointmentHerHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
     }
     return _headView;
 }

@@ -8,7 +8,14 @@
 
 #import "BaseTableViewCell.h"
 
+@class OrderManageListModel;
+
 @interface OrderManageManageCell : BaseTableViewCell
+
+@property (nonatomic, strong) OrderManageListModel *model;
+
++ (CGFloat)getCellHeightWithModel:(OrderManageListModel *)model;
+
 
 @end
 

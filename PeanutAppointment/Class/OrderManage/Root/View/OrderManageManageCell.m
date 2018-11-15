@@ -9,6 +9,8 @@
 #import "OrderManageManageCell.h"
 #import "TitleImageButton.h"
 
+#import "OrderManageListModel.h"
+
 @interface OrderManageManageCell()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @property (nonatomic, strong) UILabel *typeLabel;
@@ -17,6 +19,7 @@
 @property (nonatomic, strong) UILabel *guoqiLabel;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) NSArray<OrderManageInvitedListModel *> *dataArr;
 
 @end
 
@@ -150,18 +153,60 @@
 
 #pragma mark - public -
 
-+ (CGFloat)getCellHeight {
++ (CGFloat)getCellHeightWithModel:(OrderManageListModel *)model {
     CGFloat oneHeight = 38;
+    CGFloat titleWidth = 70;
     CGFloat headWidth = 30;
-    return MARGIN_15 + oneHeight * 3  + headWidth * 2 + MARGIN_10 * 3;
+    
+    CGFloat height = MARGIN_15 + oneHeight * 3 + MARGIN_10;
+    
+    if (model.invitedList > 0) {
+        
+        NSInteger count = floorf((ScreenWidth - titleWidth + MARGIN_15 * 3 + MARGIN_10)/(headWidth + MARGIN_10));
+        NSInteger lineNum = ceilf((model.invitedList.count /(float)count));
+        height += lineNum * (headWidth + MARGIN_10);
+    } else {
+        height += oneHeight;
+    }
+    
+    return height;
 }
 
+- (void)setModel:(OrderManageListModel *)model {
+    _model = model;
+    
+    self.typeLabel.text = model.pasName;
+    self.timeLabel.text = model.createTime;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *startDate = [dateFormatter dateFromString:model.createTime];
+    NSDate *endDate = [NSDate dateWithTimeInterval:[model.dayNumber integerValue] * 24 * 60 * 60 sinceDate:startDate];
+    NSDate *nowDate = [NSDate date];
+    if ([nowDate compare:endDate] == NSOrderedAscending) {
+        //结束时间 比现在 时间大 意味着时间没过期
+        NSInteger second = floor([endDate timeIntervalSinceDate:nowDate]);
+        NSInteger days = ceilf(second/(24 * 60 * 60.f));
+        self.guoqiLabel.text = [NSString stringWithFormat:@"%ld后过期",days];
+    } else {
+        //已过期
+        self.guoqiLabel.text = @"0天后过期";
+    }
+    if (model.invitedList.count > 0) {
+        self.dataArr = model.invitedList;
+        [self.collectionView reloadData];
+        
+        self.collectionView.hidden = NO;
+    } else {
+        self.collectionView.hidden = YES;
+    }
+}
 
 
 #pragma mark - ============= UICollectionViewDataSource,UICollectionViewDelegate ===============
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 10;
+    return self.dataArr.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -171,7 +216,11 @@
         
         cell = [collectionView dequeueReusableCellWithReuseIdentifier:[OrderManageManageHeadCell reuseIdentifier] forIndexPath:indexPath];
     }
-    
+    if (self.dataArr.count > indexPath.row) {
+        OrderManageInvitedListModel *model = self.dataArr[indexPath.row];
+        [cell.headImageV sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
+        cell.redDotView.hidden = [model.isQuery integerValue] == 1;
+    }
     return cell;
     
 }

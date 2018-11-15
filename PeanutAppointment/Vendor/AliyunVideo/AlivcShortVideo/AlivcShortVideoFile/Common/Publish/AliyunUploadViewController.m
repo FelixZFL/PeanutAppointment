@@ -186,7 +186,7 @@
     if (totalSize) {
         dispatch_async(dispatch_get_main_queue(), ^{
             CGFloat progress = uploadedSize/(double)totalSize;
-            [_progressView setProgress:progress];
+            [self.progressView setProgress:progress];
             [self updateUploadLabelWithProgress:progress];
         });
     }
@@ -205,8 +205,8 @@
 -(void)uploadFailedWithCode:(NSString *)code message:(NSString *)message {
     NSLog(@"upload failed code:%@, message:%@", code, message);
     dispatch_async(dispatch_get_main_queue(), ^{
-        _progressView.hidden = YES;
-        _uploadLabel.hidden = YES;
+        self.progressView.hidden = YES;
+        self.uploadLabel.hidden = YES;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"上传失败\ncode:%@\nmessage:%@",code,message] message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alert show];
     });
@@ -214,11 +214,28 @@
 
 -(void)uploadSuccessWithVid:(NSString *)vid imageUrl:(NSString *)imageUrl {
     NSLog(@"upload success vid:%@, imageurl:%@", vid, imageUrl);
-    _finished = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        _progressView.hidden = YES;
-        _uploadLabel.hidden = YES;
-    });
+    
+    /* url：地址（相当于视频的vid），
+     userId：用户id   videoType：类型（1:直播/2:视频）
+     coverUrl：封面
+     vUserId：直播用户ID（避免字段冲突加了个v，直播的时候才会传递）
+     room_id：直播房间id（直播的时候才会传递））*/
+    
+    [YQNetworking postWithApiNumber:API_NUM_10017 params:@{@"userId":[PATool getUserId], @"videoType":@"1", @"url":vid, @"coverUrl":imageUrl} successBlock:^(id response) {
+        if (getResponseIsSuccess(response)) {
+            [SVProgressHUD showSuccessWithStatus:@"上传成功"];
+            self.finished = YES;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                self.progressView.hidden = YES;
+                self.uploadLabel.hidden = YES;
+            });
+        } else {
+            [SVProgressHUD showErrorWithStatus:@"上传失败"];
+        }
+    } failBlock:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"上传失败"];
+    }];
+    
 }
 
 -(void)uploadRetry {
