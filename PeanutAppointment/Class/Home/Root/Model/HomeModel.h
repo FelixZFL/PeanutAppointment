@@ -98,6 +98,9 @@ NS_ASSUME_NONNULL_END
 
 @interface HomeVideoHotUserModel : NSObject
 
+///封面
+@property (nonatomic, copy) NSString *coverUrl;
+
 ///1：视频 /2：直播
 @property (nonatomic, copy) NSString *videoType;
 
@@ -105,8 +108,9 @@ NS_ASSUME_NONNULL_END
 @property (nonatomic, copy) NSString *voidUrl;
 
 /*
+ coverUrl = "https://outin-3a0966eea47a11e8b8f200163e1c7426.oss-cn-shanghai.aliyuncs.com/image/cover/6B77ACD74025424696BC0BE6D0ECDD93-6-2.png?Expires=1542252123&OSSAccessKeyId=LTAInFumgYEtNMvC&Signature=5vcqROzkqT%2BAL%2BQeOzcVecxEyyw%3D";
  videoType = 1;
- voidUrl = xx;
+ voidUrl = b1a5eac191a44a53aaaba685ab15b07c;
  */
 
 @end

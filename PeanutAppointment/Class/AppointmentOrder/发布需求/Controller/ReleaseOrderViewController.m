@@ -50,6 +50,9 @@
 
 - (void)setupUI {
     
+    self.pageNum = 0;
+    self.pageSize = 20;
+    
     self.view.backgroundColor = self.tableView.backgroundColor = COLOR_UI_FFFFFF;
     
     self.tableView.tableHeaderView = self.headView;

@@ -122,13 +122,30 @@
         [cell setModel:self.dataArr[indexPath.row]];
     }
     return cell;
-    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.dataArr.count > indexPath.row) {
 //        GotTalentListModel *model = self.dataArr[indexPath.row];
+        [self pushTargetVCWithClassString:@"AVC_VP_VideoPlayViewController"];
     }
 }
+
+
+#pragma mark -- private
+
+#pragma mark - Custom Method
+
+- (void)pushTargetVCWithClassString:(NSString *)classString{
+    Class viewControllerClass = NSClassFromString(classString);
+    if (viewControllerClass) {
+        UIViewController *targetVC = [[viewControllerClass alloc]init];
+        if (targetVC) {
+            [self.navigationController pushViewController:targetVC animated:true];
+        }
+    }
+    
+}
+
 
 @end

@@ -25,6 +25,7 @@
 #import "UIImage+AlivcHelper.h"
 #import <AliyunVodPlayerSDK/AliyunVodDownLoadManager.h>
 #import "AlivcAlertView.h"
+#import "STSInfoModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -688,32 +689,63 @@ static NSInteger alertViewTag_delete_video = 1004; //删除本地视频
     self.config = [[AVCVideoConfig alloc]init];
     self.config.playMethod = AliyunPlayMedthodSTS;
     
-    NSString *defaultVidString = @"6e783360c811449d8692b2117acc9212";
-    [AlivcAppServer getStsDataWithVid:defaultVidString sucess:^(NSString *accessKeyId, NSString *accessKeySecret, NSString *securityToken) {
-        self.config.stsAccessKeyId = accessKeyId;
-        self.config.stsAccessSecret = accessKeySecret;
-        self.config.stsSecurityToken = securityToken;
-        //查询视频列表
-        [AlivcVideoPlayManager requestPlayListVodPlayWithAccessKeyId:self.config.stsAccessKeyId accessSecret:self.config.stsAccessSecret securityToken:self.config.stsSecurityToken sucess:^(NSArray *ary, long total) {
-            self.listView.dataAry = ary;
-            AlivcVideoPlayListModel *model = ary.firstObject;
-            self.config.videoId = model.videoId;
-            self.config.playMethod = AliyunPlayMedthodSTS;
-            //赋值
-            for(AlivcVideoPlayListModel *itemModel in ary){
-                itemModel.stsAccessKeyId = self.config.stsAccessKeyId;
-                itemModel.stsAccessSecret = self.config.stsAccessSecret;
-                itemModel.stsSecurityToken = self.config.stsSecurityToken;
-            }
-            if (success) {
-                success();
-            }
-        } failure:^(NSString *error) {
+    //type：1视频    2直播
+    [YQNetworking postWithApiNumber:API_NUM_20023 params:@{@"type":@"1"} successBlock:^(id response) {
+        if (getResponseIsSuccess(response)) {
             
-        }];
-    } failure:^(NSString *errorString) {
-        [MBProgressHUD showMessage:errorString inView:self.view];
-    }];
+            STSInfoModel *model = [STSInfoModel mj_objectWithKeyValues:getResponseData(response)];
+            self.config.stsAccessKeyId = model.accessKeyId;
+            self.config.stsAccessSecret = model.accessKeySecret;
+            self.config.stsSecurityToken = model.securityToken;
+            //查询视频列表
+            [AlivcVideoPlayManager requestPlayListVodPlayWithAccessKeyId:self.config.stsAccessKeyId accessSecret:self.config.stsAccessSecret securityToken:self.config.stsSecurityToken sucess:^(NSArray *ary, long total) {
+                self.listView.dataAry = ary;
+                AlivcVideoPlayListModel *model = ary.firstObject;
+                self.config.videoId = model.videoId;
+                self.config.playMethod = AliyunPlayMedthodSTS;
+                //赋值
+                for(AlivcVideoPlayListModel *itemModel in ary){
+                    itemModel.stsAccessKeyId = self.config.stsAccessKeyId;
+                    itemModel.stsAccessSecret = self.config.stsAccessSecret;
+                    itemModel.stsSecurityToken = self.config.stsSecurityToken;
+                }
+                if (success) {
+                    success();
+                }
+            } failure:^(NSString *error) {
+                
+            }];
+        }
+        
+    } failBlock:nil];
+    
+//    NSString *defaultVidString = @"6e783360c811449d8692b2117acc9212";
+//
+//    [AlivcAppServer getStsDataWithVid:defaultVidString sucess:^(NSString *accessKeyId, NSString *accessKeySecret, NSString *securityToken) {
+//        self.config.stsAccessKeyId = accessKeyId;
+//        self.config.stsAccessSecret = accessKeySecret;
+//        self.config.stsSecurityToken = securityToken;
+//        //查询视频列表
+//        [AlivcVideoPlayManager requestPlayListVodPlayWithAccessKeyId:self.config.stsAccessKeyId accessSecret:self.config.stsAccessSecret securityToken:self.config.stsSecurityToken sucess:^(NSArray *ary, long total) {
+//            self.listView.dataAry = ary;
+//            AlivcVideoPlayListModel *model = ary.firstObject;
+//            self.config.videoId = model.videoId;
+//            self.config.playMethod = AliyunPlayMedthodSTS;
+//            //赋值
+//            for(AlivcVideoPlayListModel *itemModel in ary){
+//                itemModel.stsAccessKeyId = self.config.stsAccessKeyId;
+//                itemModel.stsAccessSecret = self.config.stsAccessSecret;
+//                itemModel.stsSecurityToken = self.config.stsSecurityToken;
+//            }
+//            if (success) {
+//                success();
+//            }
+//        } failure:^(NSString *error) {
+//
+//        }];
+//    } failure:^(NSString *errorString) {
+//        [MBProgressHUD showMessage:errorString inView:self.view];
+//    }];
 }
 
 

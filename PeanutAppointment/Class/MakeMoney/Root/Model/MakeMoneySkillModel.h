@@ -13,16 +13,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface MakeMoneySkillModel : NSObject
 
 
-///技能id
+///数据id
 @property (nonatomic, copy) NSString *ID;
+
+///技能id
+@property (nonatomic, copy) NSString *jnId;
 
 ///技能名称
 @property (nonatomic, copy) NSString *jnName;
 
 
 /*
- "id": "1", //技能id
- "jnName": "测试"//技能名称
+ "jnId": "1", //技能id
+ "jnName": "测试"//技能名称  jnId
  */
 
 @end

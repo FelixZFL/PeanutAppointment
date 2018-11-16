@@ -70,6 +70,7 @@
         if (getResponseIsSuccess(response)) {
             
             self.model = [DemanDetailModel mj_objectWithKeyValues:getResponseData(response)];
+            self.model.state = self.state;
             [self updateUI];
         }
 
@@ -102,6 +103,29 @@
     DemandDetailCell *cell = (DemandDetailCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[DemandDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        [cell setBtnClickBlock:^(DemanDetailModel * _Nonnull model, UIButton * _Nonnull sender) {
+            
+            if ([sender.titleLabel.text isEqualToString:@"发消息"]) {
+                
+            } else if ([sender.titleLabel.text isEqualToString:@"确认支付"]) {
+                
+                [YQNetworking postWithApiNumber:API_NUM_10020 params:@{@"orderId":self.orderId, @"yUserId":self.yUserId} successBlock:^(id response) {
+                    
+                    if (getResponseIsSuccess(response)) {
+                        [SVProgressHUD showSuccessWithStatus:@"支付成功"];
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }
+                    
+                } failBlock:nil];
+                
+            } else if ([sender.titleLabel.text isEqualToString:@"申请退款"]) {
+                
+            } else if ([sender.titleLabel.text isEqualToString:@"付余款"]) {
+                
+            } else if ([sender.titleLabel.text isEqualToString:@"去评价"]) {
+                
+            }
+        }];
     }
     if (self.model) {
         [cell setModel:self.model];

@@ -36,6 +36,8 @@
 
 - (void)setupUI {
     
+    self.backgroundColor = COLOR_UI_FFFFFF;
+    
     UIView *lineView = [[UIView alloc] init];
     lineView.backgroundColor = COLOR_UI_F0F0F0;
     [self addSubview:lineView];
@@ -67,7 +69,7 @@
     _scrollTextView.textStayTime        = 2;
     _scrollTextView.scrollAnimationTime = 1;
     _scrollTextView.textColor           = COLOR_UI_222222;
-    _scrollTextView.textFont            = KFont(15);
+    _scrollTextView.textFont            = KFont(12);
     _scrollTextView.textAlignment       = NSTextAlignmentLeft;
     _scrollTextView.touchEnable         = NO;
     [self addSubview:_scrollTextView];

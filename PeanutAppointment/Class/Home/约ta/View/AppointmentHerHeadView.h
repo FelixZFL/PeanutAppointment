@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class UserMainPageUserInfoModel;
 @class HomeIndexUserModel;
 @class SkillListModel;
 
@@ -19,9 +20,11 @@
 
 @property (nonatomic, strong) HomeIndexUserModel *model;
 
+@property (nonatomic, strong) UserMainPageUserInfoModel *userInfoModel;
+
 @property (nonatomic, strong) NSArray<SkillListModel *> *skillArray;
 
-+ (CGFloat )getHeightWithModel:(HomeIndexUserModel *)model skills:(NSArray *)skillArray;
++ (CGFloat )getHeightWithSkills:(NSArray *)skillArray;
 
 @end
 

@@ -15,7 +15,7 @@
 
 @property (nonatomic, strong) UILabel *typeLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
-@property (nonatomic, strong) UILabel *statusLabel;
+//@property (nonatomic, strong) UILabel *statusLabel;
 @property (nonatomic, strong) UILabel *guoqiLabel;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -95,7 +95,8 @@
                 make.top.bottom.mas_equalTo(0);
                 make.width.mas_greaterThanOrEqualTo(0);
             }];
-            contentLabel.text = @"棋牌";
+            //contentLabel.text = @"棋牌";
+            self.typeLabel = contentLabel;
         } else if (i == 1) {
             _guoqiLabel = [UILabel labelWithFont:KFont(14) textColor:COLOR_UI_222222 textAlignment:NSTextAlignmentRight];
             _guoqiLabel.text = @"29天后过期";
@@ -105,7 +106,8 @@
                 make.top.bottom.mas_equalTo(0);
                 make.width.mas_greaterThanOrEqualTo(0);
             }];
-            contentLabel.text = @"2018-08-30 03:25";
+            //contentLabel.text = @"2018-08-30 03:25";
+            self.timeLabel = contentLabel;
         } else {
             contentLabel.text = @"未成交·等待服务者应邀";
         }
@@ -160,13 +162,13 @@
     
     CGFloat height = MARGIN_15 + oneHeight * 3 + MARGIN_10;
     
-    if (model.invitedList > 0) {
+    if (model.invitedList.count > 0) {
         
         NSInteger count = floorf((ScreenWidth - titleWidth + MARGIN_15 * 3 + MARGIN_10)/(headWidth + MARGIN_10));
         NSInteger lineNum = ceilf((model.invitedList.count /(float)count));
         height += lineNum * (headWidth + MARGIN_10);
     } else {
-        height += oneHeight;
+        height += headWidth + MARGIN_10;
     }
     
     return height;
@@ -179,7 +181,7 @@
     self.timeLabel.text = model.createTime;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *startDate = [dateFormatter dateFromString:model.createTime];
     NSDate *endDate = [NSDate dateWithTimeInterval:[model.dayNumber integerValue] * 24 * 60 * 60 sinceDate:startDate];
     NSDate *nowDate = [NSDate date];
@@ -218,7 +220,7 @@
     }
     if (self.dataArr.count > indexPath.row) {
         OrderManageInvitedListModel *model = self.dataArr[indexPath.row];
-        [cell.headImageV sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
+        [cell.headImageV sd_setImageWithURL:URLWithString(model.headUrl?:@"") placeholderImage:imageNamed(placeHolderHeadImageName)];
         cell.redDotView.hidden = [model.isQuery integerValue] == 1;
     }
     return cell;
@@ -226,6 +228,12 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
+    if (self.dataArr.count > indexPath.row) {
+        OrderManageInvitedListModel *invitedModel = self.dataArr[indexPath.row];
+        if (self.clickHeadBlock) {
+            self.clickHeadBlock(self.model, invitedModel);
+        }
+    }
 }
 
 

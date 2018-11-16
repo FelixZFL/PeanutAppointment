@@ -50,7 +50,7 @@
 - (void)setModel:(GotTalentListModel *)model {
     _model = model;
     
-    [self.imageV sd_setImageWithURL:URLWithString(model.voidUrl)];
+    [self.imageV sd_setImageWithURL:URLWithString(model.coverUrl) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
     [self.playCountBtn setButtonStateNormalTitle:model.playNumber];
     self.commentCountLabel.text = [NSString stringWithFormat:@"%@条评论",model.comments];
 }

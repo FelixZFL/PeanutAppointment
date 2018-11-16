@@ -9,13 +9,16 @@
 #import "AppointmentHerViewController.h"
 #import "AppointmentHerHeadView.h"
 #import "HomeIndexUserModel.h"
+
 #import "SkillListModel.h"
+#import "UserMainPageModel.h"
 
 #import "RechargeViewController.h"
 
 @interface AppointmentHerViewController ()
 
 @property (nonatomic, strong) AppointmentHerHeadView *headView;
+@property (nonatomic, strong) UIButton *releaseBtn;
 
 @property (nonatomic, strong) NSArray *skillArray;
 
@@ -43,8 +46,31 @@
 #pragma mark - UI
 
 - (void)setupUI {
-    //获取技能信息
+    UIButton *releaseBtn = [[UIButton alloc] init];
+    [releaseBtn setButtonStateNormalTitle:@"发布需求" Font:KFont(14) textColor:COLOR_UI_FFFFFF];
+    releaseBtn.backgroundColor = COLOR_UI_THEME_RED;
+    releaseBtn.hidden = YES;
+    [releaseBtn addTarget:self action:@selector(releaseBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.releaseBtn = releaseBtn;
+    
+    [self.view addSubview:releaseBtn];
+    [releaseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.mas_equalTo(0);
+        make.bottom.mas_equalTo(-HOMEBAR_HEIGHT);
+        make.height.mas_equalTo(BUTTON_HEIGHT_50);
+    }];
+    
+    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(-HOMEBAR_HEIGHT - BUTTON_HEIGHT_50);
+    }];
+    
+    
     if (_choosedUser) {
+        _yUserId = _choosedUser.userId;
+        [self updateUI];
+        
+    } else {
+        //获取技能信息
         [self getData];
     }
     
@@ -55,35 +81,36 @@
 }
 
 - (void)updateUI {
-    if (_choosedUser && self.skillArray.count > 0) {
-        self.headView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [AppointmentHerHeadView getHeightWithModel:_choosedUser skills:self.skillArray]);
+    
+    if (_choosedUser) {
+        SkillListModel *model = [[SkillListModel alloc] init];
+        model.jnId = _choosedUser.pusId;
+        model.jnName = _choosedUser.jnName;
+        self.skillArray = @[model];
+        self.headView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [AppointmentHerHeadView getHeightWithSkills:self.skillArray]);
         [self.headView setModel:_choosedUser];
         [self.headView setSkillArray:self.skillArray];
         self.tableView.tableHeaderView = self.headView;
+        self.releaseBtn.hidden = NO;
         
-        UIButton *releaseBtn = [[UIButton alloc] init];
-        [releaseBtn setButtonStateNormalTitle:@"发布需求" Font:KFont(14) textColor:COLOR_UI_FFFFFF];
-        releaseBtn.backgroundColor = COLOR_UI_THEME_RED;
-        [releaseBtn addTarget:self action:@selector(releaseBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
         
-        [self.view addSubview:releaseBtn];
-        [releaseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.mas_equalTo(0);
-            make.bottom.mas_equalTo(-HOMEBAR_HEIGHT);
-            make.height.mas_equalTo(BUTTON_HEIGHT_50);
-        }];
-        
-        [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.mas_equalTo(-HOMEBAR_HEIGHT - BUTTON_HEIGHT_50);
-        }];
+    } else {
+        if (self.skillArray.count > 0) {
+            self.headView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [AppointmentHerHeadView getHeightWithSkills:self.skillArray]);
+            [self.headView setUserInfoModel:_userModel];
+            [self.headView setSkillArray:self.skillArray];
+            self.tableView.tableHeaderView = self.headView;
+            self.releaseBtn.hidden = NO;
+        }
     }
+    
 }
 
 #pragma mark - network
 
 - (void)getData {
     [SVProgressHUD show];
-    [YQNetworking postWithApiNumber:API_NUM_20036 params:@{@"userId":_choosedUser.userId} successBlock:^(id response) {
+    [YQNetworking postWithApiNumber:API_NUM_20036 params:@{@"userId":_yUserId} successBlock:^(id response) {
         [SVProgressHUD dismiss];
         if (getResponseIsSuccess(response)) {
             self.skillArray = [SkillListModel mj_objectArrayWithKeyValuesArray:getResponseData(response)];
@@ -105,17 +132,17 @@
     NSString *dayNumber = self.headView.choosedVailDays;
     NSString *subscription = self.headView.choosedPrice;
     
-    NSString *yUserId = _choosedUser.userId;
+    NSString *yUserId = _yUserId;
     
     [YQNetworking postWithApiNumber:API_NUM_10007 params:@{@"userId":[PATool getUserId],@"yUserId":yUserId,@"jnId":jnId,@"dayNumber":dayNumber,@"subscription":subscription} successBlock:^(id response) {
         if (getResponseIsSuccess(response)) {
             NSDictionary *dic = getResponseData(response);
             //1：发布成功  0:余额不足     （注：在用户发布需求的时候就要扣取定金金额，所以有判断）
-            if ([dic[@"success"] integerValue] == 1) {
+            if ([dic[@"isSuccess"] integerValue] == 1) {
                 [[AlertBaseView alertWithTitle:@"发布成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:^{
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }] showInWindow];
-            } else if ([dic[@"success"] integerValue] == 0) {
+            } else if ([dic[@"isSuccess"] integerValue] == 0) {
                 [SVProgressHUD showSuccessWithStatus:@"余额不足"];
                 RechargeViewController *vc = [[RechargeViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];

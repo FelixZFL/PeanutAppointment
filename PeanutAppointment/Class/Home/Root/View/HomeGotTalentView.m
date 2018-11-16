@@ -58,7 +58,7 @@
 + (CGFloat )getHeightWithArray:(NSArray *)array {
     
     CGFloat photoWidth = (SCREEN_WIDTH - MARGIN_15 * 2 - MARGIN_1 * 2)/3.f;
-    return [HomeTitleView getHeight] + (photoWidth + MARGIN_1) * ((array.count - 1) + 1) + MARGIN_15;
+    return [HomeTitleView getHeight] + (photoWidth + MARGIN_1) * ((array.count - 1)/3 + 1) + MARGIN_15;
 }
 
 - (void)setDataArray:(NSArray<HomeVideoHotUserModel *> *)dataArray {
@@ -72,9 +72,9 @@
     CGFloat titleHeight = [HomeTitleView getHeight];
     CGFloat photoWidth = (SCREEN_WIDTH - MARGIN_15 * 2 - MARGIN_1 * 2)/3.f;
     for (int i = 0; i < dataArray.count; i++) {
-        
+        HomeVideoHotUserModel *model = dataArray[i];
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_15 + i%3 * (photoWidth + MARGIN_1), titleHeight + i/3 * (photoWidth + MARGIN_1), photoWidth, photoWidth)];
-        imageV.image = imageNamed(@"placeholder_image_loadFaile");
+        [imageV sd_setImageWithURL:URLWithString(model.coverUrl) placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
         imageV.tag = kImageTag + i;
         imageV.userInteractionEnabled = YES;
         [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClickAction:)]];
@@ -92,5 +92,7 @@
 }
 
 #pragma mark - getter -
+
+
 
 @end

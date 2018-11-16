@@ -11,6 +11,7 @@
 #import "UserMainPageFootView.h"
 #import "LocationManager.h"
 
+#import "HomeIndexUserModel.h"
 #import "UserMainPageModel.h"
 
 #import "AppointmentHerViewController.h"
@@ -132,9 +133,16 @@
 
 - (void)getData {
     if (_location) {
-        
+        NSString *pusId = @"";
+        NSString *userId = @"";
+        if (_userModel) {
+            pusId = _userModel.pusId;
+            userId = _userModel.userId;
+        } else {
+            userId = _userId?:@"";
+        }
         [SVProgressHUD show];
-        NSDictionary *param = @{@"userId":_userId?:@"", @"pusId":_pusId?:@"", @"lng":@(_location.coordinate.longitude), @"lat":@(_location.coordinate.latitude)};
+        NSDictionary *param = @{@"userId":userId, @"pusId":pusId, @"lng":@(_location.coordinate.longitude), @"lat":@(_location.coordinate.latitude)};
         [YQNetworking postWithApiNumber:API_NUM_20032 params:param successBlock:^(id response) {
             [SVProgressHUD dismiss];
             if (getResponseIsSuccess(response)) {
@@ -174,6 +182,12 @@
 - (void)btnClickAction:(UIButton *)sender {
     if ([sender.titleLabel.text isEqualToString:@"约Ta"]) {
         AppointmentHerViewController *vc = [[AppointmentHerViewController alloc] init];
+        if (_userModel) {
+            vc.choosedUser = _userModel;
+        } else {
+            vc.yUserId = _userId;
+            vc.userModel = self.model.userInfo;
+        }
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

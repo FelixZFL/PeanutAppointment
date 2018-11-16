@@ -94,7 +94,6 @@
         
         if (getResponseIsSuccess(response)) {
             [self.dataArr addObjectsFromArray:[MakeMoneySkillModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
-//            self.dataArr = [NSMutableArray arrayWithArray:@[[MakeMoneySkillModel mj_objectWithKeyValues:getResponseData(response)]]];
             [self.tableView reloadData];
         }
     } failBlock:^(NSError *error) {

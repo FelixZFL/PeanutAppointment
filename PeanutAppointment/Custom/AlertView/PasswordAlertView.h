@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^AuthSuccessBlock)(void);
+typedef void(^AuthSuccessBlock)(NSString *pwd);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,8 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removFromWindow;
 
-+ (instancetype )alertWithBlock:(AuthSuccessBlock )block;
-
++ (instancetype )alertWithTitle:(NSString *)titleStr Block:(AuthSuccessBlock )block;
 
 @end
 

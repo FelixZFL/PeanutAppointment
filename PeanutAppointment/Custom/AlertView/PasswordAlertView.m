@@ -141,9 +141,10 @@
     [self removeFromSuperview];
 }
 
-+ (instancetype )alertWithBlock:(AuthSuccessBlock )block {
++ (instancetype )alertWithTitle:(NSString *)titleStr Block:(AuthSuccessBlock )block {
     PasswordAlertView *alert = [[PasswordAlertView alloc] initWithFrame:CGRectMake(0, 0, AlertBaseViewWidth, 170)];
     alert.successBlock = block;
+    alert.titleLabel.text = titleStr;
     return alert;
 }
 
@@ -155,8 +156,9 @@
 }
 
 - (void)rightBtnAction {
-
-    [self removFromWindow];
+    if (self.passwordTF.text.length > 0 && self.successBlock) {
+        self.successBlock(self.passwordTF.text);
+    }
 }
 
 // 当键盘出现或改变时调用
@@ -195,7 +197,7 @@
         _passwordTF = [UITextField textFieldWithFont:KFont(17) textColor:COLOR_UI_222222 textAlignment:NSTextAlignmentLeft];
         [_passwordTF setDefaultCorner];
         _passwordTF.backgroundColor = COLOR_UI_F0F0F0;
-        _passwordTF.keyboardType = UIKeyboardTypeASCIICapable;
+        _passwordTF.keyboardType = UIKeyboardTypeNumberPad;//UIKeyboardTypeASCIICapable;
         _passwordTF.secureTextEntry = YES;
         [_passwordTF setLeftView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, MARGIN_10, 0)]];
         _passwordTF.leftViewMode = UITextFieldViewModeAlways;

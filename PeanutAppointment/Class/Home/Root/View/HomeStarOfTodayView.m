@@ -59,7 +59,7 @@
     for (int i = 0; i < 3; i++) {
         
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_15 + i * (photoWidth + MARGIN_1), titleHeight, photoWidth, photoWidth)];
-        imageV.image = imageNamed(@"placeholder_image_loadFaile");
+        imageV.image = imageNamed(placeHolderHeadImageName);
         imageV.tag = kImageTag + i;
         imageV.userInteractionEnabled = YES;
         [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageClickAction:)]];
@@ -97,11 +97,11 @@
     for (int i = 0; i < dataArray.count; i++) {
         HomeHotUserModel *model = dataArray[i];
         if (i == 0) {
-            [self.photo1 sd_setImageWithURL:URLWithString(model.headUrl)];
+            [self.photo1 sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
         } else if (i == 1) {
-            [self.photo2 sd_setImageWithURL:URLWithString(model.headUrl)];
+            [self.photo2 sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
         } else if (i == 2) {
-            [self.photo3 sd_setImageWithURL:URLWithString(model.headUrl)];
+            [self.photo3 sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
         }
     }
 }

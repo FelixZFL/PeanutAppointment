@@ -43,6 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *yyTIme;
 
 
+
+@property (nonatomic, copy) NSString *state;
+
 /*
  pasName,//技能名称
  createTime,//发布时间
