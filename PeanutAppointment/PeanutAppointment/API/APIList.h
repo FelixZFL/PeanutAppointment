@@ -169,7 +169,7 @@ static NSString * const API_NUM_10019 = @"10019";//
 static NSString * const API_NUM_20029 = @"20029";//
 
 //支付定金接口：
-static NSString * const API_NUM_10020 = @"10020";
+static NSString * const API_NUM_10020 = @"10020";//
 
 //APP首页-打赏-礼物查询接口
 static NSString * const API_NUM_20030 = @"20030";//礼物缺图片 

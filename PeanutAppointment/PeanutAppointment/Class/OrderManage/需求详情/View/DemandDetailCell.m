@@ -187,6 +187,27 @@
     
     self.timeLabel.text = model.yyTIme;
     
+    self.button1.hidden = self.button2.hidden = self.button3.hidden = self.button4.hidden = YES;
+    self.button1.selected = self.button2.selected = self.button3.selected = self.button4.selected = NO;
+    
+    if ([model.state integerValue] == 1) {//待确认
+        
+        self.button1.hidden = self.button2.hidden = NO;
+        
+        self.button2.selected = YES;
+        [self.button2 setButtonStateNormalTitle:@"发消息"];
+        [self.button1 setButtonStateNormalTitle:@"确认支付"];
+        
+    } else if ([model.state integerValue] == 2) {
+        self.button1.hidden = self.button2.hidden = self.button3.hidden = self.button4.hidden = NO;
+        
+        self.button4.selected = YES;
+        
+        [self.button4 setButtonStateNormalTitle:@"发消息"];
+        [self.button3 setButtonStateNormalTitle:@"申请退款"];
+        [self.button2 setButtonStateNormalTitle:@"付余款"];
+        [self.button1 setButtonStateNormalTitle:@"去评价"];
+    }
 }
 
 #pragma mark - private -
@@ -231,6 +252,9 @@
 
 - (void)btnClickAction:(UIButton *)sender {
     
+    if (self.model && self.btnClickBlock) {
+        self.btnClickBlock(self.model, sender);
+    }
 }
 
 #pragma mark - getter -

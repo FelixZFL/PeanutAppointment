@@ -13,7 +13,6 @@
 #import "XMPPManager.h"
 #import "AlertShareView.h"
 #import "SignInAlertView.h"
-#import "PasswordAlertView.h"
 #import "RewardAlertView.h"
 #import "RechargeAlertView.h"
 #import "CommentListAlertView.h"
@@ -356,8 +355,7 @@
         [cell setUserInfoBlock:^(HomeIndexUserModel * _Nonnull model) {
             if (![self cheakLogin]) return;
             UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
-            vc.userId = model.userId;
-            vc.pusId = model.pusId;
+            vc.userModel = model;
             [self.navigationController pushViewController:vc animated:YES];
         }];
         [cell setImageClickBlock:^(NSInteger index, HomeIndexUserModel * _Nonnull model) {
@@ -533,10 +531,5 @@
  dispatch_async(dispatch_get_main_queue(), ^{
  [weakSelf presentViewController:sheet animated:YES completion:nil];
  });
- } else if (index == 7) {
- [[PasswordAlertView alertWithBlock:^{
- [SVProgressHUD showInfoWithStatus:@"确定"];
- }] showInWindow];
  }
-
  */

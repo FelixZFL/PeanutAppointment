@@ -10,6 +10,10 @@
 #import "NavTypeChooseView.h"
 #import "SGQRCode.h"
 
+#import "WXApiObject.h"
+#import <WXApi.h>
+#import "TencentOpenAPI/QQApiInterface.h"
+
 #define kBtnTag 948
 
 @interface ShareViewController ()
@@ -18,6 +22,7 @@
 @property (nonatomic, assign) NavTypeChooseViewType type;
 
 @property (nonatomic, strong) UIImageView *bgImageV;
+@property (nonatomic, strong) UIImageView *QRCodeImgV;
 
 @end
 
@@ -61,6 +66,7 @@
         make.width.mas_equalTo(CodeImgWidth);
         make.height.mas_equalTo(CodeImgWidth);
     }];
+    self.QRCodeImgV = QRCodeImgV;
     
     NSString *shareStr = shareAddressWithPhone([PAUserDefaults getUserBoundPhone]);
     
@@ -111,6 +117,51 @@
 
 - (void)shareBtnAction:(UIButton *)sender {
     NSLog(@"tag==%ld",sender.tag - kBtnTag);
+    
+    NSString *titleStr = @"加入花生约见";
+    UIImage *shareImage = self.QRCodeImgV.image;
+    
+    if (sender.tag - kBtnTag == 0) {
+        NSData *imageData = UIImageJPEGRepresentation(shareImage, 0.5);
+        QQApiImageObject *imgObj = [QQApiImageObject objectWithData:imageData
+                                                   previewImageData:imageData
+                                                              title:titleStr
+                                                        description:titleStr];
+        SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imgObj];
+        //将内容分享到qq
+        QQApiSendResultCode code = [QQApiInterface sendReq:req];
+        if (code == EQQAPITIMNOTSUPPORTAPI) {
+            [SVProgressHUD showInfoWithStatus:@"请安装QQ"];
+        }
+        
+    }else if (sender.tag - kBtnTag == 1 || sender.tag - kBtnTag == 2) {
+        if ([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
+            NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *filePath = [documentPath stringByAppendingPathComponent:@"ocr.jpg"];
+            NSData *imageData = UIImageJPEGRepresentation(shareImage, 1);
+            [imageData writeToFile:filePath atomically:NO];
+            
+            UIImage *thumbImage = [UIImage imageWithData:UIImageJPEGRepresentation(shareImage, 0.5)];
+            
+            WXImageObject *ext = [WXImageObject object];
+            // 小于10MB
+            ext.imageData = imageData;
+            
+            WXMediaMessage *message = [WXMediaMessage message];
+            message.mediaObject = ext;
+            // 缩略图 小于32KB
+            [message setThumbImage:thumbImage];
+            
+            SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+            req.bText = NO;
+            req.scene = sender.tag - kBtnTag == 1 ? WXSceneSession : WXSceneTimeline;
+            req.message = message;
+            [WXApi sendReq:req];
+        }else {
+            [SVProgressHUD showErrorWithStatus:@"没有安装微信"];
+        }
+    }
+    
 }
 
 #pragma mark - getter

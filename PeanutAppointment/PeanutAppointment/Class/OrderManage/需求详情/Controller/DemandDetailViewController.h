@@ -18,6 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 ///应邀者id
 @property (nonatomic, copy) NSString *yUserId;
 
+///状态
+@property (nonatomic, copy) NSString *state;
+
+///技能id
+//@property (nonatomic, copy) NSString *jnId;
 
 @end
 

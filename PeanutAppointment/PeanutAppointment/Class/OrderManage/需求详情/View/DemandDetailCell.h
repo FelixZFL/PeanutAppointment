@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DemandDetailCell : BaseTableViewCell
 
+@property (nonatomic, copy) void(^btnClickBlock) (DemanDetailModel *model, UIButton *sender);
+
 @property (nonatomic, strong) DemanDetailModel *model;
 
 + (CGFloat)getCellHeightWithModel:(DemanDetailModel *)model;

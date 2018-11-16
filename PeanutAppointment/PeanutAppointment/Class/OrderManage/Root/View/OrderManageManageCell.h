@@ -9,8 +9,11 @@
 #import "BaseTableViewCell.h"
 
 @class OrderManageListModel;
+@class OrderManageInvitedListModel;
 
 @interface OrderManageManageCell : BaseTableViewCell
+
+@property (nonatomic, copy) void(^clickHeadBlock)(OrderManageListModel *model, OrderManageInvitedListModel *invitedModel);
 
 @property (nonatomic, strong) OrderManageListModel *model;
 

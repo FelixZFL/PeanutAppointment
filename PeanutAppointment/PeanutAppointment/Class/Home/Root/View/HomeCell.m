@@ -130,7 +130,7 @@
 - (void)setModel:(HomeIndexUserModel *)model {
     _model = model;
     [self.userView.headImageV sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
-    self.userView.typeLevelLabel.text = @"";
+    self.userView.typeLevelLabel.text = model.jnName;
     self.userView.distanceLabel.text = [NSString stringWithFormat:@"%.2fKM",[model.distance integerValue]/1000.f];
     self.userView.nickNameLabel.text = model.nikeName;
     self.userView.ageLabel.text = [NSString stringWithFormat:@" %@  ",model.age];

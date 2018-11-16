@@ -10,4 +10,11 @@
 
 @implementation OrderManageListModel
 
++ (NSDictionary *)mj_objectClassInArray {
+    return @{@"invitedList":[OrderManageInvitedListModel class]};
+}
+
+@end
+
+@implementation OrderManageInvitedListModel
 @end

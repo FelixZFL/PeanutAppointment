@@ -8,8 +8,11 @@
 
 #import "WithdrawalViewController.h"
 #import "RechargeTypeCell.h"
+#import "PasswordAlertView.h"
 
 #import "MyAccountInfoModel.h"
+
+#import "ChangePasswordViewController.h"
 
 @interface WithdrawalViewController ()
 
@@ -160,7 +163,26 @@
         return;
     }
     
-    [self withdrawalAction];
+    if (self.model.withdrawPassword.length > 0) {
+        
+        __block PasswordAlertView *alert = [PasswordAlertView alertWithTitle:@"请设置支付密码" Block:^(NSString *pwd) {
+            if ([pwd isEqualToString:self.model.withdrawPassword]) {
+                [self withdrawalAction];
+                [alert removFromWindow];
+            } else {
+                [SVProgressHUD showErrorWithStatus:@"密码不正确"];
+            }
+            
+        }];
+        [alert showInWindow];
+        
+    } else {
+        ChangePasswordViewController *vc = [[ChangePasswordViewController alloc] init];
+        [vc setSubmitSuccessBlock:^{
+            //[self withdrawalAction];
+        }];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)withdrawalAction {

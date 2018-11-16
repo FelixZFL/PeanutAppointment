@@ -136,9 +136,9 @@
     
     [self.userView.headImageV sd_setImageWithURL:URLWithString(model.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
     self.userView.typeLevelLabel.text = model.pasName;
-    self.userView.distanceLabel.text = [NSString stringWithFormat:@"%@KM",model.distance];
+    
     self.userView.nickNameLabel.text = model.nikeName;
-    self.userView.ageLabel.text = [NSString stringWithFormat:@" %@  ",model.age];
+    self.userView.ageLabel.text = [NSString stringWithFormat:@" %@  ",model.age?:@"18"];
     self.userView.genderLabel.text = [model.sex integerValue] == 1 ? @" 男 " : @" 女 ";
     [self setAuthImageWithModel:model];
     
@@ -146,6 +146,7 @@
     self.hintLabel.hidden = isDone;
     
     if (isDone) {//已完成
+        self.userView.distanceLabel.hidden = YES;
         
         self.button3.hidden = [model.state integerValue] != 2;
         
@@ -157,9 +158,11 @@
         } else {
             [self.button1 setButtonStateNormalTitle:@"已完成"];
         }
-        [self.button1 setButtonStateNormalTitle:@""];
         
     } else {//接单中
+        self.userView.distanceLabel.hidden = NO;
+        self.userView.distanceLabel.text = [NSString stringWithFormat:@"%@KM",model.distance];
+        
         self.button3.hidden = YES;
         
         self.button1.backgroundColor = COLOR_UI_THEME_RED;

@@ -134,11 +134,28 @@
 - (void)btnAction:(UIButton *)sender {
     if ([sender.titleLabel.text isEqualToString:@"提现"]) {
         
-        WithdrawalViewController *vc = [[WithdrawalViewController alloc] init];
-        [vc setSubmitSuccessBlock:^{
-            [self getData];
-        }];
-        [self.navigationController pushViewController:vc animated:YES];
+        if (self.model) {
+             if ([self.model.idCard integerValue] == 1) {
+                 //已实名认证  进入提醒界面
+                 WithdrawalViewController *vc = [[WithdrawalViewController alloc] init];
+                 [vc setSubmitSuccessBlock:^{
+                     [self getData];
+                 }];
+                 [self.navigationController pushViewController:vc animated:YES];
+                
+            } else if ([self.model.idCard integerValue] == 2) {
+                [SVProgressHUD showInfoWithStatus:@"身份认证正在审核中"];
+            } else {
+                [SVProgressHUD showInfoWithStatus:@"需要先进行实名认证"];
+                //身份证认证
+                CardAuthViewController *vc = [[CardAuthViewController alloc] init];
+                [vc setSubmitSuccessBlock:^{
+                    [self getData];
+                }];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+        
         
     } else if ([sender.titleLabel.text isEqualToString:@"充值"]) {
         
@@ -201,14 +218,13 @@
         
     } else if (indexPath.row == 1) {
         if (self.model && ([self.model.idCard integerValue] == 0 || [self.model.idCard integerValue] == 3)) {
-            
+            //身份证认证
+            CardAuthViewController *vc = [[CardAuthViewController alloc] init];
+            [vc setSubmitSuccessBlock:^{
+                [self getData];
+            }];
+            [self.navigationController pushViewController:vc animated:YES];
         }
-        //身份证认证
-        CardAuthViewController *vc = [[CardAuthViewController alloc] init];
-        [vc setSubmitSuccessBlock:^{
-            [self getData];
-        }];
-        [self.navigationController pushViewController:vc animated:YES];
         
     } else if (indexPath.row == 2) {
         //账户安全及密码修改

@@ -30,8 +30,8 @@ static NSTimeInterval   requestTimeout = 20.f;
 @implementation YQNetworking
 
 BOOL getResponseIsSuccess(id responseObject){
-    return [responseObject[@"code"] integerValue] == 0 && ![responseObject[@"data"] isKindOfClass:[NSNull class]];
-}
+    return [responseObject[@"code"] integerValue] == 0;
+}// && ![responseObject[@"data"] isKindOfClass:[NSNull class]]
 id getResponseData(id responseObject){
     return responseObject[@"data"];
 }
@@ -171,18 +171,10 @@ NSInteger getResponseCode(id responseObject){
                       
                       [[self allTasks] removeObject:session];
                       
-                      if (!getResponseIsSuccess(responseObject)) {
+                      if (getResponseCode(responseObject) != 0) {
                           if (getResponseMsg(responseObject)) {
                               [SVProgressHUD showErrorWithStatus:getResponseMsg(responseObject)];
                           }
-                          /*
-                           if (getResponseCode(responseObject) == 401 || getResponseCode(responseObject) == 511) {
-                           //未登陆 或者 已过期
-                           AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                           //[delegate enterLoginVC];
-                           }
-                           */
-                          
                       }
                   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                       NSLog(@"\nURL===%@ \n error == %@",session.currentRequest.URL,error);
@@ -266,17 +258,10 @@ NSInteger getResponseCode(id responseObject){
                            [[VersionUpdateAlertView alertWithModel:resp.version] showInWindow];
                        }
                        
-                       if (!getResponseIsSuccess(responseObject)) {
+                       if (getResponseCode(responseObject) != 0) {
                            if (getResponseMsg(responseObject)) {
                                [SVProgressHUD showErrorWithStatus:getResponseMsg(responseObject)];
                            }
-                           /*
-                            if (getResponseCode(responseObject) == 401 || getResponseCode(responseObject) == 511) {
-                            //未登陆 或者 已过期
-                            AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                            //[delegate enterLoginVC];
-                            }
-                            */
                        }
                    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                        

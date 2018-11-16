@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *distance;
 ///技能id（注：此id还用于查看别人首页的时候会用到）
 @property (nonatomic, copy) NSString *pusId;
+//技能名称
+@property (nonatomic, copy) NSString *jnName;
 
 
 ///评论数量

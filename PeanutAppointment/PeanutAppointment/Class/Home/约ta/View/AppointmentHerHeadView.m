@@ -7,6 +7,8 @@
 //
 
 #import "AppointmentHerHeadView.h"
+
+#import "UserMainPageModel.h"
 #import "HomeIndexUserModel.h"
 #import "SkillListModel.h"
 
@@ -66,7 +68,7 @@
     
     
     __weak __typeof(self)weakSelf = self;
-    
+    [self.headImageV setCorner:45/2.f];
     [self.headImageV mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(MARGIN_15);
         make.centerY.equalTo(userView.mas_centerY);
@@ -200,49 +202,53 @@
 }
 
 #pragma mark - public -
-
-+ (CGFloat )getHeightWithModel:(HomeIndexUserModel *)model skills:(NSArray *)skillArray {
++ (CGFloat )getHeightWithSkills:(NSArray *)skillArray {
+    CGFloat btnHeight = 30;
+    CGFloat marginLeft = 85;
+    CGFloat btnsHeight = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
+    CGFloat hintHeight = [hintString getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(12)];
+    CGFloat hight1 = btnsHeight + MARGIN_10 * 2 + hintHeight;
     
-    if (model) {
-        CGFloat btnHeight = 30;
-        CGFloat marginLeft = 85;
-        CGFloat btnsHeight = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
-        CGFloat hintHeight = [hintString getHeightWithMaxWidth:SCREEN_WIDTH - marginLeft - MARGIN_15 font:KFont(12)];
-        CGFloat hight1 = btnsHeight + MARGIN_10 * 2 + hintHeight;
-        
-        CGFloat height2 = 35;
-        if (skillArray.count > 0) {
-            CGFloat btnX = marginLeft;
-            CGFloat btnY = MARGIN_10;
-            UIButton *lastBtn = nil;
-            UIView *view = [[UIView alloc] init];
-            for (int j = 0; j < skillArray.count; j++ ) {
-                
-                SkillListModel *model = skillArray[j];
-                UIButton *btn = [[UIButton alloc] init];
-                [btn setButtonStateNormalTitle:model.jnName Font:KFont(14) textColor:COLOR_UI_666666];
-                [view addSubview:btn];
-                CGFloat btnWith = [model.jnName getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
-                if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
-                    btnX = marginLeft;
-                    btnY += btnHeight + MARGIN_10;
-                }
-                btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
-                
-                btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
-                lastBtn = btn;
-            }
+    CGFloat height2 = 35;
+    if (skillArray.count > 0) {
+        CGFloat btnX = marginLeft;
+        CGFloat btnY = MARGIN_10;
+        UIButton *lastBtn = nil;
+        UIView *view = [[UIView alloc] init];
+        for (int j = 0; j < skillArray.count; j++ ) {
             
-            height2 = MAX(CGRectGetMaxY(lastBtn.frame) + MARGIN_10, 35);
+            SkillListModel *model = skillArray[j];
+            UIButton *btn = [[UIButton alloc] init];
+            [btn setButtonStateNormalTitle:model.jnName Font:KFont(14) textColor:COLOR_UI_666666];
+            [view addSubview:btn];
+            CGFloat btnWith = [model.jnName getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
+            if (btnX + btnWith > SCREEN_WIDTH - MARGIN_15) {
+                btnX = marginLeft;
+                btnY += btnHeight + MARGIN_10;
+            }
+            btn.frame = CGRectMake(btnX, btnY, btnWith, 30);
+            
+            btnX = CGRectGetMaxX(btn.frame) + MARGIN_5;
+            lastBtn = btn;
         }
         
-        
-        CGFloat height3 = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
-        
-        return 65 + hight1 + height2 + height3;
-        
+        height2 = MAX(CGRectGetMaxY(lastBtn.frame) + MARGIN_10, 35);
     }
-    return 0;
+    
+    
+    CGFloat height3 = MARGIN_10 + 2 * (btnHeight + MARGIN_10);
+    
+    return 65 + hight1 + height2 + height3;
+    
+}
+
+- (void)setUserInfoModel:(UserMainPageUserInfoModel *)userInfoModel {
+    _userInfoModel = userInfoModel;
+    
+    [self.headImageV sd_setImageWithURL:URLWithString(userInfoModel.headUrl) placeholderImage:imageNamed(placeHolderHeadImageName)];
+    self.nickNameLabel.text = userInfoModel.nikeName;
+    self.ageLabel.text = [NSString stringWithFormat:@" %@岁 ",userInfoModel.age];
+    self.genderLabel.text = [NSString stringWithFormat:@" %@ ",[userInfoModel.sex integerValue] == 1 ? @"男" : @"女"];
 }
 
 - (void)setModel:(HomeIndexUserModel *)model {

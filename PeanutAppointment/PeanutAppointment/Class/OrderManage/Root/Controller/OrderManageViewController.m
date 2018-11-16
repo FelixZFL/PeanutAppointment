@@ -126,7 +126,7 @@
         [SVProgressHUD show];
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
         //lng：（长）经度 lat：（短）纬度
-        //[PAUserDefaults saveUserId:@"1fa4535f42ca41329e086f2afd9be2d1"];  [PATool getUserId]
+        //NSString *userId = _selectIndex == 0 ? [PATool getUserId] : @"2854b68ebf4e46e2a8c172b0bc813d4a";
         [YQNetworking postWithApiNumber:apiNum params:@{@"userId":[PATool getUserId], @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize),@"lng":@(_location.coordinate.longitude),@"lat":@(_location.coordinate.latitude)} successBlock:^(id response) {
             [SVProgressHUD dismiss];
             if (getResponseIsSuccess(response)) {
@@ -135,8 +135,9 @@
                 } else {
                     [self.dataArr addObjectsFromArray:[OrderManageDoneListModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
                 }
-                [self.tableView reloadData];
             }
+            
+            [self.tableView reloadData];
             
 //            self.placeholderView.hidden = self.dataArr.count > 0;
             
@@ -176,7 +177,7 @@
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;//self.dataArr.count;
+    return self.dataArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -184,7 +185,7 @@
         if (self.dataArr.count > indexPath.row) {
             return [OrderManageManageCell getCellHeightWithModel:self.dataArr[indexPath.row]];
         }
-        return 200;//0;
+        return 0;//0;
     } else {
         return [OrderManageCell getCellHeight];
     }
@@ -196,6 +197,13 @@
         OrderManageManageCell *cell = (OrderManageManageCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
         if (!cell) {
             cell = [[OrderManageManageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+            [cell setClickHeadBlock:^(OrderManageListModel *model, OrderManageInvitedListModel *invitedModel) {
+                DemandDetailViewController *vc = [[DemandDetailViewController alloc] init];
+                vc.orderId = model.poId;
+                vc.yUserId = invitedModel.puId;
+                vc.state = model.state;
+                [self.navigationController pushViewController:vc animated:YES];
+            }];
         }
         if (self.dataArr.count > indexPath.row) {
             [cell setModel:self.dataArr[indexPath.row]];
@@ -216,6 +224,7 @@
                 } else if ([sender.titleLabel.text isEqualToString:@"去评价"]) {
                     [[CommentListAlertView alertWithId:model.pasId] showInWindow];
                 } else if ([sender.titleLabel.text isEqualToString:@"应邀赚钱"]) {
+                    //NSString *userId = _selectIndex == 0 ? [PATool getUserId] : @"2854b68ebf4e46e2a8c172b0bc813d4a";
                     [YQNetworking postWithApiNumber:API_NUM_10019 params:@{@"userId":[PATool getUserId],@"orderId":model.orderId} successBlock:^(id response) {
                         if (getResponseIsSuccess(response)) {
                             [self.tableView.mj_header beginRefreshing];
@@ -235,16 +244,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_selectIndex == 0 && self.dataArr.count > indexPath.row) {
-        OrderManageListModel *model = self.dataArr[indexPath.row];
-        if (model.invitedList.count > 0) {
-            OrderManageInvitedListModel *invitedUser = model.invitedList.firstObject;
-            DemandDetailViewController *vc = [[DemandDetailViewController alloc] init];
-            vc.orderId = model.poId;
-            vc.yUserId = invitedUser.puId;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-    }
+    
 }
 
 #pragma mark - getter

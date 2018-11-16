@@ -2495,8 +2495,8 @@
 		5A31D39F21455D8E001E2043 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				5A05056B219E18AA006FC345 /* LMJScrollTextView2 */,
 				5AD630BE2195927200FBC87C /* AliyunVideo */,
+				5A05056B219E18AA006FC345 /* LMJScrollTextView2 */,
 				5A5635002184E3FD00D8D442 /* UpYunSDK */,
 				5A0C977A2165C60C0083D1BE /* TencentOpenAPI */,
 				5A0C97702165C6010083D1BE /* JYJKeyBoard */,
@@ -4644,13 +4644,13 @@
 		5AD634A52195928400FBC87C /* AlivcVideoPlayController */ = {
 			isa = PBXGroup;
 			children = (
-				5AD634A62195928400FBC87C /* AVC_VP_PlaySettingVC.xib */,
-				5AD634A72195928400FBC87C /* AVC_VP_BaseViewController.m */,
-				5AD634A82195928400FBC87C /* AVC_VP_VideoPlayViewController.m */,
-				5AD634A92195928400FBC87C /* AVC_VP_PlaySettingVC.h */,
-				5AD634AA2195928400FBC87C /* AVC_VP_BaseViewController.h */,
 				5AD634AB2195928400FBC87C /* AVC_VP_VideoPlayViewController.h */,
+				5AD634A82195928400FBC87C /* AVC_VP_VideoPlayViewController.m */,
+				5AD634AA2195928400FBC87C /* AVC_VP_BaseViewController.h */,
+				5AD634A72195928400FBC87C /* AVC_VP_BaseViewController.m */,
+				5AD634A92195928400FBC87C /* AVC_VP_PlaySettingVC.h */,
 				5AD634AC2195928400FBC87C /* AVC_VP_PlaySettingVC.m */,
+				5AD634A62195928400FBC87C /* AVC_VP_PlaySettingVC.xib */,
 			);
 			path = AlivcVideoPlayController;
 			sourceTree = "<group>";

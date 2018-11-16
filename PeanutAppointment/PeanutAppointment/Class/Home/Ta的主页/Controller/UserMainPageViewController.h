@@ -8,6 +8,8 @@
 
 #import "BaseTableViewController.h"
 
+@class HomeIndexUserModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UserMainPageViewController : BaseTableViewController
@@ -16,7 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *userId;
 
 ///技能id
-@property (nonatomic, copy) NSString *pusId;
+//@property (nonatomic, copy) NSString *pusId;
+
+///用户信息
+@property (nonatomic, strong) HomeIndexUserModel *userModel;
+
 
 @end
 
