@@ -31,8 +31,11 @@ static NSTimeInterval   requestTimeout = 20.f;
 
 BOOL getResponseIsSuccess(id responseObject){
     return [responseObject[@"code"] integerValue] == 0;
-}// && ![responseObject[@"data"] isKindOfClass:[NSNull class]]
+}
 id getResponseData(id responseObject){
+    if ([responseObject[@"data"] isKindOfClass:[NSNull class]]) {
+        return nil;
+    }
     return responseObject[@"data"];
 }
 
@@ -180,7 +183,7 @@ NSInteger getResponseCode(id responseObject){
                       NSLog(@"\nURL===%@ \n error == %@",session.currentRequest.URL,error);
                       if (failBlock) failBlock(error);
                       [[self allTasks] removeObject:session];
-                      if (!([error.userInfo[@"NSLocalizedDescription"] isEqualToString:@"已取消"] && [error.userInfo[@"NSLocalizedDescription"] isEqualToString:@"cancelled"])) {
+                      if (!([error.userInfo[@"NSLocalizedDescription"] isEqualToString:@"已取消"] || [error.userInfo[@"NSLocalizedDescription"] isEqualToString:@"cancelled"])) {
                           [SVProgressHUD showErrorWithStatus:@"网络连接失败"];
                       }
                       //是否有缓存
@@ -268,7 +271,7 @@ NSInteger getResponseCode(id responseObject){
                        NSLog(@"\nURL===%@ \n error == %@",session.currentRequest.URL,error);
                        if (failBlock) failBlock(error);
                        [[self allTasks] removeObject:session];
-                       if (!([error.userInfo[@"NSLocalizedDescription"] isEqualToString:@"已取消"] && [error.userInfo[@"NSLocalizedDescription"] isEqualToString:@"cancelled"])) {
+                       if (!([error.userInfo[@"NSLocalizedDescription"] isEqualToString:@"已取消"] || [error.userInfo[@"NSLocalizedDescription"] isEqualToString:@"cancelled"])) {
                            [SVProgressHUD showErrorWithStatus:@"网络连接失败"];
                        }
                        //是否有缓存

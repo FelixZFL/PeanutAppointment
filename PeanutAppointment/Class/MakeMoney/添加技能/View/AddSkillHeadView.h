@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "CustomPlaceholderTextView.h"
 
+@class SkillDetailModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AddSkillHeadView : UIView
@@ -34,6 +36,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///照片数组
 @property (nonatomic, strong) NSMutableArray *photosArray;
 
+
+@property (nonatomic, copy) void(^skillTypeChangeBlock)(void);
+
+@property (nonatomic, strong) SkillDetailModel *model;
 
 + (CGFloat )getHeight;
 

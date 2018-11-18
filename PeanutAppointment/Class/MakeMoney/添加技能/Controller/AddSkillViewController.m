@@ -13,7 +13,8 @@
 
 #import "SkillTypesModel.h"
 
-#import "AddSkillDetailViewController.h"
+#import "AddSkillDetailViewController.h"//添加 编辑 技能详细
+
 
 @interface AddSkillViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, HorizontalCollectionLayoutDelegate>
 
@@ -169,9 +170,16 @@
 
 #pragma mark - <UICollectionViewDelegate>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    self.selectIndexP = indexPath;
-    [self.collectionView reloadData];
-    [self updateUI];
+    if (self.dataArr.count > indexPath.section) {
+        SkillTypesModel *typesModel = self.dataArr[indexPath.section];
+        if (self.chooseSkillBlock) {//编辑模式
+            self.chooseSkillBlock(typesModel.list[indexPath.row]);
+        } else {
+            self.selectIndexP = indexPath;
+            [self.collectionView reloadData];
+            [self updateUI];
+        }
+    }
 }
 
 

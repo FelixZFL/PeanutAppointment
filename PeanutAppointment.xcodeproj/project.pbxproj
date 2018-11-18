@@ -146,6 +146,7 @@
 		5AAE9CD1216D1835001FA488 /* PasswordTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE9CD0216D1835001FA488 /* PasswordTextField.m */; };
 		5AAE9CD4216D1FE2001FA488 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE9CD3216D1FE2001FA488 /* FeedbackViewController.m */; };
 		5AAE9CD7216D2122001FA488 /* FeedbackHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE9CD6216D2122001FA488 /* FeedbackHeadView.m */; };
+		5AB26176219FDA5D00D37019 /* SkillDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AB26175219FDA5D00D37019 /* SkillDetailModel.m */; };
 		5ABCE9D321686A8800845324 /* PayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABCE9D221686A8800845324 /* PayManager.m */; };
 		5ABCE9D621686FA400845324 /* IntegralExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABCE9D521686FA400845324 /* IntegralExchangeViewController.m */; };
 		5ABCE9DC216873B900845324 /* IntegralExchangeListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABCE9DB216873B900845324 /* IntegralExchangeListModel.m */; };
@@ -945,6 +946,8 @@
 		5AAE9CD3216D1FE2001FA488 /* FeedbackViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		5AAE9CD5216D2122001FA488 /* FeedbackHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackHeadView.h; sourceTree = "<group>"; };
 		5AAE9CD6216D2122001FA488 /* FeedbackHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackHeadView.m; sourceTree = "<group>"; };
+		5AB26174219FDA5D00D37019 /* SkillDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkillDetailModel.h; sourceTree = "<group>"; };
+		5AB26175219FDA5D00D37019 /* SkillDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SkillDetailModel.m; sourceTree = "<group>"; };
 		5ABCE9D121686A8800845324 /* PayManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayManager.h; sourceTree = "<group>"; };
 		5ABCE9D221686A8800845324 /* PayManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayManager.m; sourceTree = "<group>"; };
 		5ABCE9D421686FA400845324 /* IntegralExchangeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntegralExchangeViewController.h; sourceTree = "<group>"; };
@@ -3344,6 +3347,8 @@
 		5A98D4D82177930700161D2B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5AB26174219FDA5D00D37019 /* SkillDetailModel.h */,
+				5AB26175219FDA5D00D37019 /* SkillDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5689,6 +5694,7 @@
 				5A56352D2184E3FE00D8D442 /* UpYunFileDealManger.m in Sources */,
 				5A56352B2184E3FE00D8D442 /* UpYunFormUploader.m in Sources */,
 				5AD635012195928500FBC87C /* AlivcLikeCountView.m in Sources */,
+				5AB26176219FDA5D00D37019 /* SkillDetailModel.m in Sources */,
 				5AF7154621976CE2006F52F4 /* AlivcChartView.m in Sources */,
 				5AF5CA0721672397005E86CF /* BoundPhoneHeadView.m in Sources */,
 				5AD637F22195932200FBC87C /* ELCVFlowLayout.m in Sources */,

@@ -10,6 +10,10 @@
 #import "AddSkillHeadView.h"
 #import "upYunTool.h"
 
+#import "SkillDetailModel.h"
+
+#import "AddSkillViewController.h"
+
 @interface AddSkillDetailViewController ()<UITextViewDelegate>
 
 @property (nonatomic, strong) AddSkillHeadView *headView;
@@ -72,6 +76,9 @@
         make.bottom.mas_equalTo(-HOMEBAR_HEIGHT - BUTTON_HEIGHT_50);
     }];
     
+    if (_type == AddSkillDetailViewType_edit) {
+        
+    }
     
 }
 
@@ -143,17 +150,13 @@
         
         if (getResponseIsSuccess(response)) {
             NSDictionary *dic = getResponseData(response);
-//            if ([dic[@"isSuccess"] integerValue] == 1) {
-//                [SVProgressHUD showSuccessWithStatus:@"提现申请成功"];
-//                if (self.submitSuccessBlock) {
-//                    self.submitSuccessBlock();
-//                }
-//                [self.navigationController popViewControllerAnimated:YES];
-//            } else if ([dic[@"isSuccess"] integerValue] == 2){
-//                [SVProgressHUD showErrorWithStatus:@"余额不足"];
-//            }
-            [SVProgressHUD showSuccessWithStatus:@"添加成功"];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            //isOk  0 添加成功  1 已经添加过了此技能
+            if ([dic[@"isOk"] integerValue] == 0) {
+                [SVProgressHUD showSuccessWithStatus:@"添加成功"];
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            } else if ([dic[@"isOk"] integerValue] == 1) {
+                [SVProgressHUD showInfoWithStatus:@"您已经添加过了此技能"];
+            }
         }
     } failBlock:nil];
     

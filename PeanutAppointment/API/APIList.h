@@ -195,8 +195,8 @@ static NSString * const API_NUM_10025 = @"10025";//
 //APP首页-查看别人主页接口
 static NSString * const API_NUM_20032 = @"20032";//
 
-//APP首页-查看别人主页-选择不同的技能返回不通的技能信息接口           ------TODO
-static NSString * const API_NUM_20033 = @"20033";
+//APP首页-查看别人主页-选择不同的技能返回不通的技能信息接口        
+static NSString * const API_NUM_20033 = @"20033";//
 
 //APP首页-游戏-开通VIP查询接口
 static NSString * const API_NUM_20034 = @"20034";//
