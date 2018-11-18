@@ -59,6 +59,7 @@
     for (int i = 0; i < 3; i++) {
         
         UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_15 + i * (photoWidth + MARGIN_1), titleHeight, photoWidth, photoWidth)];
+        [imageV setCorner:photoWidth/2.f];
         imageV.image = imageNamed(placeHolderHeadImageName);
         imageV.tag = kImageTag + i;
         imageV.userInteractionEnabled = YES;

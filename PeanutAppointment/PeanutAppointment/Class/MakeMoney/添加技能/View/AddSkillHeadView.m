@@ -9,6 +9,8 @@
 #import "AddSkillHeadView.h"
 #import <TZImagePickerController/TZImagePickerController.h>
 
+#import "SkillDetailModel.h"
+
 #define kImageVTag 74784
 
 @interface AddSkillHeadView()<TZImagePickerControllerDelegate>
@@ -87,6 +89,7 @@
                 make.centerY.equalTo(titleLabel);
             }];
             self.skillNameLabel = label;
+            [singleView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(skillClickAction)]];
             
         } else if (i == 1 || i == 4) {
             
@@ -227,6 +230,22 @@
     return  35 * 3 + 55 * 2 + height6 + 100 * 3 + height9;
 }
 
+- (void)setModel:(SkillDetailModel *)model {
+    _model = model;
+    
+//    self.skillNameLabel.text = model
+    
+    /*
+     "serviceType": "1",                              //服务方式：（1：ta找我 2：我找ta   3:ta找我我找ta）
+     "servicePrice": 20,                              //服务价格
+     "introduce": "服务好",                        //服务结束
+     "downPayment": 20,                          //定金
+     "selfIntroduction": "专业的技能服务",//技能介绍
+     "experience": "给大型公司服务过",   //工作经历
+     "serviceTime": "1,2,3,4,5,6,7"           //服务时间 （1:周一2:周二3:周三.........）
+     */
+}
+
 #pragma mark - action -
 //服务方式
 - (void)serverTypeClickAction:(UIButton *)sender {
@@ -297,6 +316,12 @@
             [self updatePhotoView];
         }];
         [self.topViewController presentViewController:imagePickerVC animated:YES completion:nil];
+    }
+}
+
+- (void)skillClickAction {
+    if (self.skillTypeChangeBlock) {
+        self.skillTypeChangeBlock();
     }
 }
 

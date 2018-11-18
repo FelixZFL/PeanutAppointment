@@ -444,12 +444,14 @@
             }
         }];
         [_headView.starView setTapActionBlcok:^(HomeHotUserModel * _Nonnull model) {
+            if (![weakSelf cheakLogin]) return;
             UserMainPageViewController *vc = [[UserMainPageViewController alloc] init];
             vc.userId = model.userId;
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }];
         
         [_headView.talentView setTapActionBlcok:^(HomeVideoHotUserModel * _Nonnull model) {
+            if (![weakSelf cheakLogin]) return;
             GotTalentOfTodayViewController *vc = [[GotTalentOfTodayViewController alloc] init];
             [weakSelf.navigationController pushViewController:vc animated:YES];
         }];

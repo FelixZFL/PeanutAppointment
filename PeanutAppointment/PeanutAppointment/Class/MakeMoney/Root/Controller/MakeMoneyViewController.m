@@ -13,10 +13,12 @@
 
 #import "MakeMoneySkillModel.h"
 #import "MyAccountInfoModel.h"
+#import "SkillDetailModel.h"
 
 #import "upYunTool.h"
 
-#import "AddSkillViewController.h"//添加技能
+#import "AddSkillViewController.h"//添加技能 选择类型
+#import "AddSkillDetailViewController.h"//添加技能详细
 #import "PersonalAuthViewController.h"//个人认证
 #import "PhotoAlbumViewController.h"//相册
 #import "CardAuthViewController.h"//身份认证
@@ -27,9 +29,8 @@
 #import "AliyunMediaConfig.h"
 #import "AliyunIConfig.h"
 #import <AssetsLibrary/AssetsLibrary.h>
-//#import "AlivcHomeViewController.h"
-#import "AlivcLivePlayViewController.h"
 #import "MBProgressHUD+AlivcHelper.h"
+#import "AlivcLivePlayViewController.h"
 
 @interface MakeMoneyViewController ()<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
@@ -148,6 +149,17 @@
     if (!cell) {
         cell = [[MakeMoneySkillCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         [cell setEditBlock:^(MakeMoneySkillModel * _Nonnull model) {
+            [YQNetworking postWithApiNumber:API_NUM_20033 params:@{@"userId":[PATool getUserId],@"pusId":model.jnId} successBlock:^(id response) {
+                if (getResponseIsSuccess(response)) {
+                    SkillDetailModel *skillModel = [SkillDetailModel mj_objectWithKeyValues:getResponseData(response)];
+                    if (skillModel) {
+                        AddSkillDetailViewController *vc = [[AddSkillDetailViewController alloc] init];
+                        vc.type = AddSkillDetailViewType_edit;
+                        vc.skillDetail = skillModel;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+                }
+            } failBlock:nil];            
         }];
         [cell setDeleteBlock:^(MakeMoneySkillModel * _Nonnull model) {
             [YQNetworking postWithApiNumber:API_NUM_10009 params:@{@"userId":[PATool getUserId],@"id":model.ID} successBlock:^(id response) {
