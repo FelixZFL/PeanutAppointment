@@ -377,7 +377,7 @@
                 [[CommentListAlertView alertWithId:model.pusId] showInWindow];
                 
             } else if (index == 2) {//点赞
-                [YQNetworking postWithApiNumber:API_NUM_10015 params:@{@"userId":[PATool getUserId],@"pusId":model.pusId} successBlock:^(id response) {
+                [YQNetworking postWithApiNumber:API_NUM_10015 params:@{@"userId":[PATool getUserId],@"pusId":model.ID} successBlock:^(id response) {
                     if (getResponseIsSuccess(response)) {
                         [btn setButtonStateNormalTitle:[NSString stringWithFormat:@"%ld",[btn.titleLabel.text integerValue] + 1]];
                     }

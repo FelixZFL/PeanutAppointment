@@ -30,7 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *pusId;
 //技能名称
 @property (nonatomic, copy) NSString *jnName;
-
+//数据id
+@property (nonatomic, copy) NSString *ID;
 
 ///评论数量
 @property (nonatomic, copy) NSString *commentNumber;

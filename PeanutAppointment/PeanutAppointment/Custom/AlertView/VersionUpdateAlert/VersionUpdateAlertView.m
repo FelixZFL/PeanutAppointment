@@ -269,7 +269,7 @@
     if (!_okBtn) {
         _okBtn = [[UIButton alloc] init];
         [_okBtn setButtonStateNormalTitle:@"立即更新" Font:KFont(17) textColor:COLOR_UI_FFFFFF];
-//        _okBtn.backgroundColor = COLOR_UI_THEME_MIDDLE;
+        _okBtn.backgroundColor = COLOR_UI_THEME_RED;
         [_okBtn setBackgroundImage:imageNamed(@"alert_btn_bg") forState:UIControlStateNormal];
         [_okBtn addTarget:self action:@selector(okBtnAction) forControlEvents:UIControlEventTouchUpInside];
     }
