@@ -107,7 +107,7 @@ static NSString * const API_NUM_10008 = @"10008";//
 static NSString * const API_NUM_10009 = @"10009";//
 
 //APP首页底部-去赚钱-修改技能接口
-static NSString * const API_NUM_10010 = @"10010";
+static NSString * const API_NUM_10010 = @"10010";//
 
 //APP首页底部-去赚钱-上传头像接口：（注：所有修改和上传头像接口通用）
 static NSString * const API_NUM_10011 = @"10011";//

@@ -233,17 +233,36 @@
 - (void)setModel:(SkillDetailModel *)model {
     _model = model;
     
+    
 //    self.skillNameLabel.text = model
     
-    /*
-     "serviceType": "1",                              //服务方式：（1：ta找我 2：我找ta   3:ta找我我找ta）
-     "servicePrice": 20,                              //服务价格
-     "introduce": "服务好",                        //服务结束
-     "downPayment": 20,                          //定金
-     "selfIntroduction": "专业的技能服务",//技能介绍
-     "experience": "给大型公司服务过",   //工作经历
-     "serviceTime": "1,2,3,4,5,6,7"           //服务时间 （1:周一2:周二3:周三.........）
-     */
+    //TODO 还差技能名称 id  和 计价单位    三张图片  self.photosArray updatePhotoView
+    
+    UIButton *btn1 = [self.serverTypeView viewWithTag:1];
+    UIButton *btn2 = [self.serverTypeView viewWithTag:2];
+    if ([model.serviceType integerValue] == 1) {
+        [self serverTypeClickAction:btn1];
+    } else if ([model.serviceType integerValue] == 2) {
+        [self serverTypeClickAction:btn2];
+    } else if ([model.serviceType integerValue] == 3) {
+        [self serverTypeClickAction:btn1];
+        [self serverTypeClickAction:btn2];
+    }
+    
+    self.depositTF.text = model.downPayment;
+    self.priceTF.text = model.servicePrice;
+    
+    NSArray *timeArr = [model.serviceTime componentsSeparatedByString:@","];
+    for (NSString *timeStr in timeArr) {
+        NSInteger btnTag = [timeStr integerValue];
+        if (btnTag > 0 && btnTag < 8) {
+            [self serverTimeClickAction:[self.serverTimeView viewWithTag:btnTag]];
+        }
+    }
+    
+    self.serverExperienceTextV.text = model.experience;
+    self.serverIntroduceTextV.text = model.introduce;
+    self.personalIntroductionTextV.text = model.selfIntroduction;
 }
 
 #pragma mark - action -
@@ -306,17 +325,18 @@
 }
 
 - (void)addPhotoTapAction:(UIGestureRecognizer *)gesture {
-    UIImageView *imageV = (UIImageView *)gesture.view;
-    if (self.photosArray.count > imageV.tag - kImageVTag) {
-        //TODO 预览
-    } else {
-        TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:3 - self.photosArray.count delegate:self];
-        [imagePickerVC setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
-            [self.photosArray addObjectsFromArray:photos];
-            [self updatePhotoView];
-        }];
-        [self.topViewController presentViewController:imagePickerVC animated:YES completion:nil];
-    }
+//    UIImageView *imageV = (UIImageView *)gesture.view;
+//    if (self.photosArray.count > imageV.tag - kImageVTag) {
+//        //TODO 预览
+//    } else {
+//      //3 - self.photosArray.count
+//    }
+    TZImagePickerController *imagePickerVC = [[TZImagePickerController alloc] initWithMaxImagesCount:3 delegate:self];
+    [imagePickerVC setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        self.photosArray = [NSMutableArray arrayWithArray:photos];
+        [self updatePhotoView];
+    }];
+    [self.topViewController presentViewController:imagePickerVC animated:YES completion:nil];
 }
 
 - (void)skillClickAction {
@@ -336,7 +356,13 @@
         if ([view isKindOfClass:[UIImageView class]]) {
             UIImageView *imageV = (UIImageView *)view;
             if (tempArray.count > imageV.tag - kImageVTag) {
-                imageV.image = tempArray[imageV.tag - kImageVTag];
+                id obg = tempArray[imageV.tag - kImageVTag];
+                if ([obg isKindOfClass:[UIImage class]]) {
+                    imageV.image = tempArray[imageV.tag - kImageVTag];
+                } else {
+                    [imageV sd_setImageWithURL:tempArray[imageV.tag - kImageVTag] placeholderImage:imageNamed(@"placeholder_image_loadFaile")];
+                }
+                
                 imageV.hidden = NO;
             } else {
                 imageV.hidden = YES;

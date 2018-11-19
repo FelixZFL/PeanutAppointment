@@ -55,6 +55,7 @@
 		5A25CA4D215A998D00E91A8C /* OrderManageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25CA4C215A998D00E91A8C /* OrderManageCell.m */; };
 		5A25CA50215AB82200E91A8C /* MakeMoneySkillCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25CA4F215AB82200E91A8C /* MakeMoneySkillCell.m */; };
 		5A25CA53215AB8BE00E91A8C /* MakeMoneyHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25CA52215AB8BE00E91A8C /* MakeMoneyHeadView.m */; };
+		5A2ADEA321A30D860088CB20 /* SVProgressHUD+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2ADEA221A30D850088CB20 /* SVProgressHUD+Extension.m */; };
 		5A31D3C021455D8E001E2043 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A31D38D21455D8E001E2043 /* Assets.xcassets */; };
 		5A31D3C321455D8E001E2043 /* CustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A31D39321455D8E001E2043 /* CustomNavigationBar.m */; };
 		5A31D3C421455D8E001E2043 /* PlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A31D39521455D8E001E2043 /* PlaceholderView.m */; };
@@ -756,6 +757,8 @@
 		5A25CA4F215AB82200E91A8C /* MakeMoneySkillCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakeMoneySkillCell.m; sourceTree = "<group>"; };
 		5A25CA51215AB8BE00E91A8C /* MakeMoneyHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MakeMoneyHeadView.h; sourceTree = "<group>"; };
 		5A25CA52215AB8BE00E91A8C /* MakeMoneyHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakeMoneyHeadView.m; sourceTree = "<group>"; };
+		5A2ADEA121A30D850088CB20 /* SVProgressHUD+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+Extension.h"; sourceTree = "<group>"; };
+		5A2ADEA221A30D850088CB20 /* SVProgressHUD+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD+Extension.m"; sourceTree = "<group>"; };
 		5A31D38D21455D8E001E2043 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A31D39321455D8E001E2043 /* CustomNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationBar.m; sourceTree = "<group>"; };
 		5A31D39421455D8E001E2043 /* CustomPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPlaceholderTextView.h; sourceTree = "<group>"; };
@@ -2551,6 +2554,8 @@
 				5A31D3AB21455D8E001E2043 /* NSObject+Extension.m */,
 				5A4809E7216BC6E6003B291F /* UIImage+Extension.h */,
 				5A4809E8216BC6E6003B291F /* UIImage+Extension.m */,
+				5A2ADEA121A30D850088CB20 /* SVProgressHUD+Extension.h */,
+				5A2ADEA221A30D850088CB20 /* SVProgressHUD+Extension.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -5706,6 +5711,7 @@
 				5A31D3C521455D8E001E2043 /* CustomPlaceholderTextView.m in Sources */,
 				5AD636F22195928600FBC87C /* AliyunColorItemCell.m in Sources */,
 				DCB5BA56219130770055D7E9 /* GotTalentListModel.m in Sources */,
+				5A2ADEA321A30D860088CB20 /* SVProgressHUD+Extension.m in Sources */,
 				5AD636E52195928600FBC87C /* AliyunEffectMusicControlView.m in Sources */,
 				5AAE9CC8216D0B6E001FA488 /* PayResultViewController.m in Sources */,
 				5AD6373D2195928600FBC87C /* AliyunPlayerViewSeekPopupView.m in Sources */,

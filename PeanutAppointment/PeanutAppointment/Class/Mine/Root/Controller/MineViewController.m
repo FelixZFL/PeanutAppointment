@@ -164,7 +164,7 @@
     
     NSArray *array = self.dataArr[indexPath.section];
     MineModel *model = array[indexPath.row];
-    
+
     if (model.controller.length > 0) {
         UIViewController *vc = [[NSClassFromString(model.controller) alloc] init];
         if ([model.controller isEqualToString:@"H5ViewController"]) {
@@ -176,7 +176,7 @@
                     [self.navigationController pushViewController:h5vc animated:YES];
                 }
             } failBlock:nil];
-            
+
         } else {
             [self.navigationController pushViewController:vc animated:YES];
         }

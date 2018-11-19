@@ -78,12 +78,10 @@
 #pragma mark - network
 
 - (void)getData {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+    [SVProgressHUD showWithClearMaskType];
     // type：类型（1:系统消息/2:消息）
     [YQNetworking postWithApiNumber:API_NUM_20024 params:@{@"type":_type == NavTypeChooseViewType_left ? @"2" : @"1", @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize)} successBlock:^(id response) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
         if (getResponseIsSuccess(response)) {
             if (self.type == NavTypeChooseViewType_left) {
                 [self.dataArr addObjectsFromArray:[MessageModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
@@ -95,7 +93,7 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     } failBlock:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
     }];
