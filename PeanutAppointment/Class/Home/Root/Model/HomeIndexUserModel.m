@@ -10,4 +10,8 @@
 
 @implementation HomeIndexUserModel
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"ID":@"id"};
+}
+
 @end
