@@ -19,5 +19,6 @@
 #import "UIButton+Extension.h"
 #import "NSObject+Extension.h"
 #import "UIImage+Extension.h"
+#import "SVProgressHUD+Extension.h"
 
 #endif /* Categorys_h */

@@ -117,15 +117,13 @@
         [SVProgressHUD show];
         [self requestFeedback];
     } else {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD show];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        [SVProgressHUD showWithClearMaskType];
         for (UIImage *image in self.footView.photos) {
             [upYunTool upImage:image successHandle:^(NSString * _Nonnull url) {
                 [self.photoUrlArray addObject:url];
                 [self requestFeedback];
             } failureHandle:^(NSError * _Nonnull error) {
-                [SVProgressHUD dismiss];
+                [SVProgressHUD dismissToMaskTypeNone];
                 [SVProgressHUD showErrorWithStatus:@"上传图片失败"];
             }];
         }
@@ -143,13 +141,13 @@
     //图片url 多张图片逗号分隔
     NSString *photosStr = [self.photoUrlArray componentsJoinedByString:@","];
     [YQNetworking postWithApiNumber:API_NUM_10006 params:@{@"userId":[PATool getUserId],@"content":self.headView.feedBackTextView.text,@"photoUrl":photosStr} successBlock:^(id response) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
         if (getResponseIsSuccess(response)) {
             [SVProgressHUD showSuccessWithStatus:@"提交成功"];
             [self.navigationController popViewControllerAnimated:YES];
         }
     } failBlock:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
     }];
 }
 

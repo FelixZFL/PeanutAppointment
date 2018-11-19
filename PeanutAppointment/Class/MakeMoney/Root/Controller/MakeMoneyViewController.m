@@ -149,7 +149,9 @@
     if (!cell) {
         cell = [[MakeMoneySkillCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         [cell setEditBlock:^(MakeMoneySkillModel * _Nonnull model) {
+            [SVProgressHUD showWithClearMaskType];
             [YQNetworking postWithApiNumber:API_NUM_20033 params:@{@"userId":[PATool getUserId],@"pusId":model.jnId} successBlock:^(id response) {
+                [SVProgressHUD dismissToMaskTypeNone];
                 if (getResponseIsSuccess(response)) {
                     SkillDetailModel *skillModel = [SkillDetailModel mj_objectWithKeyValues:getResponseData(response)];
                     if (skillModel) {
@@ -159,14 +161,21 @@
                         [self.navigationController pushViewController:vc animated:YES];
                     }
                 }
-            } failBlock:nil];            
+            } failBlock:^(NSError *error) {
+                [SVProgressHUD dismissToMaskTypeNone];
+            }];
         }];
         [cell setDeleteBlock:^(MakeMoneySkillModel * _Nonnull model) {
-            [YQNetworking postWithApiNumber:API_NUM_10009 params:@{@"userId":[PATool getUserId],@"id":model.ID} successBlock:^(id response) {
-                if (getResponseIsSuccess(response)) {
-                    [self getData];
-                }
-            } failBlock:nil];
+            
+            [[AlertBaseView alertWithTitle:@"您确定要删除该技能吗" leftBtn:@"取消" leftBlock:nil rightBtn:@"确定" rightBlock:^{
+                [YQNetworking postWithApiNumber:API_NUM_10009 params:@{@"userId":[PATool getUserId],@"id":model.ID} successBlock:^(id response) {
+                    if (getResponseIsSuccess(response)) {
+                        [self getData];
+                    }
+                } failBlock:nil];
+                
+            }] showInWindow];
+            
         }];
     }
     if (self.dataArr.count > indexPath.row) {
@@ -187,17 +196,15 @@
         UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSLog(@"选择完毕----image:%@-----info:%@",image,info);
         
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD show];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        [SVProgressHUD showWithClearMaskType];
         [upYunTool upImage:image successHandle:^(NSString * _Nonnull url) {
-            [SVProgressHUD dismiss];
+            [SVProgressHUD dismissToMaskTypeNone];
             [YQNetworking postWithApiNumber:API_NUM_10011 params:@{@"userId":[PATool getUserId],@"headUrl":url} successBlock:^(id response) {
                 [SVProgressHUD showSuccessWithStatus:@"上传成功"];
             } failBlock:nil];
             
         } failureHandle:^(NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
+            [SVProgressHUD dismissToMaskTypeNone];
         }];
         
     }];

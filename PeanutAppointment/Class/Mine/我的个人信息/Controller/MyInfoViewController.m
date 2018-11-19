@@ -114,11 +114,9 @@
         UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
         NSLog(@"选择完毕----image:%@-----info:%@",image,info);
         
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD show];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        [SVProgressHUD showWithClearMaskType];
         [upYunTool upImage:image successHandle:^(NSString * _Nonnull url) {
-            [SVProgressHUD dismiss];
+            [SVProgressHUD dismissToMaskTypeNone];
             [YQNetworking postWithApiNumber:API_NUM_10011 params:@{@"userId":[PATool getUserId],@"headUrl":url} successBlock:^(id response) {
                 if (getResponseIsSuccess(response)) {
                     [SVProgressHUD showSuccessWithStatus:@"上传成功"];
@@ -127,7 +125,7 @@
             } failBlock:nil];
             
         } failureHandle:^(NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
+            [SVProgressHUD dismissToMaskTypeNone];
         }];
         
     }];

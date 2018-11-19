@@ -77,7 +77,7 @@
     }];
     
     if (_type == AddSkillDetailViewType_edit) {
-        
+        [self.headView setModel:self.skillDetail];
     }
     
 }
@@ -120,17 +120,20 @@
         return;
     }
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
-    for (UIImage *image in _headView.photosArray) {
-        [upYunTool upImage:image successHandle:^(NSString * _Nonnull url) {
-            [self.photoUrlArray addObject:url];
+    [SVProgressHUD showWithClearMaskType];
+    for (id obj in _headView.photosArray) {
+        if ([obj isKindOfClass:[UIImage class]]) {
+            [upYunTool upImage:(UIImage *)obj successHandle:^(NSString * _Nonnull url) {
+                [self.photoUrlArray addObject:url];
+                [self uploadReleaseInfo];
+            } failureHandle:^(NSError * _Nonnull error) {
+                [SVProgressHUD dismissToMaskTypeNone];
+                [SVProgressHUD showErrorWithStatus:@"上传图片失败"];
+            }];
+        } else {
+            [self.photoUrlArray addObject:(NSString *)obj];
             [self uploadReleaseInfo];
-        } failureHandle:^(NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
-            [SVProgressHUD showErrorWithStatus:@"上传图片失败"];
-        }];
+        }
     }
 }
 
@@ -139,14 +142,21 @@
     if (self.photoUrlArray.count != _headView.photosArray.count) {
         return;
     }
-    [SVProgressHUD dismiss];
+    [SVProgressHUD dismissToMaskTypeNone];
     
     NSString *photosStr = [self.photoUrlArray componentsJoinedByString:@","];
     NSString *serverTiemStr = [_headView.serverDaysArray componentsJoinedByString:@","];
     
     NSDictionary *dic = @{@"userId":[PATool getUserId],@"jnName":_pasName,@"pasId":_pasId, @"serviceType":@(_headView.serverType),@"downPayment":_headView.depositTF.text,@"servicePrice":_headView.priceTF.text, @"unit":@(_headView.PriceUnit), @"serviceTime":serverTiemStr, @"experience":_headView.serverExperienceTextV.text, @"introduce":_headView.serverIntroduceTextV.text, @"photos":photosStr, @"selfIntroduction":_headView.personalIntroductionTextV.text};
     
-    [YQNetworking postWithApiNumber:API_NUM_10008 params:dic successBlock:^(id response) {
+    NSString *urlStr = @"";
+    if (_type == AddSkillDetailViewType_edit) {
+        urlStr = API_NUM_10010;
+    } else {
+        urlStr = API_NUM_10008;
+    }
+    
+    [YQNetworking postWithApiNumber:urlStr params:dic successBlock:^(id response) {
         
         if (getResponseIsSuccess(response)) {
             NSDictionary *dic = getResponseData(response);

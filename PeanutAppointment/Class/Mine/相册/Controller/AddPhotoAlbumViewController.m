@@ -111,15 +111,13 @@
         return;
     }
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+    [SVProgressHUD showWithClearMaskType];
     for (UIImage *image in self.footView.photos) {
         [upYunTool upImage:image successHandle:^(NSString * _Nonnull url) {
             [self.photoUrlArray addObject:url];
             [self requestAddPhotoWithTypeId:typeId];
         } failureHandle:^(NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
+            [SVProgressHUD dismissToMaskTypeNone];
             [SVProgressHUD showErrorWithStatus:@"上传图片失败"];
         }];
     }
@@ -133,7 +131,7 @@
     
     NSString *photosStr = [self.photoUrlArray componentsJoinedByString:@","];
     [YQNetworking postWithApiNumber:API_NUM_10025 params:@{@"userId":[PATool getUserId], @"typeId":typeId, @"photosUrl":photosStr} successBlock:^(id response) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
         if (getResponseIsSuccess(response)) {
             [SVProgressHUD showSuccessWithStatus:@"添加相册成功"];
             if (self.addSuccessBlock) {
@@ -142,7 +140,7 @@
             [self.navigationController popViewControllerAnimated:YES];
         }
     } failBlock:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
     }];
 }
 

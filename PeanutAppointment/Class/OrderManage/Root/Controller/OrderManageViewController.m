@@ -122,13 +122,11 @@
         } else {
             apiNum = API_NUM_20028;
         }
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-        [SVProgressHUD show];
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+        [SVProgressHUD showWithClearMaskType];
         //lng：（长）经度 lat：（短）纬度
         //NSString *userId = _selectIndex == 0 ? [PATool getUserId] : @"2854b68ebf4e46e2a8c172b0bc813d4a";
         [YQNetworking postWithApiNumber:apiNum params:@{@"userId":[PATool getUserId], @"page":@(self.pageNum * self.pageSize),@"limit":@(self.pageSize),@"lng":@(_location.coordinate.longitude),@"lat":@(_location.coordinate.latitude)} successBlock:^(id response) {
-            [SVProgressHUD dismiss];
+            [SVProgressHUD dismissToMaskTypeNone];
             if (getResponseIsSuccess(response)) {
                 if (self.selectIndex == 0) {
                     [self.dataArr addObjectsFromArray:[OrderManageListModel mj_objectArrayWithKeyValuesArray:getResponseData(response)]];
@@ -144,7 +142,7 @@
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
         } failBlock:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            [SVProgressHUD dismissToMaskTypeNone];
             [self.tableView.mj_header endRefreshing];
             [self.tableView.mj_footer endRefreshing];
         }];

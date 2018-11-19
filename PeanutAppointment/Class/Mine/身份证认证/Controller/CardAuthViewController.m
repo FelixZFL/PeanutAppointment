@@ -87,7 +87,7 @@
                             @"fm":self.offsideUrl
                             };
     [YQNetworking postWithApiNumber:API_NUM_10001 params:param successBlock:^(id response) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
         if (getResponseIsSuccess(response)) {
             if (self.submitSuccessBlock) {
                 self.submitSuccessBlock();
@@ -95,7 +95,7 @@
             [self.navigationController popViewControllerAnimated:YES];
         }
     } failBlock:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
     }];
 }
 
@@ -131,9 +131,7 @@
         return;
     }
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    [SVProgressHUD show];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+    [SVProgressHUD showWithClearMaskType];
     [upYunTool upImage:self.insideImage successHandle:^(NSString * _Nonnull url) {
         
         self.insideUrl = url;
@@ -142,11 +140,11 @@
             self.offsideUrl = url;
             [self submitRealNameInfo];
         } failureHandle:^(NSError * _Nonnull error) {
-            [SVProgressHUD dismiss];
+            [SVProgressHUD dismissToMaskTypeNone];
         }];
         
     } failureHandle:^(NSError * _Nonnull error) {
-        [SVProgressHUD dismiss];
+        [SVProgressHUD dismissToMaskTypeNone];
     }];
     
     
