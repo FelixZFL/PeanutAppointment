@@ -10,6 +10,7 @@
 #import "RechargeAlertCell.h"
 
 #import "RechargeAlertListModel.h"
+#import "RechargeViewController.h"
 
 @interface RechargeAlertView()<UICollectionViewDelegate, UICollectionViewDataSource>
 
@@ -135,12 +136,16 @@
         [YQNetworking postWithApiNumber:API_NUM_10022 params:@{@"userId":[PATool getUserId], @"money":model.rmb,@"id":model.ID} successBlock:^(id response) {
             if (getResponseIsSuccess(response)) {
                 NSDictionary *dic = getResponseData(response);
-                if ([dic[@"isSuccess"] integerValue] == 1) {
-                    [AlertBaseView alertWithTitle:@"充值成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:^{
+                if ([dic[@"isSuccess"] integerValue] == 1 || [dic[@"success"] integerValue] == 1) {
+                    [[AlertBaseView alertWithTitle:@"充值成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:^{
                         [self removFromWindow];
-                    }];
+                    }] showInWindow];
                 } else {
-                    [SVProgressHUD showSuccessWithStatus:@"金钻不足"];
+                    [SVProgressHUD showSuccessWithStatus:@"余额不足"];
+                    UIViewController *currentVC = [UIViewController fl_currentViewController];
+                    RechargeViewController *vc = [[RechargeViewController alloc] init];
+                    [currentVC.navigationController pushViewController:vc animated:YES];
+                    [self removFromWindow];
                 }
             }
         } failBlock:nil];

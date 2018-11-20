@@ -31,9 +31,6 @@
     
     //更新状态栏
     [self setNeedsStatusBarAppearanceUpdate];
-    if (self.navigationController.viewControllers.count > 1) {
-        [self.customNavBar setLeftButtonWithImage:imageNamed(@"main_nav_back")];
-    }
     
     [self setNavStyle:CustomNavStyle_Light];
 }

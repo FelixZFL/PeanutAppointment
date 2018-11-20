@@ -34,8 +34,11 @@
 
 - (void)setupNav {
     
-    [self setTitle:@"支付成功"];
-    
+    [self setTitle:_isSuccess ? @"支付成功" : @"支付失败"];
+    __weak __typeof(self)weakSelf = self;
+    [self.customNavBar setOnClickLeftButton:^(UIButton *btn) {
+        [weakSelf back];
+    }];
 }
 
 - (void)setupUI {
@@ -46,7 +49,12 @@
     headView.backgroundColor = COLOR_UI_FFFFFF;
     
     UILabel *moneyLabel = [UILabel labelWithFont:KFont(14) textColor:COLOR_UI_222222 textAlignment:NSTextAlignmentCenter];
-    [moneyLabel setTextString:@"您已经成功支付￥300.00元" AndColorSubString:@"￥300.00" color:COLOR_UI_THEME_RED];
+    if (_isSuccess) {
+        NSString *payString = [NSString stringWithFormat:@"您已经成功支付%@元",_money];
+        [moneyLabel setTextString:payString AndColorSubString:_money color:COLOR_UI_THEME_RED];
+    } else {
+        [moneyLabel setText:@"支付失败"];
+    }
     [headView addSubview:moneyLabel];
     [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.mas_equalTo(0);
@@ -54,5 +62,23 @@
     }];
     self.tableView.tableHeaderView = headView;
 }
+
+- (void)back {
+    int index = (int)[[self.navigationController viewControllers]indexOfObject:self];
+    if (index>2) {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(index-2)] animated:YES];
+    }else
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    return NO;
+}
+
 
 @end

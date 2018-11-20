@@ -10,6 +10,8 @@
 #import "BuyVIPHeadView.h"
 #import "BuyVIPModel.h"
 
+#import "RechargeViewController.h"
+
 @interface BuyVIPViewController ()
 
 @property (nonatomic, strong) BuyVIPHeadView *headView;
@@ -98,8 +100,16 @@
     if (self.selectModel) {
         [YQNetworking postWithApiNumber:API_NUM_10014 params:@{@"userId":[PATool getUserId],@"piwId":self.selectModel.pvbId} successBlock:^(id response) {
             if (getResponseIsSuccess(response)) {
-                [self getData];
-                [[AlertBaseView alertWithTitle:@"开通会员成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
+                NSDictionary *dic = getResponseData(response);
+                if ([dic[@"isSuccess"] integerValue] == 1 || [dic[@"success"] integerValue] == 1) {
+                    [self getData];
+                    [[AlertBaseView alertWithTitle:@"开通会员成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
+                } else {
+                    [SVProgressHUD showSuccessWithStatus:@"余额不足"];
+                    RechargeViewController *vc = [[RechargeViewController alloc] init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                
             }
         } failBlock:nil];
     }

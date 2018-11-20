@@ -33,9 +33,9 @@
 
 - (void)setUpUI {
     
-    CGFloat titleHeight = [HomeTitleView getHeight];
+    CGFloat titleHeight = [HomeTitleView getHeight] - 20;
     HomeTitleView *titleView = [[HomeTitleView alloc] init];
-    [titleView setChiniseTitle:@"九街" englishTitle:@"Nine Street"];
+    [titleView setChiniseTitle:@"" englishTitle:@"Nine Street"];
     [self addSubview:titleView];
     [titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.top.mas_equalTo(0);
@@ -47,7 +47,7 @@
 #pragma mark - public
 
 + (CGFloat)getHeight {
-    return [HomeTitleView getHeight];
+    return [HomeTitleView getHeight] - 20;
 }
 
 + (NSString *) reuseIdentifier {

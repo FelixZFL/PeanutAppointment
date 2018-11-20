@@ -86,32 +86,12 @@
         make.height.with.mas_greaterThanOrEqualTo(0);
     }];
     
-    
-    [self setdata];
-
 }
 
 #pragma mark - public -
 
 + (CGFloat)getHeight {
     return 66;
-}
-
-- (void)setdata {
-    //实现富文本
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
-    
-    for (int i = 0; i < 3; i++) {
-        //进行图文混排
-        NSTextAttachment *textAttachment = [[NSTextAttachment alloc] initWithData:nil ofType:nil];
-        textAttachment.image = [UIImage imageNamed:@"mine_icon_vip"];
-        textAttachment.bounds =CGRectMake(0,0, 16,16);
-        NSAttributedString * textAttachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-        
-        [string insertAttributedString:textAttachmentString atIndex:string.length];
-    }
-    
-    self.authimgLabel.attributedText = string;
 }
 
 #pragma mark - getter -

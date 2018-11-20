@@ -138,11 +138,11 @@
         if (getResponseIsSuccess(response)) {
             NSDictionary *dic = getResponseData(response);
             //1：发布成功  0:余额不足     （注：在用户发布需求的时候就要扣取定金金额，所以有判断）
-            if ([dic[@"isSuccess"] integerValue] == 1) {
+            if ([dic[@"isSuccess"] integerValue] == 1 || [dic[@"success"] integerValue] == 1) {
                 [[AlertBaseView alertWithTitle:@"发布成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:^{
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }] showInWindow];
-            } else if ([dic[@"isSuccess"] integerValue] == 0) {
+            } else if ([dic[@"isSuccess"] integerValue] == 0 || [dic[@"success"] integerValue] == 0) {
                 [SVProgressHUD showSuccessWithStatus:@"余额不足"];
                 RechargeViewController *vc = [[RechargeViewController alloc] init];
                 [self.navigationController pushViewController:vc animated:YES];

@@ -14,6 +14,8 @@
 #import "MajiangVipModel.h"
 #import "MajiangRoomCardModel.h"
 
+#import "RechargeViewController.h"
+
 #define kBtnTag 58492
 
 @interface MaJiangViewController ()
@@ -189,18 +191,23 @@
 
 - (MaJiangVipFootView *)vipFootView {
     if (!_vipFootView) {
+        __weak __typeof(self)weakSelf = self;
         _vipFootView = [[MaJiangVipFootView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
         [_vipFootView setItemClickBlock:^(MajiangVipModel * _Nonnull model) {
-            [YQNetworking postWithApiNumber:API_NUM_10026 params:@{@"userId":[PATool getUserId], @"pgvId":model.pgvId} successBlock:^(id response) {
-                if (getResponseIsSuccess(response)) {
-                    NSDictionary *dic = getResponseData(response);
-                    if ([dic[@"isSuccess"] integerValue] == 1) {
-                        [[AlertBaseView alertWithTitle:@"开通成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
-                    } else {
-                        [SVProgressHUD showSuccessWithStatus:@"开通失败"];
+            [[AlertBaseView alertWithTitle:@"是否确认开通?" leftBtn:@"取消" leftBlock:nil rightBtn:@"开通" rightBlock:^{
+                [YQNetworking postWithApiNumber:API_NUM_10026 params:@{@"userId":[PATool getUserId], @"pgvId":model.pgvId} successBlock:^(id response) {
+                    if (getResponseIsSuccess(response)) {
+                        NSDictionary *dic = getResponseData(response);
+                        if ([dic[@"isSuccess"] integerValue] == 1 || [dic[@"success"] integerValue] == 1) {
+                            [[AlertBaseView alertWithTitle:@"开通成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
+                        } else {
+                            [SVProgressHUD showSuccessWithStatus:@"开通失败"];
+                            RechargeViewController *vc = [[RechargeViewController alloc] init];
+                            [weakSelf.navigationController pushViewController:vc animated:YES];
+                        }
                     }
-                }
-            } failBlock:nil];
+                } failBlock:nil];
+            }] showInWindow];
         }];
     }
     return _vipFootView;
@@ -208,18 +215,23 @@
 
 - (MaJiangRoomCardFootView *)roomCardFootView {
     if (!_roomCardFootView) {
+        __weak __typeof(self)weakSelf = self;
         _roomCardFootView = [[MaJiangRoomCardFootView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0)];
         [_roomCardFootView setItemClickBlock:^(MajiangRoomCardModel * _Nonnull model) {
-            [YQNetworking postWithApiNumber:API_NUM_10027 params:@{@"userId":[PATool getUserId], @"prbId":model.prbId} successBlock:^(id response) {
-                if (getResponseIsSuccess(response)) {
-                    NSDictionary *dic = getResponseData(response);
-                    if ([dic[@"isSuccess"] integerValue] == 1) {
-                        [[AlertBaseView alertWithTitle:@"购买成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
-                    } else {
-                        [SVProgressHUD showSuccessWithStatus:@"购买失败"];
+            [[AlertBaseView alertWithTitle:@"是否确认购买?" leftBtn:@"取消" leftBlock:nil rightBtn:@"购买" rightBlock:^{
+                [YQNetworking postWithApiNumber:API_NUM_10027 params:@{@"userId":[PATool getUserId], @"prbId":model.prbId} successBlock:^(id response) {
+                    if (getResponseIsSuccess(response)) {
+                        NSDictionary *dic = getResponseData(response);
+                        if ([dic[@"isSuccess"] integerValue] == 1 || [dic[@"success"] integerValue] == 1) {
+                            [[AlertBaseView alertWithTitle:@"购买成功" leftBtn:nil leftBlock:nil rightBtn:@"确定" rightBlock:nil] showInWindow];
+                        } else {
+                            [SVProgressHUD showSuccessWithStatus:@"购买失败"];
+                            RechargeViewController *vc = [[RechargeViewController alloc] init];
+                            [weakSelf.navigationController pushViewController:vc animated:YES];
+                        }
                     }
-                }
-            } failBlock:nil];
+                } failBlock:nil];
+            }] showInWindow];
         }];
     }
     return _roomCardFootView;
