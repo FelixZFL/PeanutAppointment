@@ -12,6 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PayResultViewController : BaseTableViewController
 
+///支付是否成功
+@property (nonatomic, assign) BOOL isSuccess;
+
+///支付金额
+@property (nonatomic, copy) NSString *money;
+
 @end
 
 NS_ASSUME_NONNULL_END

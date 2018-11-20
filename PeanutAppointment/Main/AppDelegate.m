@@ -51,6 +51,9 @@
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     
+    //iOS 12 tabbar push返回bug
+    [UITabBar appearance].translucent = NO;
+    
     //初始化界面
     [self initWindow];
     
@@ -60,6 +63,8 @@
 #pragma mark - 界面跳转
 
 - (void)initWindow {
+    USERDEFAULT_SET_OBJECT(@"showUpdate", @"1");
+    USERDEFAULT_SYNCHRONIZE;
     [PAUserDefaults saveAppReseted:YES];
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     //获取当前版本号 与存储的新特性版本号对比

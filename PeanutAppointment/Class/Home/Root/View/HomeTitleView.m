@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) UILabel *chiniseTitleLabel;
 
-@property (nonatomic, strong) UILabel *englishTitleLabel;
+//@property (nonatomic, strong) UILabel *englishTitleLabel;
 
 @end
 
@@ -41,7 +41,7 @@
     [self addSubview:lineView];
     
     [self addSubview:self.chiniseTitleLabel];
-    [self addSubview:self.englishTitleLabel];
+//    [self addSubview:self.englishTitleLabel];
 
     __weak __typeof(self)weakSelf = self;
     
@@ -52,14 +52,14 @@
     }];
     
     [self.chiniseTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(MARGIN_15);
+        make.centerY.equalTo(weakSelf);
         make.left.equalTo(lineView.mas_right).with.mas_offset(MARGIN_5);
     }];
     
-    [self.englishTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-MARGIN_10);
-        make.left.equalTo(weakSelf.chiniseTitleLabel.mas_left);
-    }];
+//    [self.englishTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.mas_equalTo(-MARGIN_10);
+//        make.left.equalTo(weakSelf.chiniseTitleLabel.mas_left);
+//    }];
 }
 
 #pragma mark - public -
@@ -68,25 +68,23 @@
     
     self.chiniseTitleLabel.text = cTitle;
     
-    NSString *upString = [eTitle uppercaseString];
-    self.englishTitleLabel.text = upString;
-    
-    NSArray *array = [upString componentsSeparatedByString:@" "];
-    
-    NSMutableAttributedString *mutableStr = [[NSMutableAttributedString alloc] initWithString:upString];
-    NSInteger loc = 0;
-    for (int i = 0; i < array.count; i++) {
-        [mutableStr addAttribute:NSFontAttributeName value:KFont(15) range:NSMakeRange(loc, 1)];
-        NSString *subStr = array[i];
-        loc += subStr.length + 1;
-    }
-    self.englishTitleLabel.attributedText = mutableStr;
+//    NSString *upString = [eTitle uppercaseString];
+//    self.englishTitleLabel.text = upString;
+//    NSArray *array = [upString componentsSeparatedByString:@" "];
+//    NSMutableAttributedString *mutableStr = [[NSMutableAttributedString alloc] initWithString:upString];
+//    NSInteger loc = 0;
+//    for (int i = 0; i < array.count; i++) {
+//        [mutableStr addAttribute:NSFontAttributeName value:KFont(15) range:NSMakeRange(loc, 1)];
+//        NSString *subStr = array[i];
+//        loc += subStr.length + 1;
+//    }
+//    self.englishTitleLabel.attributedText = mutableStr;
     
 }
 
 + (CGFloat)getHeight {
     
-    return 65;
+    return 45;
 }
 
 
@@ -100,12 +98,12 @@
     return _chiniseTitleLabel;
 }
 
-- (UILabel *)englishTitleLabel {
-    if (!_englishTitleLabel) {
-        _englishTitleLabel = [[UILabel alloc] init];
-        [_englishTitleLabel setLabelFont:KFont(10) textColor:COLOR_UI_000000 textAlignment:NSTextAlignmentLeft];
-    }
-    return _englishTitleLabel;
-}
+//- (UILabel *)englishTitleLabel {
+//    if (!_englishTitleLabel) {
+//        _englishTitleLabel = [[UILabel alloc] init];
+//        [_englishTitleLabel setLabelFont:KFont(10) textColor:COLOR_UI_000000 textAlignment:NSTextAlignmentLeft];
+//    }
+//    return _englishTitleLabel;
+//}
 
 @end

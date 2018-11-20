@@ -194,13 +194,13 @@
         if (getResponseIsSuccess(response)) {
             
             NSDictionary *dic = getResponseData(response);
-            if ([dic[@"isSuccess"] integerValue] == 1) {
+            if ([dic[@"isSuccess"] integerValue] == 1 || [dic[@"success"] integerValue] == 1) {
                 [SVProgressHUD showSuccessWithStatus:@"提现申请成功"];
                 if (self.submitSuccessBlock) {
                     self.submitSuccessBlock();
                 }
                 [self.navigationController popViewControllerAnimated:YES];
-            } else if ([dic[@"isSuccess"] integerValue] == 2){
+            } else if ([dic[@"isSuccess"] integerValue] == 2 || [dic[@"success"] integerValue] == 2){
                 [SVProgressHUD showErrorWithStatus:@"余额不足"];
             }
             

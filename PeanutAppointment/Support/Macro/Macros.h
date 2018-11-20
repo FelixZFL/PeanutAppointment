@@ -18,12 +18,16 @@
 #define STATEBAR_HEIGHT (CGRectGetHeight([UIApplication sharedApplication].statusBarFrame))
 #define NAVITETION_HEIGHT (STATEBAR_HEIGHT + 44)
 
-#define TABBAR_HEIGHT ((IS_iPhoneX) ? 83 : 49)
+//#define TABBAR_HEIGHT ((IS_iPhoneX) ? 83 : 49)
+#define TABBAR_HEIGHT ((IS_iPhoneX) ? 83 : 0)
 
 #define HOMEBAR_HEIGHT ((IS_iPhoneX) ? 34 : 0)
 
 
-//#define WEAK_SELF   __weak typeof(self)  __weakSelf = self;
+#define USERDEFAULT_SET_OBJECT(key,value) [[NSUserDefaults standardUserDefaults] setObject:value forKey:key]
+#define USERDEFAULT_GET_OBJECT(key) [[NSUserDefaults standardUserDefaults] objectForKey:key]
+#define USERDEFAULT_SYNCHRONIZE [[NSUserDefaults standardUserDefaults] synchronize]
+
 
 #define kCurrentShortVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 

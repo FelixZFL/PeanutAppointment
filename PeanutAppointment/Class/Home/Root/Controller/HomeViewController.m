@@ -313,6 +313,7 @@
         if(!sectionHeadView){
             sectionHeadView = [[HomeSectionHeadView alloc] initWithReuseIdentifier:identifier];
             [sectionHeadView setChoosedBlcok:^(NSInteger index) {
+                if (![self cheakLogin]) return;
                 if (index == 0) {
                     //智能排序
                     [[HomeSortAlertView alertWithBlock:^(NSInteger index) {

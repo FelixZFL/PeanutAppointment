@@ -200,11 +200,12 @@
         }
     }
     
-    self.moneyTF.text = @"";//清空输入框内容
-    
     PayResultViewController *vc = [[PayResultViewController alloc] init];
+    vc.isSuccess = success;
+    vc.money = [NSString stringWithFormat:@"￥%.2f",[self.moneyTF.text doubleValue]];
     [self.navigationController pushViewController:vc animated:YES];
     
+    self.moneyTF.text = @"";//清空输入框内容
 }
 
 #pragma mark - scrollViewDelegate
