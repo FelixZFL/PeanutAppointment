@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FB4363202E0FE51EF810C0A98FCE3DD3"
+               BlueprintIdentifier = "A86C958E03720AD8560A9D94C27013FD"
                BlueprintName = "TTRangeSlider"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "TTRangeSlider.framework">
