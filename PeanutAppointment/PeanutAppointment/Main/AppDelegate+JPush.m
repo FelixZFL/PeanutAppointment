@@ -24,9 +24,19 @@
         [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |UIUserNotificationTypeSound |UIUserNotificationTypeAlert)categories:nil];
     }
     
+    
+    
     // Required
     // init Push
     [JPUSHService setupWithOption:launchOptions appKey:JPushAppKey channel:@"App Store" apsForProduction:YES];
+    
+    // Required - 启动 JMessage SDK
+    [JMessage setupJMessage:launchOptions appKey:JPushAppKey channel:@"App Store" apsForProduction:NO category:nil messageRoaming:NO];
+    //可以添加自定义categories
+    [JMessage registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                  UIUserNotificationTypeSound |
+                                                  UIUserNotificationTypeAlert)
+                                      categories:nil];
     
     [JPUSHService registrationIDCompletionHandler:^(int resCode, NSString *registrationID) {
         if(resCode == 0){
@@ -58,6 +68,8 @@
     }
     /// Required - 注册 DeviceToken
     [JPUSHService registerDeviceToken:deviceToken];
+    
+    [JMessage registerDeviceToken:deviceToken];
 }
 //实现注册APNs失败接口（可选）
 - (void)JPapplication:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
