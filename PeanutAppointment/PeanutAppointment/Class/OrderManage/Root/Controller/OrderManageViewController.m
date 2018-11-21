@@ -67,7 +67,6 @@
     
     [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(NAVITETION_HEIGHT + TypeChooseViewHeight + MARGIN_1);
-        make.bottom.mas_equalTo(-TABBAR_HEIGHT);
     }];
 }
 
