@@ -5583,7 +5583,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment-resources.sh",
 				"${PODS_ROOT}/BaiduMapKit/BaiduMapKit/BaiduMapAPI_Map.framework/mapapi.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -5592,7 +5592,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A879BCE1C97F746EAA29B243 /* [CP] Embed Pods Frameworks */ = {
@@ -5601,7 +5601,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaAsyncSocket/CocoaAsyncSocket.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
@@ -5648,7 +5648,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D53D93E4BEDEFED15298D3A8 /* [CP] Check Pods Manifest.lock */ = {

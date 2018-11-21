@@ -26,8 +26,10 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - IQKeyboardManager (6.1.1)
-  - JCore (1.2.2)
+  - IQKeyboardManager (6.2.0)
+  - JCore (1.2.5)
+  - JMessage (3.7.0):
+    - JCore (~> 1.0)
   - JPush (3.1.0):
     - JCore (~> 1.2.0)
   - JSONModel (1.8.0)
@@ -50,8 +52,8 @@ PODS:
   - SDWebImage/Core (4.4.2)
   - SVProgressHUD (2.2.5)
   - TTRangeSlider (1.0.6)
-  - TZImagePickerController (3.0.8)
-  - WechatOpenSDK (1.8.2)
+  - TZImagePickerController (3.1.2)
+  - WechatOpenSDK (1.8.3)
   - XMPPFramework (4.0.0):
     - XMPPFramework/default (= 4.0.0)
   - XMPPFramework/default (4.0.0):
@@ -66,7 +68,8 @@ DEPENDENCIES:
   - BMKLocationKit
   - FMDB
   - IQKeyboardManager
-  - JPush (= 3.1.0)
+  - JMessage
+  - JPush
   - JSONModel
   - LBXScan/LBXNative (~> 2.3)
   - LBXScan/UI (~> 2.3)
@@ -93,6 +96,7 @@ SPEC REPOS:
     - FMDB
     - IQKeyboardManager
     - JCore
+    - JMessage
     - JPush
     - JSONModel
     - KissXML
@@ -118,8 +122,9 @@ SPEC CHECKSUMS:
   CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
   CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  IQKeyboardManager: 79c57795f5c2408d259d37b9da2ed07efcbb5225
-  JCore: f14c0549968a63c22e246a4875aa9d428446f373
+  IQKeyboardManager: 6194101620b73af5e67900b8f89707a99de0b804
+  JCore: 14706de2640b25fb77dbd02332696491407f37c9
+  JMessage: 90c194ca878a1724694da320aad4867b489276e9
   JPush: 5921e25ad13e0386351079217b009f2039084eac
   JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
   KissXML: 09f88ff8161fd058d67b70740b8b516687b52823
@@ -134,10 +139,10 @@ SPEC CHECKSUMS:
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TTRangeSlider: 78188bea83f6471a06f75adbc88da5e990baeafe
-  TZImagePickerController: 9092aa0f97af1cb9643c0ea7d7e5a77802ec7245
-  WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
+  TZImagePickerController: 29b279caee3309cbaa04ef1384b036ec90297f3f
+  WechatOpenSDK: 3117412f8aafde4758cac1e8d20b93c67cafcfef
   XMPPFramework: 5d31ff9f73dce031b24bc49bcf88093627a3a86e
 
-PODFILE CHECKSUM: 9c5e97d967c5bd885b3fa9bb9f6cf9a23545aede
+PODFILE CHECKSUM: d53a8bfc7d9a6e146631206c6e5c0fecb2c7e817
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0.beta.1

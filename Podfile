@@ -20,7 +20,7 @@ target 'PeanutAppointment' do
     pod 'Masonry'
     #1.75
     pod 'SDCycleScrollView'
-    #3.0.8
+    #3.1.2
     pod 'TZImagePickerController'
     
 #    Installing CocoaAsyncSocket (7.6.3)
@@ -28,21 +28,24 @@ target 'PeanutAppointment' do
 #    Installing KissXML (5.2.3)
 #    Installing libidn (1.35)
 #    Installing XMPPFramework (4.0.0)
+#暂时先不要
     pod 'XMPPFramework'
 
-    #微信开放平台  1.8.2
+    #微信开放平台  1.8.3
     pod 'WechatOpenSDK'
     
-#    Installing JCore (1.2.2)
+#    Installing JCore (1.2.5)
     #极光推送(3.1.0)
-    pod 'JPush', '3.1.0'
+    pod 'JPush'
+    #极光IM  3.7.0
+    pod 'JMessage'
     
     #百度定位(1.3.0.2)
     pod 'BMKLocationKit'
     #百度地图(4.2.0)
     pod 'BaiduMapKit'
 
-    #键盘管理
+    #键盘管理 6.2.0
     pod 'IQKeyboardManager'
     
     #阿里直播需要用到的三方
