@@ -88,10 +88,6 @@
     
     self.tableView.tableHeaderView = self.headView;
     
-    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(-TABBAR_HEIGHT);
-    }];
-    
 }
 
 - (void)setupNav {

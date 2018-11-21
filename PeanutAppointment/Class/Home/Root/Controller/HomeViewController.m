@@ -109,7 +109,6 @@
     
     [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
-        make.bottom.mas_equalTo(-TABBAR_HEIGHT);
     }];
     
 }

@@ -18,8 +18,7 @@
 #define STATEBAR_HEIGHT (CGRectGetHeight([UIApplication sharedApplication].statusBarFrame))
 #define NAVITETION_HEIGHT (STATEBAR_HEIGHT + 44)
 
-//#define TABBAR_HEIGHT ((IS_iPhoneX) ? 83 : 49)
-#define TABBAR_HEIGHT ((IS_iPhoneX) ? 83 : 0)
+#define TABBAR_HEIGHT ((IS_iPhoneX) ? 83 : 49)
 
 #define HOMEBAR_HEIGHT ((IS_iPhoneX) ? 34 : 0)
 

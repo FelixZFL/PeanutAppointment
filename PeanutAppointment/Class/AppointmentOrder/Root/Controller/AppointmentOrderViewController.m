@@ -53,11 +53,10 @@
     
     
     [self.view addSubview:self.collectionView];
-    CGFloat bottomMargin = _type == AppointmentOrderViewControllerType_ChooseType ? 0 : -TABBAR_HEIGHT;
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(NAVITETION_HEIGHT);
         make.left.right.mas_equalTo(0);
-        make.bottom.mas_equalTo(bottomMargin);
+        make.bottom.mas_equalTo(0);
     }];
     
 }

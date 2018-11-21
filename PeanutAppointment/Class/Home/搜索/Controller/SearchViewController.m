@@ -73,12 +73,6 @@
         make.height.mas_equalTo(TypeChooseViewHeight);
     }];
     
-    [self.tableView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(NAVITETION_HEIGHT + TypeChooseViewHeight + MARGIN_1);
-        make.bottom.mas_equalTo(-TABBAR_HEIGHT);
-    }];
-    
-    
     CGFloat btnH = BUTTON_HEIGHT_50;
     UIView *btnView = [UIView viewWithColor:COLOR_UI_FFFFFF];
     [self.view addSubview:btnView];
