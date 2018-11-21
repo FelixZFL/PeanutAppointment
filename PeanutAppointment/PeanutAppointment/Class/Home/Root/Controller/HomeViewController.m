@@ -10,7 +10,7 @@
 #import "HomeHeadView.h"
 #import "HomeSectionHeadView.h"
 #import "HomeCell.h"
-#import "XMPPManager.h"
+//#import "XMPPManager.h"
 #import "AlertShareView.h"
 #import "SignInAlertView.h"
 #import "RewardAlertView.h"

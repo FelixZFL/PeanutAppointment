@@ -29,7 +29,7 @@ target 'PeanutAppointment' do
 #    Installing libidn (1.35)
 #    Installing XMPPFramework (4.0.0)
 #暂时先不要
-    pod 'XMPPFramework'
+#    pod 'XMPPFramework'
 
     #微信开放平台  1.8.3
     pod 'WechatOpenSDK'

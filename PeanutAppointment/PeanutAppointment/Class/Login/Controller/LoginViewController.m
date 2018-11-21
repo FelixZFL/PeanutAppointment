@@ -10,7 +10,7 @@
 #import <WXApi.h>
 #import "WXAuthModel.h"
 #import "WXUserInfoModel.h"
-#import "XMPPManager.h"
+//#import "XMPPManager.h"
 #import "LocationManager.h"
 
 #import "BoundPhoneViewController.h"
@@ -150,9 +150,9 @@
                     WXUserInfoModel *user = [WXUserInfoModel mj_objectWithKeyValues:response];
                     NSLog(@"nickname == %@",user.nickname);
                     self.userInfoModel = user;
-                    [[XMPPManager shareManager] registWithName:[NSString stringWithFormat:@"%@,%@",user.openid,user.nickname] registBlock:^(BOOL isSucess) {
-                        [self requestToRegister];
-                    }];
+                    [self requestToRegister];
+//                    [[XMPPManager shareManager] registWithName:[NSString stringWithFormat:@"%@,%@",user.openid,user.nickname] registBlock:^(BOOL isSucess) {
+//                    }];
                 }
             } failBlock:nil];
         }
