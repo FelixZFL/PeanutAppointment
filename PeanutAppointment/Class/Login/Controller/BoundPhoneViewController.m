@@ -61,9 +61,9 @@
         [_headView setConfirmBlock:^(NSString * _Nonnull phone, NSString * _Nonnull code) {
             [YQNetworking postWithApiNumber:API_NUM_10013 params:@{@"phone":phone,@"msgCode":code,@"userId":weakSelf.userId} successBlock:^(id response) {
                 if (getResponseIsSuccess(response)) {
-                    [PAUserDefaults saveUserId:weakSelf.userId];
-                    [PAUserDefaults saveUserBoundPhone:phone];
-                    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                    if (weakSelf.boundPhoneSuccessBlock) {
+                        weakSelf.boundPhoneSuccessBlock(phone);
+                    }
                 }
             } failBlock:nil];
             

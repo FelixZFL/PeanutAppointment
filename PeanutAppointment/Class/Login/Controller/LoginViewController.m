@@ -184,12 +184,12 @@
                 
                 BoundPhoneViewController *vc = [[BoundPhoneViewController alloc] init];
                 vc.userId = [dic objectForKey:@"userId"];
+                [vc setBoundPhoneSuccessBlock:^(NSString * _Nonnull phone) {
+                    [self saveUserInfoWithUserId:[dic objectForKey:@"userId"] andPhone:phone];
+                }];
                 [self.navigationController pushViewController:vc animated:YES];
             } else {
-                
-                [PAUserDefaults saveUserId:[dic objectForKey:@"userId"]];
-                [PAUserDefaults saveUserBoundPhone:[dic objectForKey:@"phone"]];
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self saveUserInfoWithUserId:[dic objectForKey:@"userId"] andPhone:[dic objectForKey:@"phone"]];
             }
             
         }
@@ -197,6 +197,51 @@
     } failBlock:^(NSError *error) {
         
     }];
+}
+
+- (void)saveUserInfoWithUserId:(NSString *)userId andPhone:(NSString *)phone {
+    
+    [PAUserDefaults saveUserId:userId];
+    [PAUserDefaults saveUserBoundPhone:phone];
+    
+    [MBProgressHUD showMessage:@"正在注册" view:self.view];
+    [JMSGUser registerWithUsername:userId
+                          password:userId
+                 completionHandler:^(id resultObject, NSError *error) {
+                     if (error == nil) {
+                         [MBProgressHUD hideHUDForView:self.view animated:YES];
+                         [MBProgressHUD showMessage:@"注册成功" view:self.view];
+                         [JMSGUser loginWithUsername:userId
+                                            password:userId
+                                   completionHandler:^(id resultObject, NSError *error) {
+                                       if (error == nil) {
+//                                           [[NSUserDefaults standardUserDefaults] setObject:username forKey:kuserName];
+//                                           [[NSUserDefaults standardUserDefaults] setObject:username forKey:klastLoginUserName];
+                                           
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           [JMSGUser updateMyInfoWithParameter:self.userInfoModel.nickname userFieldType:kJMSGUserFieldsNickname completionHandler:^(id resultObject, NSError *error) {
+                                               if (self.loginSuccessBlock) {
+                                                   self.loginSuccessBlock();
+                                               }
+                                               [self dismissViewControllerAnimated:YES completion:nil];
+                                           }];
+                                       } else {
+//                                           DDLogDebug(@"login fail error  %@",error);
+                                           NSString *alert = [JCHATStringUtils errorAlert:error];
+                                           alert = [JCHATStringUtils errorAlert:error];
+                                           [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                                           [MBProgressHUD showMessage:alert view:self.view];
+//                                           DDLogError(alert);
+                                       }
+                                   }];
+                     } else {
+                         NSString *alert = @"注册失败";
+                         alert = [JCHATStringUtils errorAlert:error];
+                         [MBProgressHUD hideHUDForView:self.view animated:YES];
+                         [MBProgressHUD showMessage:alert view:self.view];
+                     }
+                 }];
+    
 }
 
 

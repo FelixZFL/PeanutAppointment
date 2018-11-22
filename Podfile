@@ -59,6 +59,10 @@ target 'PeanutAppointment' do
     pod 'LXReorderableCollectionViewFlowLayout'
     pod 'TTRangeSlider'
     
+    
+    #聊天需要
+    pod 'CocoaLumberjack'
+    pod 'GPUImage', '~> 0.1.7'
 
   # Pods for PeanutAppointment
 
