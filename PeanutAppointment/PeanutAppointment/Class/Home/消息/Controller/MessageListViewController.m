@@ -14,6 +14,7 @@
 #import "MessageModel.h"
 #import "SystemMessageModel.h"
 
+#import "JCHATConversationViewController.h"
 
 @interface MessageListViewController ()
 
@@ -99,6 +100,63 @@
     }];
 }
 
+- (void)getConversationList {
+    
+    if (isGetingAllConversation) {
+        NSLog(@"is loading conversation list");
+        cacheCount++;
+        return ;
+    }
+    
+    NSLog(@"get allConversation -- start");
+    isGetingAllConversation = YES;
+    
+//    [self.addBgView setHidden:YES];
+    [JMSGConversation allConversations:^(id resultObject, NSError *error) {
+        JCHATMAINTHREAD(^{
+            isGetingAllConversation = NO;
+            if (error == nil) {
+                _conversationArr = [self sortConversation:resultObject];
+                _unreadCount = 0;
+                for (NSInteger i=0; i < [_conversationArr count]; i++) {
+                    JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
+                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
+                }
+//                [self saveBadge:_unreadCount];
+            } else {
+                _conversationArr = nil;
+            }
+//            [self.chatTableView reloadData];
+            NSLog(@"get allConversation -- end");
+            isGetingAllConversation = NO;
+            [self checkCacheGetAllConversationAction];
+        });
+    }];
+}
+
+- (void)checkCacheGetAllConversationAction {
+    if (cacheCount > 0) {
+        NSLog(@"is have cache ,once again get all conversation");
+        cacheCount = 0;
+        [self getConversationList];
+    }
+}
+
+
+#pragma mark --排序conversation
+- (NSMutableArray *)sortConversation:(NSMutableArray *)conversationArr {
+    NSSortDescriptor *firstDescriptor = [[NSSortDescriptor alloc] initWithKey:@"latestMessage.timestamp" ascending:NO];
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:firstDescriptor, nil];
+    
+    NSArray *sortedArray = [conversationArr sortedArrayUsingDescriptors:sortDescriptors];
+    
+    return [NSMutableArray arrayWithArray:sortedArray];
+    
+    //    NSArray *sortResultArr = [conversationArr sortedArrayUsingFunction:sortType context:nil];
+    //    return [NSMutableArray arrayWithArray:sortResultArr];
+}
+
 
 #pragma mark - UITableViewDelegate
 
@@ -141,6 +199,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (_type == NavTypeChooseViewType_left) {
+        
+        JCHATConversationViewController *sendMessageCtl =[[JCHATConversationViewController alloc] init];
+        sendMessageCtl.hidesBottomBarWhenPushed = YES;
+        sendMessageCtl.superViewController = self;
+        JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
+        sendMessageCtl.conversation = conversation;
+        [self.navigationController pushViewController:sendMessageCtl animated:YES];
+        
+        NSInteger badge = _unreadCount - [conversation.unreadCount integerValue];
+        [self saveBadge:badge];
+    }
+    
+}
+
+- (void)saveBadge:(NSInteger)badge {
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%zd",badge] forKey:kBADGE];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

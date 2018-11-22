@@ -96,6 +96,20 @@
 //    [self.window makeKeyAndVisible];
 //}
 
+
+
+- (void)onDBMigrateStart {
+    NSLog(@"onDBmigrateStart in appdelegate");
+    _isDBMigrating = YES;
+}
+
+- (void)onDBMigrateFinishedWithError:(NSError *)error {
+    NSLog(@"onDBmigrateFinish in appdelegate");
+    _isDBMigrating = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDBMigrateFinishNotification object:nil];
+}
+
+
 #pragma mark - 推送 -
 
 //注册APNs成功并上报DeviceToken

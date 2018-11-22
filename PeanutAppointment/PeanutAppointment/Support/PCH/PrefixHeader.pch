@@ -9,7 +9,7 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
-
+//阿里云视频需要
 #import "AliyunVideoPchConfig.h"
 
 
@@ -40,6 +40,15 @@
 #import <MJExtension/MJExtension.h>
 #import <MJRefresh/MJRefresh.h>
 #import <IQKeyboardManager/IQKeyboardManager.h>
+
+
+#import <JMessage/JMessage.h>
+#import "MBProgressHUD.h"
+#import "MBProgressHUD+Add.h"
+#import "ViewUtil.h"
+#import "JCHATAlertToSendImage.h"
+#import "JCHATStringUtils.h"
+//#import "Masonry.h"
 
 
 #endif

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BoundPhoneViewController : BaseTableViewController
 
+@property (nonatomic, copy) void(^boundPhoneSuccessBlock) (NSString *phone);
+
 @property (nonatomic, copy) NSString *userId;
 
 @end
