@@ -68,10 +68,19 @@
 
 - (void)logoutBtnAction {
     [[AlertBaseView alertWithTitle:@"您确定要退出登录" leftBtn:@"取消" leftBlock:nil rightBtn:@"确定" rightBlock:^{
-        //TODO  退出
-        [PAUserDefaults logout];
-        RootViewController *tabbarVC = (RootViewController *)self.tabBarController;
-        [tabbarVC logoutToHomePage];
+        
+        //退出当前登录的用户
+        [JMSGUser logout:^(id resultObject, NSError *error) {
+            if (!error) {
+                //退出登录成功`
+                [PAUserDefaults logout];
+                RootViewController *tabbarVC = (RootViewController *)self.tabBarController;
+                [tabbarVC logoutToHomePage];
+            } else {
+                //退出登录失败
+            }
+        }];
+        
         
     }] showInWindow];
 }
