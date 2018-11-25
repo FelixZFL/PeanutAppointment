@@ -9,12 +9,12 @@
 #import "AppDelegate.h"
 #import "AppDelegate+JPush.h"
 #import "PayManager.h"
-
+#import "JCHATFileManager.h"
 #import <WXApi.h>
 #import <TencentOpenAPI/TencentApiInterface.h>//qq
 #import <TencentOpenAPI/TencentOAuth.h>//qq
 #import <BMKLocationkit/BMKLocationComponent.h>//百度地图
-
+#import "JCHATCustomFormatter.h"
 
 
 #import "RootViewController.h"
@@ -30,6 +30,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [self initLogger];
     
     //SVProgressHUD 设置默认最短显示时间
     [SVProgressHUD setMinimumDismissTimeInterval:2.f];
@@ -57,6 +59,12 @@
     //初始化界面
     [self initWindow];
     
+    [self reLogin];
+    
+    [JCHATFileManager initWithFilePath];//demo 初始化存储路径
+    
+    [JMessage resetBadge];
+    
     return YES;
 }
 
@@ -74,6 +82,19 @@
         [PAUserDefaults saveVersionOfNewFeature:currentVersion];
     }
     [self enterRootVC];
+    
+    [[UINavigationBar appearance] setBarTintColor:COLOR_UI_THEME_RED];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    NSShadow* shadow = [NSShadow new];
+    shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    [[UINavigationBar appearance] setTitleTextAttributes: @{
+                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                            NSFontAttributeName: [UIFont boldSystemFontOfSize:17],
+                                                            NSShadowAttributeName: shadow
+                                                            }];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
 }
 
 - (void)enterRootVC {
@@ -107,6 +128,41 @@
     NSLog(@"onDBmigrateFinish in appdelegate");
     _isDBMigrating = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:kDBMigrateFinishNotification object:nil];
+}
+
+- (void)reLogin {
+    if ([PATool isLogin]) {
+        [JMSGUser loginWithUsername:[PATool getUserId]
+                           password:[PATool getUserId]
+                  completionHandler:^(id resultObject, NSError *error) {
+                      if (error == nil) {
+                          NSLog(@"登录成功");
+                      } else {
+                          NSLog(@"登录失败");
+                          JCHATMAINTHREAD(^{
+                              [MBProgressHUD showMessage:[JCHATStringUtils errorAlert:error] view:nil];
+                          });
+                      }
+                  }];
+    }
+}
+
+
+- (void)initLogger {
+    JCHATCustomFormatter *formatter = [[JCHATCustomFormatter alloc] init];
+    
+    // XCode console
+    [[DDTTYLogger sharedInstance] setLogFormatter:formatter];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    // Apple System
+    [[DDASLLogger sharedInstance] setLogFormatter:formatter];
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+    fileLogger.rollingFrequency = 60 * 60 * 24; // 一个LogFile的有效期长，有效期内Log都会写入该LogFile
+    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;//最多LogFile的数量
+    [fileLogger setLogFormatter:formatter];
+    [DDLog addLogger:fileLogger];
 }
 
 

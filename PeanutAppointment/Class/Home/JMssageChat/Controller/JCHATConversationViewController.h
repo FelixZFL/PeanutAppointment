@@ -24,7 +24,7 @@
 
 static NSInteger const messagePageNumber = 25;
 static NSInteger const messagefristPageNumber = 20;
-
+ 
 @interface JCHATConversationViewController : UIViewController <
 UITableViewDataSource,
 UITableViewDelegate,

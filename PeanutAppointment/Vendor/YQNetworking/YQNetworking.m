@@ -260,11 +260,13 @@ NSInteger getResponseCode(id responseObject){
                        if ([resp.version.isUpdate integerValue] == 1 && [currentVersion compare:resp.version.iosSerialNumber] == NSOrderedAscending) {
                            [[VersionUpdateAlertView alertWithModel:resp.version] showInWindow];
                        }
-                       else if ([currentVersion compare:resp.version.iosSerialNumber] == NSOrderedAscending && [USERDEFAULT_GET_OBJECT(@"showUpdate") integerValue] == 1) {
-                           USERDEFAULT_SET_OBJECT(@"showUpdate", @"0");
-                           USERDEFAULT_SYNCHRONIZE;
-                           [[VersionUpdateAlertView alertWithModel:resp.version] showInWindow];
-                       }
+                       /*
+                        else if ([currentVersion compare:resp.version.iosSerialNumber] == NSOrderedAscending && [USERDEFAULT_GET_OBJECT(@"showUpdate") integerValue] == 1) {
+                        USERDEFAULT_SET_OBJECT(@"showUpdate", @"0");
+                        USERDEFAULT_SYNCHRONIZE;
+                        [[VersionUpdateAlertView alertWithModel:resp.version] showInWindow];
+                        }
+                        */
                        
                        if (getResponseCode(responseObject) != 0) {
                            if (getResponseMsg(responseObject)) {

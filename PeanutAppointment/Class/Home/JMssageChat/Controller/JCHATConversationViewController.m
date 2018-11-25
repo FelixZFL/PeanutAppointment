@@ -49,7 +49,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
-
+    self.navigationController.navigationBar.hidden = YES;
+    
     _refreshAvatarUsersDic = [NSMutableDictionary dictionary];
     _allMessageDic = [NSMutableDictionary dictionary];
     _allmessageIdArr = [NSMutableArray array];
@@ -159,27 +160,28 @@
   _messageTableView.backgroundColor = messageTableColor;
   
   _moreViewContainer.moreView.delegate = self;
+  _moreViewContainer.backgroundColor = messageTableColor;
   _moreViewContainer.moreView.backgroundColor = messageTableColor;
 }
 
 - (void)setupNavigation {
   self.navigationController.navigationBar.translucent = NO;
-  _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-  [_rightBtn setFrame:navigationRightButtonRect];
   if (_conversation.conversationType == kJMSGConversationTypeSingle) {
-    [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal];
+//    [_rightBtn setImage:[UIImage imageNamed:@"userDetail"] forState:UIControlStateNormal];
   } else {
+      _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+      [_rightBtn setFrame:navigationRightButtonRect];
       [_rightBtn setImage:[UIImage imageNamed:@"groupDetail"] forState:UIControlStateNormal];
       [self updateGroupConversationTittle:nil];
-    if ([((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
-      _rightBtn.hidden = YES;
-    }
+      if ([((JMSGGroup *)_conversation.target) isMyselfGroupMember]) {
+          _rightBtn.hidden = YES;
+      }
+      [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
+      self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
   }
   
   [_conversation clearUnreadCount];
   
-  [_rightBtn addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBtn];//为导航栏添加右侧按钮
     
   UIButton *leftBtn =[UIButton buttonWithType:UIButtonTypeCustom];
   [leftBtn setFrame:kNavigationLeftButtonRect];
@@ -224,7 +226,9 @@
 }
 
 - (void)hidenDetailBtn:(BOOL)flag {
-    [_rightBtn setHidden:flag];
+    if (_rightBtn) {
+        [_rightBtn setHidden:flag];
+    }
 }
 
 - (void)setTitleWithUser:(JMSGUser *)user {
