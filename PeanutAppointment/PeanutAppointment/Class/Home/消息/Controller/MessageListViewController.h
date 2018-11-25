@@ -11,13 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MessageListViewController : BaseTableViewController
-{
-    NSInteger cacheCount;
-    BOOL isGetingAllConversation;
-    
-    __block NSMutableArray *_conversationArr;
-    NSInteger _unreadCount;
-}
+
 
 @end
 

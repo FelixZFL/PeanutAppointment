@@ -60,6 +60,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self getData];
+    self.navigationController.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -381,6 +382,14 @@
     
     [self.navigationController pushViewController:targetVC animated:YES];
 }
+
+#pragma mark - UINavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
 
 #pragma mark - getter
 

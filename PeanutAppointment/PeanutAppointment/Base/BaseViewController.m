@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface BaseViewController ()<UIGestureRecognizerDelegate>
+@interface BaseViewController ()<UIGestureRecognizerDelegate,UINavigationControllerDelegate>
 
 @property (nonatomic, assign) CustomNavStyle stateStyle;
 
@@ -24,6 +24,7 @@
         
     self.view.backgroundColor = COLOR_UI_F0F0F0;
 
+    self.navigationController.delegate = self;
     self.navigationController.navigationBar.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
 
@@ -136,6 +137,16 @@
         return NO;
     }
 }
+
+#pragma mark - UINavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    // 判断是否隐藏navBar
+    BOOL barHidden = [viewController isKindOfClass:[self class]];
+    
+    [self.navigationController setNavigationBarHidden:barHidden animated:YES];
+}
+
 
 #pragma mark - getter -
 

@@ -18,6 +18,7 @@
 
 #import "MessageListViewController.h"
 #import "DemandDetailViewController.h"//需求详情
+#import "JCHATConversationViewController.h"//聊天
 
 @interface OrderManageViewController ()
 
@@ -224,11 +225,41 @@
                     //NSString *userId = _selectIndex == 0 ? [PATool getUserId] : @"2854b68ebf4e46e2a8c172b0bc813d4a";
                     [YQNetworking postWithApiNumber:API_NUM_10019 params:@{@"userId":[PATool getUserId],@"orderId":model.orderId} successBlock:^(id response) {
                         if (getResponseIsSuccess(response)) {
+                            
                             [self.tableView.mj_header beginRefreshing];
+                            
+                            //发送消息  TODO
+                            [JMSGConversation createSingleConversationWithUsername:@"" completionHandler:^(id resultObject, NSError *error) {
+                                if (!error) {
+                                    //创建单聊会话成功， resultObject为创建的会话
+                                    JMSGConversation *conversation = (JMSGConversation *)resultObject;
+                                    NSString *text = @"我对您的订单很感兴趣，期待您的回复，如果我不在线，请留言，我将第一时间回复您";
+                                    JMSGMessage *message = nil;
+                                    JMSGTextContent *textContent = [[JMSGTextContent alloc] initWithText:text];
+                                    message = [conversation createMessageWithContent:textContent];//!
+                                    [conversation sendMessage:message];
+                                } else {
+                                    //创建单聊会话失败
+                                }
+                            }];
                         }
                     } failBlock:nil];
                 } else if ([sender.titleLabel.text isEqualToString:@"发消息"]) {
-                    
+                    //TODO
+                    [JMSGConversation createSingleConversationWithUsername:@"" completionHandler:^(id resultObject, NSError *error) {
+                        if (!error) {
+                            //创建单聊会话成功， resultObject为创建的会话
+                            
+                            JCHATConversationViewController *sendMessageCtl =[[JCHATConversationViewController alloc] init];
+                            sendMessageCtl.hidesBottomBarWhenPushed = YES;
+                            sendMessageCtl.superViewController = self;
+                            JMSGConversation *conversation = (JMSGConversation *)resultObject;
+                            sendMessageCtl.conversation = conversation;
+                            [self.navigationController pushViewController:sendMessageCtl animated:YES];
+                        } else {
+                            //创建单聊会话失败
+                        }
+                    }];
                 }
                 
             }];
@@ -243,6 +274,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
+
 
 #pragma mark - getter
 

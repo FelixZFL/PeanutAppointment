@@ -17,8 +17,10 @@
 //@property (nonatomic, copy) AlertokBlock okBlock;
 //@property (nonatomic, copy) AlertCancelBlock cancelBlock;
 
-@property (nonatomic, strong) UILabel *currentVersionLabel;
-@property (nonatomic, strong) UILabel *targetVersionLabel;
+//@property (nonatomic, strong) UILabel *currentVersionLabel;
+//@property (nonatomic, strong) UILabel *targetVersionLabel;
+
+@property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
 
 @property (nonatomic, strong) UIButton *cancelBtn;
@@ -50,63 +52,73 @@
     
     __weak __typeof(self)weakSelf = self;
     
+    UIImageView *imageV = [[UIImageView alloc] init];
+    imageV.image = imageNamed(@"version_update_icon");
+    [self addSubview:imageV];
+    [imageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(MARGIN_10);
+        make.centerX.equalTo(weakSelf);
+    }];
+    
     UILabel *titleLabel = [[UILabel alloc] init];
     [titleLabel setLabelFont:KBoldFont(17) textColor:COLOR_UI_222222 textAlignment:NSTextAlignmentCenter];
-    titleLabel.text = @"检测到新版本";
+    titleLabel.text = @"发现新版本";
     [self addSubview:titleLabel];
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.mas_equalTo(0);
+        make.top.equalTo(imageV.mas_bottom);
+        make.left.right.mas_equalTo(0);
         make.height.mas_equalTo(40);
     }];
+    self.titleLabel = titleLabel;
     
-    UIView *topLine = [UIView viewWithColor:COLOR_UI_F0F0F0];
-    [self addSubview:topLine];
-    [topLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.mas_equalTo(0);
-        make.height.mas_equalTo(LINE_HEIGHT);
-        make.bottom.equalTo(titleLabel);
-    }];
+//    UIView *topLine = [UIView viewWithColor:COLOR_UI_F0F0F0];
+//    [self addSubview:topLine];
+//    [topLine mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.mas_equalTo(0);
+//        make.height.mas_equalTo(LINE_HEIGHT);
+//        make.bottom.equalTo(titleLabel);
+//    }];
     
     
-    [self addSubview:self.currentVersionLabel];
-    [self.currentVersionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(titleLabel.mas_bottom).with.mas_offset(MARGIN_15);
-        make.left.mas_equalTo(MARGIN_10);
-        make.right.mas_equalTo(-MARGIN_10);
-        make.height.mas_equalTo(15);
-    }];
+//    [self addSubview:self.currentVersionLabel];
+//    [self.currentVersionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(titleLabel.mas_bottom).with.mas_offset(MARGIN_15);
+//        make.left.mas_equalTo(MARGIN_10);
+//        make.right.mas_equalTo(-MARGIN_10);
+//        make.height.mas_equalTo(15);
+//    }];
+//
+//    [self addSubview:self.targetVersionLabel];
+//    [self.targetVersionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(weakSelf.currentVersionLabel.mas_bottom).with.mas_offset(MARGIN_15);
+//        make.left.mas_equalTo(MARGIN_10);
+//        make.right.mas_equalTo(-MARGIN_10);
+//        make.height.mas_equalTo(15);
+//    }];
     
-    [self addSubview:self.targetVersionLabel];
-    [self.targetVersionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.currentVersionLabel.mas_bottom).with.mas_offset(MARGIN_15);
-        make.left.mas_equalTo(MARGIN_10);
-        make.right.mas_equalTo(-MARGIN_10);
-        make.height.mas_equalTo(15);
-    }];
+//    UIView *hLine = [UIView viewWithColor:COLOR_UI_F0F0F0];
+//    [self addSubview:hLine];
+//    [hLine mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(weakSelf.targetVersionLabel.mas_bottom).with.mas_offset(MARGIN_15);
+//        make.left.mas_equalTo(MARGIN_10);
+//        make.right.mas_equalTo(-MARGIN_10);
+//        make.height.mas_equalTo(LINE_HEIGHT);
+//    }];
     
-    UIView *hLine = [UIView viewWithColor:COLOR_UI_F0F0F0];
-    [self addSubview:hLine];
-    [hLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(weakSelf.targetVersionLabel.mas_bottom).with.mas_offset(MARGIN_15);
-        make.left.mas_equalTo(MARGIN_10);
-        make.right.mas_equalTo(-MARGIN_10);
-        make.height.mas_equalTo(LINE_HEIGHT);
-    }];
-    
-    UILabel *contentTitleLabel = [[UILabel alloc] init];
-    [contentTitleLabel setLabelFont:KFont(12) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentLeft];
-    contentTitleLabel.text = @"版本更新内容:";
-    [self addSubview:contentTitleLabel];
-    [contentTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(hLine.mas_bottom).with.mas_offset(MARGIN_15);
-        make.left.mas_equalTo(MARGIN_10);
-        make.right.mas_equalTo(-MARGIN_10);
-        make.height.mas_equalTo(15);
-    }];
+//    UILabel *contentTitleLabel = [[UILabel alloc] init];
+//    [contentTitleLabel setLabelFont:KFont(12) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentLeft];
+//    contentTitleLabel.text = @"版本更新内容:";
+//    [self addSubview:contentTitleLabel];
+//    [contentTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(hLine.mas_bottom).with.mas_offset(MARGIN_15);
+//        make.left.mas_equalTo(MARGIN_10);
+//        make.right.mas_equalTo(-MARGIN_10);
+//        make.height.mas_equalTo(15);
+//    }];
     
     [self addSubview:self.contentLabel];
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(contentTitleLabel.mas_bottom).with.mas_offset(MARGIN_15);
+        make.top.equalTo(titleLabel.mas_bottom).with.mas_offset(MARGIN_10);
         make.left.mas_equalTo(MARGIN_10);
         make.right.mas_equalTo(-MARGIN_10);
         make.height.mas_greaterThanOrEqualTo(0);
@@ -146,8 +158,6 @@
         }
     }
     
-//    [window removeAllSubviews];
-    
     self.layerView = [[UIView alloc] init];
     self.layerView.backgroundColor = RGB(0, 0, 0, 0.5);
     [window addSubview:self.layerView];
@@ -171,8 +181,9 @@
 + (instancetype )alertWithModel:(VersionModel *)model {
     
     NSString *string = [model.described stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
+    CGFloat contentHeight = [string getHeightWithMaxWidth:AlertBaseViewWidth - MARGIN_10 * 2 font:KFont(14) lineSpacing:LINE_SPACE_5];
     
-    CGFloat height = [string getHeightWithMaxWidth:AlertBaseViewWidth - MARGIN_10 * 2 font:KFont(14) lineSpacing:LINE_SPACE_5] + 40 + MARGIN_15*6 + 15*3 +  AlertButtonHeight;
+    CGFloat height = MARGIN_10 + 68 + 40 + MARGIN_10 + contentHeight +  MARGIN_20 +  AlertButtonHeight;
     
     VersionUpdateAlertView *alert = [[VersionUpdateAlertView alloc] initWithFrame:CGRectMake(0, 0, AlertBaseViewWidth, height)];
     if ([model.isUpdate integerValue] == 1) {//强制更新
@@ -184,13 +195,15 @@
         }];
         [alert.okBtn setButtonStateNormalTitle:@"确认更新"];
     }
-    NSString *currentVersion = kCurrentShortVersion;
-    alert.currentVersionLabel.text = [NSString stringWithFormat:@"当前版本：%@",currentVersion];
-    [alert.currentVersionLabel setFontAndColorWithLoc:5 len:[currentVersion length] font:KFont(14) color:COLOR_UI_222222];
+//    NSString *currentVersion = kCurrentShortVersion;
+//    alert.currentVersionLabel.text = [NSString stringWithFormat:@"当前版本：%@",currentVersion];
+//    [alert.currentVersionLabel setFontAndColorWithLoc:5 len:[currentVersion length] font:KFont(14) color:COLOR_UI_222222];
+//
+//    NSString *targetVersion = model.iosSerialNumber;
+//    alert.targetVersionLabel.text = [NSString stringWithFormat:@"目标版本：%@",targetVersion];
+//    [alert.targetVersionLabel setFontAndColorWithLoc:5 len:[targetVersion length] font:KFont(14) color:COLOR_UI_222222];
     
-    NSString *targetVersion = model.iosSerialNumber;
-    alert.targetVersionLabel.text = [NSString stringWithFormat:@"目标版本：%@",targetVersion];
-    [alert.targetVersionLabel setFontAndColorWithLoc:5 len:[targetVersion length] font:KFont(14) color:COLOR_UI_222222];
+    alert.titleLabel.text = [NSString stringWithFormat:@"发现新版本%@",model.iosSerialNumber];
     
     alert.contentLabel.text = string;
     
@@ -226,28 +239,28 @@
 
 #pragma mark - getter -
 
-- (UILabel *)currentVersionLabel {
-    if (!_currentVersionLabel) {
-        _currentVersionLabel = [[UILabel alloc] init];
-        [_currentVersionLabel setLabelFont:KFont(12) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentLeft];
-        _currentVersionLabel.text = @"当前版本：";
-    }
-    return _currentVersionLabel;
-}
-
-- (UILabel *)targetVersionLabel {
-    if (!_targetVersionLabel) {
-        _targetVersionLabel = [[UILabel alloc] init];
-        [_targetVersionLabel setLabelFont:KFont(12) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentLeft];
-        _targetVersionLabel.text = @"目标版本：";
-    }
-    return _targetVersionLabel;
-}
+//- (UILabel *)currentVersionLabel {
+//    if (!_currentVersionLabel) {
+//        _currentVersionLabel = [[UILabel alloc] init];
+//        [_currentVersionLabel setLabelFont:KFont(12) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentLeft];
+//        _currentVersionLabel.text = @"当前版本：";
+//    }
+//    return _currentVersionLabel;
+//}
+//
+//- (UILabel *)targetVersionLabel {
+//    if (!_targetVersionLabel) {
+//        _targetVersionLabel = [[UILabel alloc] init];
+//        [_targetVersionLabel setLabelFont:KFont(12) textColor:COLOR_UI_666666 textAlignment:NSTextAlignmentLeft];
+//        _targetVersionLabel.text = @"目标版本：";
+//    }
+//    return _targetVersionLabel;
+//}
 
 - (UILabel *)contentLabel {
     if (!_contentLabel) {
         _contentLabel = [[UILabel alloc] init];
-        [_contentLabel setLabelFont:KFont(14) textColor:COLOR_UI_222222 textAlignment:NSTextAlignmentLeft];
+        [_contentLabel setLabelFont:KFont(14) textColor:COLOR_UI_THEME_RED textAlignment:NSTextAlignmentLeft];
         _contentLabel.numberOfLines = 0;
         [_contentLabel setLineParagrp:LINE_SPACE_5];
     }

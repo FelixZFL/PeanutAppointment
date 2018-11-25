@@ -12,6 +12,8 @@
 
 #import "DemanDetailModel.h"
 
+#import "JCHATConversationViewController.h"//聊天
+
 
 @interface DemandDetailViewController ()
 
@@ -106,6 +108,20 @@
         [cell setBtnClickBlock:^(DemanDetailModel * _Nonnull model, UIButton * _Nonnull sender) {
             
             if ([sender.titleLabel.text isEqualToString:@"发消息"]) {
+                [JMSGConversation createSingleConversationWithUsername:self.yUserId completionHandler:^(id resultObject, NSError *error) {
+                    if (!error) {
+                        //创建单聊会话成功， resultObject为创建的会话
+                        
+                        JCHATConversationViewController *sendMessageCtl =[[JCHATConversationViewController alloc] init];
+                        sendMessageCtl.hidesBottomBarWhenPushed = YES;
+                        sendMessageCtl.superViewController = self;
+                        JMSGConversation *conversation = (JMSGConversation *)resultObject;
+                        sendMessageCtl.conversation = conversation;
+                        [self.navigationController pushViewController:sendMessageCtl animated:YES];
+                    } else {
+                        //创建单聊会话失败
+                    }
+                }];
                 
             } else if ([sender.titleLabel.text isEqualToString:@"确认支付"]) {
                 
