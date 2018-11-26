@@ -13,6 +13,7 @@
 
 #import "HomeIndexUserModel.h"
 #import "UserMainPageModel.h"
+#import "SkillDetailModel.h"
 
 #import "AppointmentHerViewController.h"
 
@@ -20,6 +21,7 @@
 
 @property (nonatomic, strong) CLLocation *location;//当前定位
 @property (nonatomic, strong) UserMainPageModel *model;
+@property (nonatomic, strong) SkillDetailModel *skillModel;
 
 @property (nonatomic, strong) UserMainPageHeadView *headView;
 @property (nonatomic, strong) UserMainPageFootView *footView;
@@ -70,9 +72,9 @@
     [self.headView setModel:self.model];
     self.tableView.tableHeaderView = self.headView;
     
-    if (self.model.skillInfo) {
-        self.footView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageFootView getHeightWithModel:self.model.skillInfo]);
-        [self.footView setModel:self.model.skillInfo];
+    if (self.skillModel) {
+        self.footView.frame = CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageFootView getHeightWithModel:self.skillModel]);
+        [self.footView setModel:self.skillModel];
         self.tableView.tableFooterView = self.footView;
     }
     
@@ -148,14 +150,39 @@
             if (getResponseIsSuccess(response)) {
                 self.model = [UserMainPageModel mj_objectWithKeyValues:getResponseData(response)];
                 [self updateUI];
+                if (pusId.length > 0) {
+                    [self requestSkillInfoUserId:userId pusId:pusId];
+                } else {
+                    if (self.model.skillList.count > 0) {
+                        UserMainPageSkillListModel *skill = self.model.skillList.firstObject;
+                        [self requestSkillInfoUserId:userId pusId:skill.pusId];
+                    }
+                }
             }
         } failBlock:^(NSError *error) {
             [SVProgressHUD dismiss];
         }];
+        
+        
         [self getLocationToRequest:NO];
     } else {
         [self getLocationToRequest:YES];
     }
+}
+
+- (void)requestSkillInfoUserId:(NSString *)userId pusId:(NSString *)pusId {
+    [SVProgressHUD show];
+    [YQNetworking postWithApiNumber:API_NUM_20033 params:@{@"userId":userId,@"pusId":pusId} successBlock:^(id response) {
+        [SVProgressHUD dismiss];
+        if (getResponseIsSuccess(response)) {
+            [SVProgressHUD dismiss];
+            self.skillModel = [SkillDetailModel mj_objectWithKeyValues:getResponseData(response)];
+            [self updateUI];
+        }
+    } failBlock:^(NSError *error) {
+        [SVProgressHUD dismiss];
+    }];
+    
 }
 
 #pragma mark - private
@@ -198,7 +225,17 @@
 
 - (UserMainPageHeadView *)headView {
     if (!_headView) {
+        __weak __typeof(self)weakSelf = self;
         _headView = [[UserMainPageHeadView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [UserMainPageHeadView getHeightWithModel:nil])];
+        [_headView setSkillClickBlock:^(NSString *pusId) {
+            NSString *userId = @"";
+            if (weakSelf.userModel) {
+                userId = weakSelf.userModel.userId;
+            } else {
+                userId = weakSelf.userId;
+            }
+            [weakSelf requestSkillInfoUserId:userId pusId:pusId];
+        }];
     }
     return _headView;
 }

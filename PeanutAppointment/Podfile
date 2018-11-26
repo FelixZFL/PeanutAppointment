@@ -58,7 +58,9 @@ target 'PeanutAppointment' do
     pod 'JSONModel'
     pod 'LXReorderableCollectionViewFlowLayout'
     pod 'TTRangeSlider'
-    
+    pod 'Nama-lite', '5.3.0'
+    pod 'AlicloudHA', '1.0.1-SNAPSHOT'
+    pod 'Reachability', '3.1.1'
     
     #聊天需要
     pod 'CocoaLumberjack'

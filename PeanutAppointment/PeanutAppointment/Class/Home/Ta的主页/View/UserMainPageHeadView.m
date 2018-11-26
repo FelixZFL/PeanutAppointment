@@ -10,6 +10,8 @@
 
 #import "UserMainPageModel.h"
 
+#define kBtnTag 4738
+
 @interface UserMainPageHeadView()
 
 @property (nonatomic, strong) UIImageView *imageV;
@@ -328,11 +330,11 @@
     
     for (int i = 0; i < model.skillList.count; i++ ) {
         UserMainPageSkillListModel *skill = model.skillList[i];
-        UIButton *btn = [[UIButton alloc] init];
+        UIButton *btn = [self getSingleBtn];
+        btn.selected = i == 0;
+        btn.tag = kBtnTag;
         [btn setButtonStateNormalTitle:skill.jnName Font:KFont(14) textColor:COLOR_UI_666666];
-        [btn setDefaultCorner];
-        [btn setborderColor:COLOR_UI_999999];
-        [btn setBackgroundColor:COLOR_UI_FFFFFF];
+        [btn addTarget:self action:@selector(skillBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.skillListView addSubview:btn];
         CGFloat btnWith = [skill.jnName getWidthWithMaxSize:CGSizeMake(SCREEN_WIDTH - marginLeft - MARGIN_15 * 3, 15) font:KFont(14)] + MARGIN_15 * 2 ;
         
@@ -378,6 +380,41 @@
 }
 
 
+#pragma mark - action
+
+- (void)skillBtnClick:(UIButton *)sender {
+    if (sender.selected) {
+        return;
+    }
+    if (self.skillClickBlock && self.model.skillList.count > sender.tag - kBtnTag) {
+        UserMainPageSkillListModel *skill = self.model.skillList[sender.tag - kBtnTag];
+        self.skillClickBlock(skill.pusId);
+    }
+    for (UIView *view in self.skillListView.subviews) {
+        if ([view isKindOfClass:[UIButton class]]) {
+            if (sender == view) {
+                [(UIButton *)view setSelected:YES];
+            } else {
+                [(UIButton *)view setSelected:NO];
+            }
+        }
+    }
+    
+}
+
 #pragma mark - getter -
+
+- (UIButton *)getSingleBtn {
+    UIButton *btn = [[UIButton alloc] init];
+    [btn setButtonStateNormalTitle:@"" Font:KFont(14) textColor:COLOR_UI_666666];
+    [btn setborderColor:COLOR_UI_999999];
+    [btn setDefaultCorner];
+    [btn setBackgroundImage:[UIImage createImageWithColor:COLOR_UI_FFFFFF] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage createImageWithColor:COLOR_UI_THEME_RED] forState:UIControlStateSelected];
+    [btn setTitleColor:COLOR_UI_666666 forState:UIControlStateNormal];
+    [btn setTitleColor:COLOR_UI_FFFFFF forState:UIControlStateSelected];
+    return btn;
+}
+
 
 @end

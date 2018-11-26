@@ -43,6 +43,7 @@
 		5A180CF02198064900F989F7 /* ShareDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A180CEE2198064800F989F7 /* ShareDataModel.m */; };
 		5A180CF32198393200F989F7 /* HomeSkillBtnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A180CF22198393200F989F7 /* HomeSkillBtnModel.m */; };
 		5A180CF62198420100F989F7 /* PhotoAlbumPhotosModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A180CF52198420100F989F7 /* PhotoAlbumPhotosModel.m */; };
+		5A1A25F521AC686B00CFDAA6 /* PhotoDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1A25F421AC686B00CFDAA6 /* PhotoDetailViewController.m */; };
 		5A1E59CB21A700BE0062EE3B /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E59C921A700BE0062EE3B /* MBProgressHUD+Add.m */; };
 		5A1E59CE21A706DB0062EE3B /* JCHATStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E59CD21A706DB0062EE3B /* JCHATStringUtils.m */; };
 		5A1E59D121A708790062EE3B /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1E59CF21A708790062EE3B /* NSDate+Utilities.m */; };
@@ -834,6 +835,8 @@
 		5A180CF22198393200F989F7 /* HomeSkillBtnModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeSkillBtnModel.m; sourceTree = "<group>"; };
 		5A180CF42198420100F989F7 /* PhotoAlbumPhotosModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoAlbumPhotosModel.h; sourceTree = "<group>"; };
 		5A180CF52198420100F989F7 /* PhotoAlbumPhotosModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoAlbumPhotosModel.m; sourceTree = "<group>"; };
+		5A1A25F321AC686B00CFDAA6 /* PhotoDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoDetailViewController.h; sourceTree = "<group>"; };
+		5A1A25F421AC686B00CFDAA6 /* PhotoDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoDetailViewController.m; sourceTree = "<group>"; };
 		5A1E59C921A700BE0062EE3B /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
 		5A1E59CA21A700BE0062EE3B /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		5A1E59CC21A706DB0062EE3B /* JCHATStringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHATStringUtils.h; sourceTree = "<group>"; };
@@ -2535,6 +2538,8 @@
 				5A121C4121655753007709B1 /* PhotoAlbumViewController.m */,
 				5A53E5792169E0C400F0D86E /* AddPhotoAlbumViewController.h */,
 				5A53E57A2169E0C400F0D86E /* AddPhotoAlbumViewController.m */,
+				5A1A25F321AC686B00CFDAA6 /* PhotoDetailViewController.h */,
+				5A1A25F421AC686B00CFDAA6 /* PhotoDetailViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4485,29 +4490,29 @@
 		5AD633072195928200FBC87C /* MagicCamera */ = {
 			isa = PBXGroup;
 			children = (
-				5AD633082195928200FBC87C /* TestViewController.m */,
-				5AD633092195928200FBC87C /* AliyunDownloadManager.m */,
-				5AD6330A2195928200FBC87C /* AliyunMagicCameraScrollView.m */,
-				5AD6330B2195928200FBC87C /* AliyunRateSelectView.m */,
 				5AD6330C2195928200FBC87C /* DO */,
-				5AD633132195928200FBC87C /* AliyunBeibeiTexture.h */,
-				5AD633142195928200FBC87C /* AliyunMosaicFilter.m */,
-				5AD633152195928200FBC87C /* AliyunMagicCameraViewController.h */,
-				5AD633162195928200FBC87C /* AliyunBlurFilter.m */,
-				5AD633172195928200FBC87C /* AliyunMagicCameraView.m */,
-				5AD633182195928200FBC87C /* AliyunMagicCameraEffectCell.m */,
-				5AD633192195928200FBC87C /* AliyunRateSelectView.h */,
-				5AD6331A2195928200FBC87C /* AliyunMagicCameraScrollView.h */,
-				5AD6331B2195928200FBC87C /* AliyunDownloadManager.h */,
-				5AD6331C2195928200FBC87C /* TestViewController.h */,
 				5AD6331D2195928200FBC87C /* VideoPreView */,
-				5AD633202195928200FBC87C /* AliyunBeibeiTexture.m */,
-				5AD633212195928200FBC87C /* AliyunMagicCameraEffectCell.h */,
-				5AD633222195928200FBC87C /* AliyunMagicCameraView.h */,
-				5AD633232195928200FBC87C /* AliyunBlurFilter.h */,
 				5AD633242195928200FBC87C /* MusicPick */,
+				5AD633152195928200FBC87C /* AliyunMagicCameraViewController.h */,
 				5AD633352195928200FBC87C /* AliyunMagicCameraViewController.m */,
+				5AD633212195928200FBC87C /* AliyunMagicCameraEffectCell.h */,
+				5AD633182195928200FBC87C /* AliyunMagicCameraEffectCell.m */,
+				5AD633222195928200FBC87C /* AliyunMagicCameraView.h */,
+				5AD633172195928200FBC87C /* AliyunMagicCameraView.m */,
+				5AD6331A2195928200FBC87C /* AliyunMagicCameraScrollView.h */,
+				5AD6330A2195928200FBC87C /* AliyunMagicCameraScrollView.m */,
+				5AD633232195928200FBC87C /* AliyunBlurFilter.h */,
+				5AD633162195928200FBC87C /* AliyunBlurFilter.m */,
 				5AD633362195928200FBC87C /* AliyunMosaicFilter.h */,
+				5AD633142195928200FBC87C /* AliyunMosaicFilter.m */,
+				5AD6331C2195928200FBC87C /* TestViewController.h */,
+				5AD633082195928200FBC87C /* TestViewController.m */,
+				5AD6331B2195928200FBC87C /* AliyunDownloadManager.h */,
+				5AD633092195928200FBC87C /* AliyunDownloadManager.m */,
+				5AD633132195928200FBC87C /* AliyunBeibeiTexture.h */,
+				5AD633202195928200FBC87C /* AliyunBeibeiTexture.m */,
+				5AD633192195928200FBC87C /* AliyunRateSelectView.h */,
+				5AD6330B2195928200FBC87C /* AliyunRateSelectView.m */,
 			);
 			path = MagicCamera;
 			sourceTree = "<group>";
@@ -6638,6 +6643,7 @@
 				5A1E5A4821A719C80062EE3B /* XHVoiceRecordHelper.m in Sources */,
 				5AD636AB2195928600FBC87C /* AliyunMusicPickCell.m in Sources */,
 				5A31FAB8217CD540004BB5BD /* RewardAlertView.m in Sources */,
+				5A1A25F521AC686B00CFDAA6 /* PhotoDetailViewController.m in Sources */,
 				5ABCE9EB21688EEE00845324 /* MyExceptionalModel.m in Sources */,
 				5AD636A12195928600FBC87C /* AliyunPasterInfo.m in Sources */,
 				5A31D3C621455D8E001E2043 /* main.m in Sources */,

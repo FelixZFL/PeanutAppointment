@@ -13,6 +13,7 @@
 #import "PhotoAlbumModel.h"
 
 #import "AddPhotoAlbumViewController.h"
+#import "PhotoDetailViewController.h"
 
 @interface PhotoAlbumViewController ()
 
@@ -169,6 +170,12 @@
     PhotoAlbumCell *cell = (PhotoAlbumCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[PhotoAlbumCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        [cell setPhotoClickBlock:^(PhotoAlbumPhotosModel * _Nonnull model, NSInteger index) {
+            PhotoDetailViewController *vc = [[PhotoDetailViewController alloc] init];
+            vc.photoModel = model;
+            vc.selectIndex = index;
+            [self.navigationController pushViewController:vc animated:YES];
+        }];
     }
     if (self.dataArr.count > indexPath.section) {
         PhotoAlbumModel *model = self.dataArr[indexPath.section];

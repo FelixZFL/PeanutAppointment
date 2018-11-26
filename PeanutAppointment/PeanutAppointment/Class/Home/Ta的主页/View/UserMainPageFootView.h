@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class UserMainPageSkillInfoModel;
+//@class UserMainPageSkillInfoModel;
+@class SkillDetailModel;
 
 @interface UserMainPageFootView : UIView
 
-@property (nonatomic, strong) UserMainPageSkillInfoModel *model;
+@property (nonatomic, strong) SkillDetailModel *model;
 
-+ (CGFloat )getHeightWithModel:(UserMainPageSkillInfoModel *)model;
++ (CGFloat )getHeightWithModel:(SkillDetailModel *)model;
 
 @end

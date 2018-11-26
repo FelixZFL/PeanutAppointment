@@ -61,8 +61,7 @@
     
     [self reLogin];
     
-    [JCHATFileManager initWithFilePath];//demo 初始化存储路径
-    
+    [JCHATFileManager initWithFilePath];// 初始化存储路径
     [JMessage resetBadge];
     
     return YES;
