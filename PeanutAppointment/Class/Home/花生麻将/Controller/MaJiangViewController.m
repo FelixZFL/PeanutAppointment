@@ -177,7 +177,16 @@
 }
 
 - (void)joinBtnTapAction {
-    
+    NSURL *url = [NSURL URLWithString:@"wx30b8c9a898d0d9df:"];
+    if ([[UIApplication sharedApplication] canOpenURL:url]) {
+        if (@available(iOS 10.0, *)) {
+            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+        } else {
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    } else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://wap.cq5266.com/"]];
+    }
 }
 
 #pragma mark - getter

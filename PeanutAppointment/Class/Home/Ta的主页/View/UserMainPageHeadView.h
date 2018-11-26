@@ -12,6 +12,8 @@
 
 @interface UserMainPageHeadView : UIView
 
+@property (nonatomic, copy) void(^skillClickBlock)(NSString *pusId);
+
 @property (nonatomic, strong) UserMainPageModel *model;
 
 + (CGFloat )getHeightWithModel:(UserMainPageModel *)model;

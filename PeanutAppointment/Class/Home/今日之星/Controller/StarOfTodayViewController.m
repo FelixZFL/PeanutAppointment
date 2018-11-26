@@ -48,9 +48,8 @@
     SDCycleScrollView *bannerView = [[SDCycleScrollView alloc] init];
     bannerView.delegate  = self;
     bannerView.autoScroll = NO;
-    bannerView.currentPageDotColor = COLOR_UI_THEME_RED;
-    bannerView.pageDotColor = COLOR_UI_FFFFFF;
-    bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;//UIViewContentModeScaleAspectFill
+    bannerView.showPageControl = NO;
+    bannerView.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
     bannerView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
     [self.view addSubview:bannerView];
     [bannerView mas_makeConstraints:^(MASConstraintMaker *make) {

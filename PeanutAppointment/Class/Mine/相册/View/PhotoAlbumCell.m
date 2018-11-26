@@ -10,6 +10,8 @@
 
 #import "PhotoAlbumPhotosModel.h"
 
+#define kImgVtag 46532
+
 @interface PhotoAlbumCell()
 
 @property (nonatomic, strong) UILabel *titleLabel;
@@ -68,11 +70,26 @@
         CGFloat photoWidth = (SCREEN_WIDTH - MARGIN_15 * 2 - MARGIN_1 * 2)/3.f;
         for (int i = 0; i < array.count; i++) {
             UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(MARGIN_15 + i%3 * (photoWidth + MARGIN_1), 35 + i/3 * (photoWidth + MARGIN_1), photoWidth, photoWidth)];
+            imageV.tag = kImgVtag + i;
+            imageV.userInteractionEnabled = YES;
+            [imageV addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageTapAction:)]];
             imageV.contentMode = UIViewContentModeScaleAspectFill;
             imageV.clipsToBounds = YES;
             [imageV sd_setImageWithURL:URLWithString(array[i])];
             [self addSubview:imageV];
         }
+    }
+}
+
+#pragma mark - action -
+
+- (void)imageTapAction:(UITapGestureRecognizer *)tapGest {
+    
+    NSInteger index = tapGest.view.tag - kImgVtag;
+    NSArray *array = [_model.photosUrl componentsSeparatedByString:@","];
+    
+    if (self.photoClickBlock && array.count > index) {
+        self.photoClickBlock(self.model, index);
     }
 }
 

@@ -17,9 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 ///用户id
 @property (nonatomic, copy) NSString *userId;
 
-///技能id
-//@property (nonatomic, copy) NSString *pusId;
-
 ///用户信息
 @property (nonatomic, strong) HomeIndexUserModel *userModel;
 

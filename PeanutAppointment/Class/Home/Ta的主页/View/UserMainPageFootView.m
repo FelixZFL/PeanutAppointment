@@ -8,7 +8,8 @@
 
 #import "UserMainPageFootView.h"
 
-#import "UserMainPageModel.h"
+//#import "UserMainPageModel.h"
+#import "SkillDetailModel.h"
 
 @interface UserMainPageFootView()
 
@@ -111,7 +112,7 @@
 
 #pragma mark - public -
 
-+ (CGFloat)getHeightWithModel:(UserMainPageSkillInfoModel *)model {
++ (CGFloat)getHeightWithModel:(SkillDetailModel *)model {
     
     if (model) {
         CGFloat height = 35 *4 ;
@@ -134,7 +135,7 @@
     
 }
 
-- (void)setModel:(UserMainPageSkillInfoModel *)model {
+- (void)setModel:(SkillDetailModel *)model {
     _model = model;
     
     if (model) {
