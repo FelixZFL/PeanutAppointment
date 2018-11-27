@@ -142,7 +142,7 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     // 判断是否隐藏navBar
-    BOOL barHidden = [viewController isKindOfClass:[self class]];
+    BOOL barHidden = [viewController isKindOfClass:[BaseViewController class]];
     
     [self.navigationController setNavigationBarHidden:barHidden animated:YES];
 }

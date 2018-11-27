@@ -74,23 +74,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self getData];
-    if (_isShowSign) {
-        _isShowSign = YES;
-        //签到
-        [[SignInAlertView alertWithBlock:^{
-            [YQNetworking postWithApiNumber:API_NUM_10024 params:@{@"userId":[PATool getUserId]} successBlock:^(id response) {
-                if (getResponseIsSuccess(response)) {
-                    //"sign":1 //1：已签到过了 2:签到成功
-                    NSDictionary *dic = getResponseData(response);
-                    if ([dic[@"sign"] integerValue] == 1) {
-                        [SVProgressHUD showInfoWithStatus:@"已签到过了"];
-                    } else if ([dic[@"sign"] integerValue] == 2) {
-                         [SVProgressHUD showSuccessWithStatus:@"签到成功"];
-                    }
-                }
-            } failBlock:nil];
-        }] showInWindow];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -147,8 +130,28 @@
     self.tableView.tableHeaderView = self.headView;
     [self.tableView reloadData];
     [self cheackHomeAlert];
+    [self cheackSignAlert];
 }
 
+- (void)cheackSignAlert {
+    if ([self.model.sign integerValue] == 1 && [PATool isLogin]) {
+        //签到
+        [[SignInAlertView alertWithBlock:^{
+            [YQNetworking postWithApiNumber:API_NUM_10024 params:@{@"userId":[PATool getUserId]} successBlock:^(id response) {
+                if (getResponseIsSuccess(response)) {
+                    //"sign":1 //1：已签到过了 2:签到成功
+                    NSDictionary *dic = getResponseData(response);
+                    if ([dic[@"sign"] integerValue] == 1) {
+                        [SVProgressHUD showInfoWithStatus:@"已签到过了"];
+                    } else if ([dic[@"sign"] integerValue] == 2) {
+                        [SVProgressHUD showSuccessWithStatus:@"签到成功"];
+                    }
+                }
+            } failBlock:nil];
+        }] showInWindow];
+        
+    }
+}
 
 - (void)cheackHomeAlert {
     if ([PAUserDefaults getAppReseted]) {
