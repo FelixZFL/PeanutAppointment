@@ -386,7 +386,7 @@
 #pragma mark - UINavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    
+
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
