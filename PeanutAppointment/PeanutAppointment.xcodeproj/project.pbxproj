@@ -164,7 +164,6 @@
 		5A31D3C521455D8E001E2043 /* CustomPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A31D39721455D8E001E2043 /* CustomPlaceholderTextView.m */; };
 		5A31D3C621455D8E001E2043 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A31D39C21455D8E001E2043 /* main.m */; };
 		5A31D3C721455D8E001E2043 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A31D39D21455D8E001E2043 /* AppDelegate.m */; };
-		5A31D3C821455D8E001E2043 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A31D39E21455D8E001E2043 /* Info.plist */; };
 		5A31D3C921455D8E001E2043 /* UILabel+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A31D3A721455D8E001E2043 /* UILabel+Extension.m */; };
 		5A31D3CA21455D8E001E2043 /* UIColor+FLExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A31D3A821455D8E001E2043 /* UIColor+FLExtension.m */; };
 		5A31D3CB21455D8E001E2043 /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A31D3AB21455D8E001E2043 /* NSObject+Extension.m */; };
@@ -1045,7 +1044,6 @@
 		5A31D39B21455D8E001E2043 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5A31D39C21455D8E001E2043 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5A31D39D21455D8E001E2043 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5A31D39E21455D8E001E2043 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A31D3A221455D8E001E2043 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		5A31D3A421455D8E001E2043 /* UIViewController+FLExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+FLExtension.h"; sourceTree = "<group>"; };
 		5A31D3A521455D8E001E2043 /* NSObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Extension.h"; sourceTree = "<group>"; };
@@ -2061,6 +2059,7 @@
 		DCB5BA55219130770055D7E9 /* GotTalentListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GotTalentListModel.m; sourceTree = "<group>"; };
 		DCC576E8219D7F780089D891 /* SkillListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkillListModel.h; sourceTree = "<group>"; };
 		DCC576E9219D7F780089D891 /* SkillListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SkillListModel.m; sourceTree = "<group>"; };
+		DCDB479C222544CB003E7B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBE3B643EF82432D9E9D6C8C /* Pods-PeanutAppointment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PeanutAppointment.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PeanutAppointment/Pods-PeanutAppointment.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -3099,7 +3098,7 @@
 				5A31D39D21455D8E001E2043 /* AppDelegate.m */,
 				5A0C977F2165C6E20083D1BE /* AppDelegate+JPush.h */,
 				5A0C97802165C6E20083D1BE /* AppDelegate+JPush.m */,
-				5A31D39E21455D8E001E2043 /* Info.plist */,
+				DCDB479C222544CB003E7B9A /* Info.plist */,
 				5A31D39C21455D8E001E2043 /* main.m */,
 			);
 			path = Main;
@@ -6161,7 +6160,6 @@
 				5AD637BF2195930900FBC87C /* InfoPlist.strings in Resources */,
 				5AD637512195928600FBC87C /* tap.m4a in Resources */,
 				5A1E5A7721A71B870062EE3B /* JCHATSelectFriendsCtl.xib in Resources */,
-				5A31D3C821455D8E001E2043 /* Info.plist in Resources */,
 				5AD637D72195931500FBC87C /* readMe_Utilites.txt in Resources */,
 				5AD6377A2195928700FBC87C /* 1.mp4 in Resources */,
 				5ACE3FD72165F81A00CFC957 /* private_key.p12 in Resources */,
